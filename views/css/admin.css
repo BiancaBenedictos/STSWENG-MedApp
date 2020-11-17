@@ -1,0 +1,99 @@
+/* .filter,  */
+.appointments, .week {
+    margin-top: -200px;
+    background-color: white;
+    box-shadow: 0px 0px 20px #00000050;
+}
+
+.options {
+    margin-top: -30px;
+}
+  
+.card-long, .admin-card {
+    /* width: 800px; */
+    height: 120px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0px 0px 20px #00000050;
+    margin: 20px;
+    
+}
+
+.admin-card {
+    width: 800px;
+}
+
+.card-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 25px;
+    margin-left: 35px;
+}
+
+.card-title {
+    margin: 0;
+}
+
+.card-body {
+    margin-top: 15px;
+    text-align:left;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-link {
+    margin-right: -15px;
+}
+
+/* .filter {    
+    text-align: center;
+}
+
+.filter img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+.filter p {
+    margin: 30px;
+} */
+
+.add {
+    display: flex;
+    justify-content: center;
+}
+
+.clinic-search {
+    width: 100%;
+    border: 1px solid gray;
+    margin-top: 15px;
+}
+
+.options a {
+    margin-top: -10px;
+}
+
+.day-row {
+    margin: 0;
+}
+
+.interval {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: -20px;
+}
+
+.view-btn {
+    margin: -5px;
+}
+
+.days {
+    margin-top: 30px;
+}

@@ -1,0 +1,58 @@
+.card {
+    width: 250px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0px 0px 20px #00000050;
+    margin: 25px;
+    /* color: #606060; */
+}
+
+.card-img-top {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+a {
+    color: black;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.card-body {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.view-btn, .edit-btn, .cancel-btn {
+    width: 130px;
+    background-color: #133C55;
+    border: none;
+    border-radius: 50px;
+    margin: 10px;
+    padding: 5px 15px 5px 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.cancel-btn {
+    margin-top: 10px;
+}
+
+.view-btn:hover, .edit-btn:hover, .cancel-btn:hover {
+    color: white;
+}
+
+.date {
+    text-align: center;
+}
+
+/* .edit-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+} */

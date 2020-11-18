@@ -4,11 +4,17 @@
     height: 70px;
 }
 
+.header {
+    background: #133C55;
+    height: 170px;
+}
+
 .search {
     width: 350px;
     height: 30px;
     border: none;
     border-radius: 50px;
+    font-size: 12px;
 }
 
 .nav-link:hover {
@@ -18,7 +24,7 @@
 
 .nav-link {
     color: white;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 img {

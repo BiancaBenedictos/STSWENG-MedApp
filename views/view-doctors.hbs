@@ -20,11 +20,10 @@
 <body>
     {{> nav}}
     
-    <div class="container-fluid">
-        <div class="row content">
-            <div class="col-1"></div>
-            <div class="col-3 filter">
-                <form action="" style="text-align: left;">
+    <div class="container">
+        <div class="row content d-flex flex-wrap">
+            <div class="col-4 filter">
+                <form action="" style="text-align:left;">
                     <h1>Field</h1>
                     <input type="radio" id="field1" name="field" value="field1">
                     <label for="field1">Field 1</label><br>
@@ -44,92 +43,49 @@
                     <label for="clinic3">Clinic 3</label><br><br>
                 </form>
             </div>
-            <div class="col-7 appointments week" style="height:100px">
-                <div class="row d-flex justify-content-center flex-wrap">
-                    <h1 class="heading mt-2">Clinic Name</h1>
+            <div class="col">
+                <div class="row appointments week justify-content-center">
+                    <h1 class="heading mt-4">Clinic Name</h1>
                 </div>
                 <div class="row timeslots flex-wrap">
                     <a href="/bookAppointment" class="card-long">
                         <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
+                            <img class="card-img" src="assets/black.png">
+                            <div class="card-body">
+                                <h5 class="card-title">Doctor's Name</h5>
+                                <p class="card-text">Field</p>
                             </div>
                         </div>
                     </a>
                     <a href="/bookAppointment" class="card-long">
                         <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
+                            <img class="card-img" src="assets/black.png">
+                            <div class="card-body">
+                                <h5 class="card-title">Doctor's Name</h5>
+                                <p class="card-text">Field</p>
                             </div>
                         </div>
                     </a>
                     <a href="/bookAppointment" class="card-long">
                         <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
+                            <img class="card-img" src="assets/black.png">
+                            <div class="card-body">
+                                <h5 class="card-title">Doctor's Name</h5>
+                                <p class="card-text">Field</p>
                             </div>
                         </div>
                     </a>
                     <a href="/bookAppointment" class="card-long">
                         <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/bookAppointment" class="card-long">
-                        <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/bookAppointment" class="card-long">
-                        <div class="row no-gutters">
-                            <div class="col-sm-3">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-body" style="margin-left:15px">
-                                    <h5 class="card-title">Doctor's Name</h5>
-                                    <p class="card-text">Field</p>
-                                </div>
+                            <img class="card-img" src="assets/black.png">
+                            <div class="card-body">
+                                <h5 class="card-title">Doctor's Name</h5>
+                                <p class="card-text">Field</p>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-1"></div>
         </div>
     </div>
 </body>

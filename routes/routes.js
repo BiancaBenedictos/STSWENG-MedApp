@@ -21,7 +21,7 @@ app.get('/concludedAppointments', appointmentController.concludedAppointments)
 app.get('/cancelledAppointments', appointmentController.cancelledAppointments)
 app.get('/bookAppointment', appointmentController.bookAppointment)
 
-app.get('/pendingAppointments', doctorController.pendingAppointments)
+app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 
 app.get('/', homeController.doctors)

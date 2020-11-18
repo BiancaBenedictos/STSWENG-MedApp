@@ -1,6 +1,5 @@
-/* .filter,  */
-.appointments, .week {
-    margin-top: -200px;
+.filter, .appointments, .week {
+    margin-top: -170px;
     background-color: white;
     box-shadow: 0px 0px 20px #00000050;
 }
@@ -8,40 +7,54 @@
 .options {
     margin-top: -30px;
 }
+
+.icon {
+    width: 20px;
+}
   
 .card-long, .admin-card {
-    /* width: 800px; */
-    height: 120px;
+    width: 250px;
+    height: 90px;
     border-radius: 14px;
     border: none;
     box-shadow: 0px 0px 20px #00000050;
-    margin: 20px;
+    margin: 10px;
     
 }
 
 .admin-card {
-    width: 800px;
+    width: 100%;
+    margin: 0 30 0 30;
 }
 
 .card-img {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin: 25px;
-    margin-left: 35px;
+    /* margin: 25px; */
+    /* margin-left: 35px; */
 }
 
-.card-title {
+/* .card-title {
     margin: 0;
-}
+    font-size: 16px;
+} */
 
 .card-body {
-    margin-top: 15px;
+    align-items: center;
+    /* margin-top: 15px; */
     text-align:left;
 }
 
+.cancel {
+    /* text-align: center; */
+    text-align: end;
+    margin-right: 30px;
+
+}
+
 .heading {
-    font-size: 32px;
+    font-size: 22px;
     font-weight: bold;
     text-align: center;
 }
@@ -50,20 +63,25 @@
     margin-right: -15px;
 }
 
-/* .filter {    
+.filter {
+    background-color: white;
+    box-shadow: 0px 0px 20px #00000050;
+}
+
+.filter {    
     text-align: center;
 }
 
 .filter img {
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     margin-top: 30px;
 }
 
 .filter p {
     margin: 30px;
-} */
+}
 
 .add {
     display: flex;
@@ -81,11 +99,21 @@
 }
 
 .day-row {
-    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.form-group {
+    margin: 3px;
 }
 
 .interval {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-left: -20px;
 }
@@ -95,5 +123,45 @@
 }
 
 .days {
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+.week {
+    height: 130px;
+    border-radius: 14px;
+}
+
+.day {
+    border: none;
+    background-color: white;
+    font-weight: bold;
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.time {
+    width: 90px;
+    height: 35px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    margin: 10px;
+
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0px 0px 10px #00000060;
+    background-color: white;
+}
+
+.timeslots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.active {
+    background-color: #133C55;
+    color: white;
 }

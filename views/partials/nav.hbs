@@ -14,8 +14,25 @@
     <div class="mx-auto order-0">
         <input type="text" class="search pl-3" placeholder="Search"/>
     </div>
-    
+
+
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <div class="dropdown show ml-auto">
+            <a class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Firstname Lastname
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/upcomingAppointments">Profile</a>
+                <a class="dropdown-item" href="/createAppointments">Create Appointments (doctor)</a>
+                <a class="dropdown-item" href="/doctorPendingAppointments">Pending Appointments (doctor)</a>
+                <a class="dropdown-item" href="/adminPending">Admin</a>
+                <a class="dropdown-item" href="/login">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    {{!-- <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/upcomingAppointments">Profile</a>
@@ -26,7 +43,7 @@
                 <img class="profile" src="assets/test.png">
             </li>
         </ul>
-    </div>
+    </div> --}}
 </nav>
 
 <div class="header"></div>

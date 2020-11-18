@@ -17,73 +17,86 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-    <!-- Animation-->
-
 </head>
 <body>
     {{> nav}}
     
-    <div class="container-fluid">
-        <div class="row content">
-            <div class="col-1"></div>
-            <div class="col-3 filter">
+    <div class="container">
+        <div class="row content d-flex flex-wrap">
+            <div class="col-4 filter">
                 <input type="text" class="search pl-3 clinic-search" placeholder="Search"/>
             </div>
-            <div class="col-7">
+            <div class="col">
                 <div class="row options">
                     <a href="/adminPending" value= "pending" id="pending">pending</a>
                     <a href="/adminDoctors" value="doctors" id="doctors">doctors</a>
-                    <a href="#" value= "clinics" id="clinics">clinics</a>
+                    <a href="/adminClinics" value= "clinics" id="clinics">clinics</a>
                 </div>
-                
-                <div class="row d-flex justify-content-center flex-wrap mt-4">
-                    <button type="button" class="btn admin-card add" data-toggle="modal" data-target="#add-clinic">
-                        <img src="assets/add.svg">
-                    </button>
-                    
-                    <a href="#" class="admin-card">
-                        <div class="row no-gutters">
-                            <div class="col-sm-2">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Clinic Name</h5>
-                                    <p class="card-text">Address</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="card-body">
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
-                                        <img src="assets/clear.svg">
-                                    </button>
-                                </div>
-                            </div>
+
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card justify-content-center">
+                        <button type="button" class="btn add" data-toggle="modal" data-target="#add-clinic">
+                            <img src="assets/add.svg" class="icon">
+                            <h1 class="heading pt-2 pl-3" style="align-self:center;font-size:18px">Add a Clinic</h1>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <a href="/viewDoctors">
+                            <img class="card-img" src="assets/black.png">
+                        </a>
+                        <div class="card-body">
+                            <a href="/viewDoctors">
+                                <h5 class="card-title">Clinic Name</h5>
+                                <p class="card-text">Address</p>
+                            </a>
                         </div>
-                    </a>
-                    <a href="#" class="admin-card">
-                        <div class="row no-gutters">
-                            <div class="col-sm-2">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Clinic Name</h5>
-                                    <p class="card-text">Address</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="card-body">
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
-                                        <img src="assets/clear.svg">
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="card-body cancel">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                                <img src="assets/clear.svg" class="icon">
+                            </button>
                         </div>
-                    </a>
+                    </div>
+                </div>
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <a href="/viewDoctors">
+                            <img class="card-img" src="assets/black.png">
+                        </a>
+                        <div class="card-body">
+                            <a href="/viewDoctors">
+                                <h5 class="card-title">Clinic Name</h5>
+                                <p class="card-text">Address</p>
+                            </a>
+                        </div>
+                        <div class="card-body cancel">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                                <img src="assets/clear.svg" class="icon">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <a href="/viewDoctors">
+                            <img class="card-img" src="assets/black.png">
+                        </a>
+                        <div class="card-body">
+                            <a href="/viewDoctors">
+                                <h5 class="card-title">Clinic Name</h5>
+                                <p class="card-text">Address</p>
+                            </a>
+                        </div>
+                        <div class="card-body cancel">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                                <img src="assets/clear.svg" class="icon">
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-1"></div>
         </div>
     </div>
 </body>

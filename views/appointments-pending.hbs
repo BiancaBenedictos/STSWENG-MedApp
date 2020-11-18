@@ -20,64 +20,59 @@
 <body>
     {{> nav}}
     
-    <div class="container-fluid">
-        <div class="row content">
-            <div class="col-1"></div>
-            <div class="col-3 filter">
+    <div class="container">
+        <div class="row content d-flex flex-wrap">
+            <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">Firstname Lastname</h1>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
                 <a href="/login" class="btn edit-btn">logout</a>
             </div>
-            <div class="col-7">
+            <div class="col">
                 <div class="row options">
                     <a href="/upcomingAppointments" id="upcoming">upcoming</a>
                     <a href="/pendingAppointments" id="pending">pending</a>
                     <a href="/concludedAppointments" id="concluded">concluded</a>
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>
-                
-                <div class="row d-flex justify-content-center flex-wrap mt-4">
-                    <a href="#" class="admin-card">
-                        <div class="row no-gutters">
-                            <div class="col-sm-2">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-7">
-                                <div class="card-body">
-                                    <h5 class="card-title">Firstname Lastname</h5>
-                                    <p class="card-text">Date · Time</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="card-body">
-                                    <button class="btn cancel-btn" data-toggle="modal" data-target="#confirm-delete">cancel</button>
-                                </div>
-                            </div>
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <img class="card-img" src="assets/black.png">
+                        <div class="card-body">
+                            <h5 class="card-title">Firstname Lastname</h5>
+                            <p class="card-text">Date · Time</p>
                         </div>
-                    </a>
-                    <a href="#" class="admin-card">
-                        <div class="row no-gutters">
-                            <div class="col-sm-2">
-                                <img class="card-img" src="assets/black.png">
-                            </div>
-                            <div class="col-sm-7">
-                                <div class="card-body">
-                                    <h5 class="card-title">Firstname Lastname</h5>
-                                    <p class="card-text">Date · Time</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="card-body">
-                                    <button class="btn cancel-btn" data-toggle="modal" data-target="#confirm-delete">cancel</button>
-                                </div>
-                            </div>
+                        <div class="card-body cancel">
+                            <button class="btn cancel-btn ml-auto" data-toggle="modal" data-target="#confirm-delete">cancel</button>
                         </div>
-                    </a>
+                    </div>
+                </div>
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <img class="card-img" src="assets/black.png">
+                        <div class="card-body">
+                            <h5 class="card-title">Firstname Lastname</h5>
+                            <p class="card-text">Date · Time</p>
+                        </div>
+                        <div class="card-body cancel">
+                            <button class="btn cancel-btn ml-auto" data-toggle="modal" data-target="#confirm-delete">cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row no-gutters admin-card">
+                        <img class="card-img" src="assets/black.png">
+                        <div class="card-body">
+                            <h5 class="card-title">Firstname Lastname</h5>
+                            <p class="card-text">Date · Time</p>
+                        </div>
+                        <div class="card-body cancel">
+                            <button class="btn cancel-btn ml-auto" data-toggle="modal" data-target="#confirm-delete">cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-1"></div>
         </div>
     </div>
 </body>
@@ -96,11 +91,11 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <div class="form-group col-6">
+                        <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
                             <input type="text" class="form-control" id="firstname">
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col">
                             <label for="lastname" class="col-form-label">Last Name</label>
                             <input type="text" class="form-control" id="lastname"></textarea>
                         </div>

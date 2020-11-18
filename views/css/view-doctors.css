@@ -1,5 +1,5 @@
 .content {
-    margin: 70px;
+    margin-top: 70px;
 }
 
 .clinics {
@@ -35,12 +35,13 @@
 
 /* filter and appointment boxes */
 .filter, .appointments {
-    height: 650px;
+    height: 500px;
     border-radius: 20px;
     border: none;
     box-shadow: 0px 0px 20px #00000050;
     padding: 20px 50px 20px 50px;
-    margin-right: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .filter {
@@ -48,49 +49,7 @@
 }
 
 .filter h1 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-top: 30px;
-}
-
-.week {
-    height: 175px;
-    border-radius: 14px;
-}
-
-.day {
-    border: none;
-    background-color: white;
-    font-weight: bold;
-    font-size: 20px;
-    margin: 0 10 0 10;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-}
-
-.time {
-    width: 150px;
-    height: 50px;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-    margin: 10px;
-
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0px 0px 10px #00000060;
-    padding: 10px;
-    background-color: white;
-}
-
-.timeslots {
-    display: flex;
-    justify-content: center;
-    margin-top: 80px;
-}
-
-.active {
-    background-color: #133C55;
-    color: white;
 }

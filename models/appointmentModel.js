@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+// const mongoosePaginate = require('mongoose-paginate');
 
-const appointmentSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-
+const appointmentSchema = new mongoose.Schema({
     bookedDoctor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Doctor'
+        type: String
     },
 
     patient: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Patient'
+        type: String
     },
 
     bookedDate: {
@@ -24,13 +20,12 @@ const appointmentSchema = mongoose.Schema({
         type: String,
     },
 
-    Status: {
+    status: {
         type: String,
-        enum: ['Accepted', 'Declined', 'Completed'],
+        enum: ['Pending', 'Declined', 'Completed', 'Cancelled'],
         required: true,
-    },
-
+    }
 });
 
-appointmentSchema.plugin(mongoosePaginate);
+// appointmentSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Appointment', appointmentSchema);

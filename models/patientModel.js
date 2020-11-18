@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+// const mongoosePaginate = require('mongoose-paginate');
 
-const patientSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-
+const patientSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -44,9 +42,11 @@ const patientSchema = mongoose.Schema({
         default: 'portrait.png',
     },
 
-    bookedAppointments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Appointment'}],
+    bookedAppointments: [{
+        type: String
+    }],
 
 });
 
-patientSchema.plugin(mongoosePaginate);
+// patientSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Patient', patientSchema);

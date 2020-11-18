@@ -40,3 +40,16 @@ a:hover {
 ::placeholder {
     font-size: 13px;
 }
+
+#clinic {
+    margin-bottom: 15px;
+}
+
+#addClinic, #registerClinic {
+    height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    background-color: white;
+    
+}

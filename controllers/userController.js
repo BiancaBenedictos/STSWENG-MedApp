@@ -3,12 +3,8 @@ const userController = {
 		res.render('login')
 	},
     
-	userRegister: function(req,res){
-		res.render('user-register')
-	},
-    
-	doctorRegister: function(req,res){
-		res.render('doctor-register');
+	register: function(req,res){
+		res.render('register')
 	}
 }
 

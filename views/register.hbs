@@ -55,24 +55,22 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Profile Picture</label>
-                            <input type="file" id="picture" name="picture" /> 
-                            <label for="picture" class="form-control">Upload Photo</label>
-                        </div>
-
-                        <div class ="button-wrap">
-                            <label class="button" for="picture">Upload File</label>
-                            <input id="picture" class="form-control" type="file" />
+                            <div class="button-wrap">
+                                <label class="button" for="picture">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
                         </div>
                     </div>
 
-                    <input type="checkbox" id="doctorCheck" onclick="isDoctor()"> I am a Doctor
+                    <input type="checkbox" id="doctorCheck">
+                    <label for="doctorCheck">I am a Doctor</label>
 
                     <div id="doctorFields" style="display:none">
                         <div class="row">
-                            <div class="col mt-3">
+                            <div class="col">
                                 <label for="profession">Profession</label>
                                 <div class="form-group">
-                                    <select class="form-control" id="profession" name="profession">
+                                    <select class="form-control" id="profession">
                                         <option>Pediatrician</option>
                                         <option>Gynecologist</option>
                                         <option>Obstetrician</option>
@@ -98,8 +96,10 @@
                         <div class="form-group row">
                             <div class="col">
                                 <label>Credentials</label>
-                                <input type="file" id="credentials" name="credentials"/> 
-                                <label for="credentials" class="form-control">Upload Credentials</label>
+                                <div class="button-wrap">
+                                    <label class="button" for="credentials">Upload File</label>
+                                    <input id="credentials" class="form-control" type="file">
+                                </div>
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@
                             <div class="col">
                                 <label for="clinic">Clinic</label>
                                 <div class="form-group">
-                                    <select class="form-control" id="clinic" name="clinic">
+                                    <select class="form-control" id="clinic">
                                         <option>Clinic 1</option>
                                         <option>Clinic 2</option>
                                         <option>Clinic 3</option>

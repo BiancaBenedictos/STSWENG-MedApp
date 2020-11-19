@@ -40,6 +40,13 @@ const adminController = {
 				res.render('admin-pending', results)
 			}
 		})
+	},
+
+	addClinic: function(req,res) {
+		console.log(req.body.newclinic)
+		db.insertOne(Clinic, req.body.newclinic, function(result){
+			console.log(result)
+		})
 	}
 }
 

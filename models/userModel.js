@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
-// const mongoosePaginate = require('mongoose-paginate');
 
 const patientSchema = new mongoose.Schema({
+    usertype: {
+        type: String,
+        enum: ['patient', 'admin'],
+        required: true
+    },
+
     email: {
         type: String,
         required: true,
@@ -22,29 +27,12 @@ const patientSchema = new mongoose.Schema({
         required: true,
     },
 
-    age: {
-        type: Number,
-        required: true,
-    },
-
-    weight: {
-        type: Number,
-        required: true,
-    },
-
-    height: {
-        type: Number,
-        required: true,
-    },
-
     profpic: {
         type: String,
         default: 'portrait.png',
     },
 
-    bookedAppointments: [{
-        type: String
-    }],
+    bookedAppointments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Appointments'}],
 
 });
 

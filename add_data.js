@@ -5,7 +5,7 @@ db.connect();
 const Appointment = require('./models/appointmentModel.js')
 const Clinic = require('./models/clinicModel.js')
 const Doctor = require('./models/doctorModel.js')
-const Patient = require('./models/patientModel.js')
+const Patient = require('./models/userModel.js')
 
 var appointment = {
     bookedDoctor: "doctor id",

@@ -11,22 +11,12 @@ const helper = {
     },
 
     renameAvatar: function (req, newName) {
-        var origName = req.files['avatar'][0].originalname;
+        var origName = req.files['picture'][0].originalname;
         var extension = origName.substring(origName.lastIndexOf('.'));
         const newURL =
-            req.files['avatar'][0].destination + '/' + newName + extension;
+            req.files['picture'][0].destination + '/' + newName + extension;
 
-        fs.renameSync(req.files['avatar'][0].path, newURL);
-        return newName + extension;
-    },
-
-    renameResume: function (req, newName) {
-        var origName = req.files['resume'][0].originalname;
-        var extension = origName.substring(origName.lastIndexOf('.'));
-        const newURL =
-            req.files['resume'][0].destination + '/' + newName + extension;
-
-        fs.renameSync(req.files['resume'][0].path, newURL);
+        fs.renameSync(req.files['picture'][0].path, newURL);
         return newName + extension;
     },
 

@@ -26,9 +26,22 @@ app.use(session({
 
 app.use('/', routes)
 
+/*
 app.use(function(req,res) {
     res.render('error')
 })
+*/
+
+const url = 'mongodb://localhost:27017/local_library'
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+};
+
+// mongoose.connect(url, options, err => {
+//     if (err) throw err;
+//     console.log('connected at ' + url);
+// });
 
 db.connect();
 

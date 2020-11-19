@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 const session = require('express-session');
 const fs = require('fs');
 const db = require('../models/db');
-const User = require('../models/patientModel');
+const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const helper = require('../helpers/helper');
 const saltRounds = 10;
@@ -38,13 +38,22 @@ const userController = {
                 register_active: true,
             });
         } else {
+//			console.log(req.body.firstname);
+//			console.log(req.body.lastname);
+//			console.log(req.body.email);
+//			console.log(req.body.password);
+//			console.log(req.files['picture']);
+
 			//sanitize use inputs
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
+			var password = req.body.password;
 			
 			bcrypt.hash(password, saltRounds, (err, hash) => {
 				if(!req.files['picture']) {
+					console.log('NO PICTURE');
+
 					var USER = new User({
 						usertype: 'patient',
 						firstname: fname,
@@ -53,14 +62,15 @@ const userController = {
 						password: hash
 					});
 
-					db.findOne(User, USER, function(flag){
+					db.insertOne(User, USER, function (flag) {
 						if (flag) {
-							res.redirect('/');
+							res.redirect('/upcomingAppointments');
 						}
 					});
 				}
 
 				else {
+					console.log('HAS PICTURE; SAVING...')
 					var USER = new User({
 						usertype: 'patient',
 						firstname: fname,
@@ -72,12 +82,22 @@ const userController = {
 					var picName = USER.firstname;
 					var picFileName = helper.renameAvatar(req, picName);
 					USER.profpic = picFileName;
+					
+					console.log(USER);
 
-					db.findOne(User, USER, function(flag){
-						if (flag) {
-							res.redirect('/');
+					db.insertOne(User, USER, function(flag) {
+						if (flag){
+							res.redirect('/upcomingAppointments');
 						}
 					});
+
+					// db.insertOne(User, USER, function (flag) {
+					// 	console.log('inside insert function....');
+					// 	console.log(flag);
+					// 	if (!flag) {
+					// 		res.redirect('/upcomingAppointments');
+					// 	}
+					// });
 				}
 			});
         

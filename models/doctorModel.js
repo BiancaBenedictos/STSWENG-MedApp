@@ -45,12 +45,14 @@ const doctorSchema = new mongoose.Schema({
     },
 
     status: {
-        type: String
+        type: String,
+        enum: ['unverified', 'verified'],
     },
 
     availability: [{
-        type: String
-    }]
+        type: String,
+    }],
+
 });
 
 // doctorSchema.plugin(mongoosePaginate);

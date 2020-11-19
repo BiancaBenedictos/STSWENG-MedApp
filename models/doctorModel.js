@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const mongoosePaginate = require('mongoose-paginate');
 
 const doctorSchema = new mongoose.Schema({
     email: {
@@ -22,8 +21,9 @@ const doctorSchema = new mongoose.Schema({
         required: true,
     },
 
-    Clinic: [{
-        type: String
+    clinics: [{
+        type: String,
+        required: true,
     }],
 
     profession: {
@@ -42,6 +42,10 @@ const doctorSchema = new mongoose.Schema({
     profpic: {
         type: String,
         default: 'portrait.png',
+    },
+
+    status: {
+        type: String
     }
 });
 

@@ -26,56 +26,17 @@
         </div>
 
         <div class="row d-flex justify-content-center flex-wrap mt-4">
+            {{#each clinics}}
             <div class="card">
                 <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
+                <h5 class="card-title card-title-home">{{clinicName}}</h5></a>
                 <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
+                    <p class="card-text"><i>{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</i></p>
+                    <a href="/viewDoctors?id={{_id}}" class="view-btn" type="button">view doctors</a>
                 </div>
             </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">Clinic's Name</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>address address address</i></p>
-                    <a href="/viewDoctors" class="view-btn" type="button">view doctors</a>
-                </div>
-            </div>
+            {{/each}}
         </div>
     </div>
-
 </body>
 </html>

@@ -53,26 +53,33 @@ a:hover {
     background-color: white;    
 }
 
-[type="file"] {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute !important;
-    white-space: nowrap;
-    width: 1px;
-  }
-  
-  [type="file"] + label {
-    /* File upload button styles */
-  }
-  
-  [type="file"]:focus + label,
-  [type="file"] + label:hover {
-    /* File upload hover state button styles */
-  }
-  
-  [type="file"]:focus + label {
-    /* File upload focus state button styles */
-  }
+/* input[type="file"] {
+    border: 1px solid lightgray;
+    position: absolute;
+    z-index: -1;
+    padding-left: 23px;
+    font-size: 14px;
+    color: #b8b8b8;
+    height: 40px;
+} */
+
+.button-wrap {
+    position: relative;
+}
+
+.button {
+    position: absolute;
+    display: inline-block;
+    height: 38px;
+    width: 115px;
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #133C55;
+    border: 1px solid lightgray;
+    font-size: 14px;
+    color: white;
+}

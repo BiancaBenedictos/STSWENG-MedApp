@@ -26,64 +26,17 @@
         </div>
 
         <div class="row d-flex justify-content-center flex-wrap mt-4">
-            <a href="/bookAppointment" class="card">
+            {{#each doctors}}
+            <a href="/bookAppointment?id={{_id}}" class="card">
                 <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
+                <h5 class="card-title card-title-home">{{firstname}} {{lastname}}</h5>
                 <div class="card-body card-body-home">
-                    Pediatrician<br>
+                    {{profession}}<br>
                     <i>Clinic</i>
                 </div>
             </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
-            <a href="/bookAppointment" class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">John Doe</h5>
-                <div class="card-body card-body-home">
-                    Pediatrician<br>
-                    <i>Clinic</i>
-                </div>
-            </a>
+            {{/each}}
         </div>
     </div>
-
 </body>
 </html>

@@ -24,21 +24,23 @@
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
                 <img src="assets/black.png">
-                <h1 class="heading">Firstname Lastname</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                <a href="/login" class="btn edit-btn">logout</a>
+                <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
+                <p>Admin</p>
+                {{!-- <a href="/login" class="btn edit-btn">logout</a> --}}
             </div>
             <div class="col">
                 <div class="row options">
                     <a href="/adminPending" value= "pending" id="pending">pending</a>
-                    <a href="/adminDoctors" id="doctors">doctors</a>
-                    <a href="/adminClinics" id="clinics">clinics</a>
+                    <a href="/adminDoctors" value="doctors" id="doctors">doctors</a>
+                    <a href="/adminClinics" value= "clinics" id="clinics">clinics</a>
                 </div>
+
+                {{#each doctors}}
                 <div class="row d-flex flex-wrap mt-4">
                     <div class="row no-gutters admin-card">
                         <img class="card-img" src="assets/black.png">
                         <div class="card-body">
-                            <h5 class="card-title">Doctor's Name</h5>
+                            <h5 class="card-title">{{firstname}} {{lastname}}</h5>
                             <p class="card-text">Clinic</p>
                         </div>
                         <div class="card-body cancel">
@@ -51,40 +53,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex flex-wrap mt-4">
-                    <div class="row no-gutters admin-card">
-                        <img class="card-img" src="assets/black.png">
-                        <div class="card-body">
-                            <h5 class="card-title">Doctor's Name</h5>
-                            <p class="card-text">Clinic</p>
-                        </div>
-                        <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm">
-                                <img src="assets/check.svg" class="icon">
-                            </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
-                                <img src="assets/clear.svg" class="icon">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex flex-wrap mt-4">
-                    <div class="row no-gutters admin-card">
-                        <img class="card-img" src="assets/black.png">
-                        <div class="card-body">
-                            <h5 class="card-title">Doctor's Name</h5>
-                            <p class="card-text">Clinic</p>
-                        </div>
-                        <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm">
-                                <img src="assets/check.svg" class="icon">
-                            </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
-                                <img src="assets/clear.svg" class="icon">
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
+
             </div>
 </body>
 </html>

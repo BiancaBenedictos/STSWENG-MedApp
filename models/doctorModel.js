@@ -21,7 +21,7 @@ const doctorSchema = new mongoose.Schema({
         required: true,
     },
 
-    clinic: [{
+    clinics: [{
         type: String,
         required: true,
     }],
@@ -42,6 +42,10 @@ const doctorSchema = new mongoose.Schema({
     profpic: {
         type: String,
         default: 'portrait.png',
+    },
+
+    status: {
+        type: String
     }
 });
 

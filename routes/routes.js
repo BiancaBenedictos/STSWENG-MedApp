@@ -28,5 +28,5 @@ app.get('/', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)
 app.get('/viewDoctors', homeController.viewDoctors)
 
-app.get('/login', userController.getLogin)
-app.get('/register', userController.getRegister)
+app.get('/login', userController.login)
+app.get('/register', userController.register)

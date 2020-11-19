@@ -36,7 +36,7 @@ var doctor = {
     password: "hi",
     firstname: "hi",
     lastname: "hello",
-    Clinic: [],
+    clinics: [],
     profession: "Pediatrician",
     credentials: [],
     profpic: "portrait.png"

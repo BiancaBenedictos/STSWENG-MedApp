@@ -35,12 +35,10 @@
                     <br>
                   
                     <h1>Clinic</h1>
-                    <input type="radio" id="clinic1" name="clinic" value="clinic1">
-                    <label for="clinic1">Clinic 1</label><br>
-                    <input type="radio" id="clinic2" name="clinic" value="clinic2">
-                    <label for="clinic2">Clinic 2</label><br>  
-                    <input type="radio" id="clinic3" name="clinic" value="clinic3">
-                    <label for="clinic3">Clinic 3</label><br><br>
+                    {{#each clinics}}
+                    <input type="radio" id="{{_id}}" value="{{_id}}">
+                    <label for="{{_id}}">{{clinicName}}</label><br>
+                    {{/each}}
                 </form>
             </div>
             <div class="col">
@@ -48,42 +46,17 @@
                     <h1 class="heading mt-4">Clinic Name</h1>
                 </div>
                 <div class="row timeslots flex-wrap">
-                    <a href="/bookAppointment" class="card-long">
+                    {{#each doctors}}
+                    <a href="/bookAppointment?id={{_id}}" class="card-long">
                         <div class="row no-gutters">
                             <img class="card-img" src="assets/black.png">
                             <div class="card-body">
-                                <h5 class="card-title">Doctor's Name</h5>
-                                <p class="card-text">Field</p>
+                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                                <p class="card-text">{{profession}}</p>
                             </div>
                         </div>
                     </a>
-                    <a href="/bookAppointment" class="card-long">
-                        <div class="row no-gutters">
-                            <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">Doctor's Name</h5>
-                                <p class="card-text">Field</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/bookAppointment" class="card-long">
-                        <div class="row no-gutters">
-                            <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">Doctor's Name</h5>
-                                <p class="card-text">Field</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/bookAppointment" class="card-long">
-                        <div class="row no-gutters">
-                            <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">Doctor's Name</h5>
-                                <p class="card-text">Field</p>
-                            </div>
-                        </div>
-                    </a>
+                    {{/each}}
                 </div>
             </div>
         </div>

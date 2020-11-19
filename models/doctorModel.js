@@ -46,7 +46,11 @@ const doctorSchema = new mongoose.Schema({
 
     status: {
         type: String
-    }
+    },
+
+    availability: [{
+        type: String
+    }]
 });
 
 // doctorSchema.plugin(mongoosePaginate);

@@ -55,8 +55,13 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Profile Picture</label>
-                            <input type="file" id="picture" /> 
+                            <input type="file" id="picture" name="picture" /> 
                             <label for="picture" class="form-control">Upload Photo</label>
+                        </div>
+
+                        <div class ="button-wrap">
+                            <label class="button" for="picture">Upload File</label>
+                            <input id="picture" class="form-control" type="file" />
                         </div>
                     </div>
 
@@ -67,7 +72,7 @@
                             <div class="col mt-3">
                                 <label for="profession">Profession</label>
                                 <div class="form-group">
-                                    <select class="form-control" id="profession">
+                                    <select class="form-control" id="profession" name="profession">
                                         <option>Pediatrician</option>
                                         <option>Gynecologist</option>
                                         <option>Obstetrician</option>
@@ -93,7 +98,7 @@
                         <div class="form-group row">
                             <div class="col">
                                 <label>Credentials</label>
-                                <input type="file" id="credentials" /> 
+                                <input type="file" id="credentials" name="credentials"/> 
                                 <label for="credentials" class="form-control">Upload Credentials</label>
                             </div>
                         </div>
@@ -102,7 +107,7 @@
                             <div class="col">
                                 <label for="clinic">Clinic</label>
                                 <div class="form-group">
-                                    <select class="form-control" id="clinic">
+                                    <select class="form-control" id="clinic" name="clinic">
                                         <option>Clinic 1</option>
                                         <option>Clinic 2</option>
                                         <option>Clinic 3</option>

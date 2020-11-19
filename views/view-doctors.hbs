@@ -31,19 +31,11 @@
                     <label for="field2">Field 2</label><br>
                     <input type="radio" id="field3" name="field" value="field3">
                     <label for="field3">Field 3</label>
-                  
-                    <br>
-                  
-                    <h1>Clinic</h1>
-                    {{#each clinics}}
-                    <input type="radio" id="{{_id}}" value="{{_id}}">
-                    <label for="{{_id}}">{{clinicName}}</label><br>
-                    {{/each}}
                 </form>
             </div>
             <div class="col">
                 <div class="row appointments week justify-content-center">
-                    <h1 class="heading mt-4">Clinic Name</h1>
+                    <h1 class="heading mt-4">{{clinic}}</h1>
                 </div>
                 <div class="row timeslots flex-wrap">
                     {{#each doctors}}

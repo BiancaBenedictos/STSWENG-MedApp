@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const patientSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     usertype: {
         type: String,
-        enum: ['patient', 'admin'],
+        enum: ['Patient', 'Admin'],
         required: true
     },
 
@@ -32,9 +32,10 @@ const patientSchema = new mongoose.Schema({
         default: 'portrait.png',
     },
 
-    bookedAppointments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Appointments'}],
-
+    bookedAppointments: [{
+        type: String
+    }]
 });
 
 // patientSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('Patient', patientSchema);
+module.exports = mongoose.model('User', userSchema);

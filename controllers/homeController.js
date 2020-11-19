@@ -22,15 +22,13 @@ const homeController = {
 	viewDoctors: function(req,res){
 		var id = req.query.id
 
-		db.findMany(Doctor, {clinics: id}, null, function(doctors) {
-			db.findMany(Clinic, {}, null, function(clinics) {
+		db.findOne(Clinic, {_id: id}, null, function(clinic) {
+			db.findMany(Doctor, {clinics: id}, null, function(doctors) {
 				var results = {
-					doctors: doctors,
-					clinics: clinics
+					clinic: clinic.clinicName,
+					doctors: doctors
 				}
-				if(results != null) {
-					res.render('view-doctors', results)
-				}
+				res.render('view-doctors', results)
 			})
 		})
   	}

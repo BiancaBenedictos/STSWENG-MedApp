@@ -22,34 +22,36 @@
     
     <div class="container">
         <div class="row content d-flex flex-wrap">
-            {{!-- <div class="col-1"></div> --}}
             <div class="col-4 filter">
                 <img src="assets/black.png">
-                <h1 class="heading">Doctor's Name</h1>
+                <h1 class="heading">{{firstname}} {{lastname}}</h1>
+                <p>{{profession}}</p>
+                
+                {{#each clinics}}
                 <p>
-                    Field field field
+                    <b>{{clinicName}}</b>
                     <br>
-                    Clinic clinic clinic clinic
+                    <i>{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</i>
                 </p>
-                <p><i>address address address address address</i></p>
+                {{/each}}
             </div>
             <div class="col">
                 <div class="row appointments week justify-content-center">
                     <span class="heading">November<br>
-                        <button class="day">15</button>
-                        <button class="day active">16</button>
-                        <button class="day">17</button>
-                        <button class="day">18</button>
-                        <button class="day">19</button>
-                        <button class="day">20</button>
-                        <button class="day">21</button>
+                        <button class="day" value="Sunday">15</button>
+                        <button class="day active" value="Monday">16</button>
+                        <button class="day" value="Tuesday">17</button>
+                        <button class="day" value="Wednesday">18</button>
+                        <button class="day" value="Thursday">19</button>
+                        <button class="day" value="Friday">20</button>
+                        <button class="day" value="Saturday">21</button>
                     </span>
                 </div>
                 <div class="row justify-content-center">
                 </div>
                 <div class="row timeslots flex-wrap">
-                    <button class="time">12:00 PM</button>
-                    <button class="time">12:30 PM</button>
+                    <button class="time" data-toggle="modal" data-target="#confirm">12:00 PM</button>
+                    {{!-- <button class="time">12:30 PM</button>
                     <button class="time">1:00 PM</button>
                     <button class="time">1:30 PM</button>
                     <button class="time">2:00 PM</button>
@@ -60,9 +62,27 @@
                     <button class="time">4:30 PM</button>
                     <button class="time">5:00 PM</button>
                     <button class="time">5:30 PM</button>
-                    <button class="time">6:00 PM</button>
+                    <button class="time">6:00 PM</button> --}}
                 </div>
         </div>
     </div>
 </body>
 </html>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header del-header">
+                Are you sure?
+            </div>
+            <div class="modal-body del-body">
+                Are you sure you want to book an appointment for 12:00 PM?
+            </div>
+            <div class="modal-footer del-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <a class="btn btn-success">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>

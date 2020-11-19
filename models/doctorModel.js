@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
 
-const doctorSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-
+const doctorSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -24,17 +21,17 @@ const doctorSchema = mongoose.Schema({
         required: true,
     },
 
-    Clinic: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Clinic'
-    },
+    clinics: [{
+        type: String,
+        required: true,
+    }],
 
     profession: {
         type: String,
         enum: ['Pediatrician', 'Gynecologist', 'Obstetrician', 'Surgeon', 'Psychiatrist', 'Cardiologist', 'Dermatologist', 'Endocrinologist',
                'Ophtalmologist', 'Pulmonologist', 'Gastroenterologist', 'Nephrologist', 'Otolaryngologist', 'Neurologist', 'Radiologist',
                'Anesthesiologist', 'Oncologist'],
-        required: true,
+        required: true
     },
 
     credentials: [{
@@ -47,7 +44,10 @@ const doctorSchema = mongoose.Schema({
         default: 'portrait.png',
     },
 
+    status: {
+        type: String
+    }
 });
 
-doctorSchema.plugin(mongoosePaginate);
+// doctorSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Doctor', doctorSchema);

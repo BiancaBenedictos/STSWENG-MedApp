@@ -55,16 +55,19 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Profile Picture</label>
-                            <input type="file" id="picture" /> 
-                            <label for="picture" class="form-control">Upload Photo</label>
+                            <div class="button-wrap">
+                                <label class="button" for="picture">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
                         </div>
                     </div>
 
-                    <input type="checkbox" id="doctorCheck" onclick="isDoctor()"> I am a Doctor
+                    <input type="checkbox" id="doctorCheck">
+                    <label for="doctorCheck">I am a Doctor</label>
 
                     <div id="doctorFields" style="display:none">
                         <div class="row">
-                            <div class="col mt-3">
+                            <div class="col">
                                 <label for="profession">Profession</label>
                                 <div class="form-group">
                                     <select class="form-control" id="profession">
@@ -93,8 +96,10 @@
                         <div class="form-group row">
                             <div class="col">
                                 <label>Credentials</label>
-                                <input type="file" id="credentials" /> 
-                                <label for="credentials" class="form-control">Upload Credentials</label>
+                                <div class="button-wrap">
+                                    <label class="button" for="credentials">Upload File</label>
+                                    <input id="credentials" class="form-control" type="file">
+                                </div>
                             </div>
                         </div>
 

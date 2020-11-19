@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
 
-const clinicSchema =  mongoose.Schema({
-    _id: mongoose.Types.ObjectId,
-
+const clinicSchema = new mongoose.Schema({
     clinicName: {
         type: String,
         required: true,
@@ -12,15 +9,13 @@ const clinicSchema =  mongoose.Schema({
     clinicAddress: {
         street: String,
         city: String,
-        state: String,
+        state: String
     },
 
     clinicDoctors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Doctor'
-    }],
-
+        type: String
+    }]
 });
 
-clinicSchema.plugin(mongoosePaginate);
+// clinicSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Clinic', clinicSchema);

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 mongoose.set("useCreateIndex", true);
 
-// const User = require('./UserModel.js')
+const Appointment = require('./appointmentModel.js')
+const Clinic = require('./clinicModel.js')
+const Doctor = require('./doctorModel.js')
+const Patient = require('./userModel.js')
 
 //connect to database
-
-const url = "mongodb+srv://ots:ots123@offthestreet.xz337.mongodb.net/local_library?retryWrites=true&w=majority";
+const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
 
 const options = {
     useUnifiedTopology: true,

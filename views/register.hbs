@@ -118,7 +118,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-6">
-                                <button type="button" id="addClinic">Add Clinic</button>
+                                <button type="button" id="addClinic" onclick="add()">Add Clinic</button>
                             </div>
                             <div class="col-6">
                                 <button type="button" id="registerClinic">Register Clinic</button>
@@ -131,6 +131,18 @@
                         <button type="submit" class="login-btn">register</button>
                     </div>
                 </form>
+                <script>
+                    function add() {
+                        var str = ` <div class="form-group">
+                                        <select class="form-control" id="clinic">
+                                            {{#each clinics}}
+                                            <option>{{clinicName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>`
+                        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+                    }
+                </script>
             </div>
         </div>
     </div>

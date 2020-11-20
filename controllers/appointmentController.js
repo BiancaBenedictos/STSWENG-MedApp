@@ -1,21 +1,137 @@
+const db = require('../models/db.js');
+const Clinic = require('../models/clinicModel.js');
+const Doctor = require('../models/doctorModel.js')
+const User = require('../models/userModel.js')
+const Appointment = require('../models/appointmentModel.js')
+const helper = require('../helpers/helper');
+
 const appointmentController = {
-	upcomingAppointments: function(req,res){
-		res.render('appointments-upcoming')
+	upcomingAppointments: function(req,res) {
+		// var userId = req.session.id
+
+		// temp user
+		var userId = '5fb59a0731422020ec5fb2e2'
+
+		var doctorIds = []
+		var apts = []
+		
+		db.findOne(User, {_id: userId}, null, function(user) {
+			db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Upcoming'}, null, function(appointments) {
+
+				for(var i = 0; i < appointments.length; i++) {
+					doctorIds.push(appointments[i].bookedDoctor)
+				}
+				
+				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
+					
+					for(var j = 0; j < doctors.length; j++) {
+						var details = {
+							doctor: doctors[j].firstname + " " + doctors[j].lastname,
+							date: helper.formatDate(appointments[j].bookedDate),
+							time: helper.getTime(appointments[j].bookedDate)
+						}
+						apts.push(details)
+					}
+					res.render('appointments-upcoming', {appointments: apts, user: user})
+				})
+			})
+		})
     },
     
-	pendingAppointments: function(req,res){
-		res.render('appointments-pending')
+	pendingAppointments: function(req,res) {
+		// temp user
+		var userId = '5fb59a0731422020ec5fb2e2'
+
+		var doctorIds = []
+		var apts = []
+		
+		db.findOne(User, {_id: userId}, null, function(user) {
+			db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Pending'}, null, function(appointments) {
+
+				for(var i = 0; i < appointments.length; i++) {
+					doctorIds.push(appointments[i].bookedDoctor)
+				}
+				
+				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
+					
+					for(var j = 0; j < doctors.length; j++) {
+						var details = {
+							doctor: doctors[j].firstname + " " + doctors[j].lastname,
+							date: helper.formatDate(appointments[j].bookedDate),
+							time: helper.getTime(appointments[j].bookedDate)
+						}
+						apts.push(details)
+					}
+					res.render('appointments-pending', {appointments: apts, user: user})
+				})
+			})
+		})
+		// res.render('appointments-pending')
     },
     
-	concludedAppointments: function(req,res){
-		res.render('appointments-concluded')
+	concludedAppointments: function(req,res) {
+		// temp user
+		var userId = '5fb59a0731422020ec5fb2e2'
+
+		var doctorIds = []
+		var apts = []
+		
+		db.findOne(User, {_id: userId}, null, function(user) {
+			db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Concluded'}, null, function(appointments) {
+
+				for(var i = 0; i < appointments.length; i++) {
+					doctorIds.push(appointments[i].bookedDoctor)
+				}
+				
+				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
+					
+					for(var j = 0; j < doctors.length; j++) {
+						var details = {
+							doctor: doctors[j].firstname + " " + doctors[j].lastname,
+							date: helper.formatDate(appointments[j].bookedDate),
+							time: helper.getTime(appointments[j].bookedDate)
+						}
+						apts.push(details)
+					}
+					res.render('appointments-concluded', {appointments: apts, user: user})
+				})
+			})
+		})
+		// res.render('appointments-concluded')
     },
     
-	cancelledAppointments: function(req,res){
-		res.render('appointments-cancelled')
+	cancelledAppointments: function(req,res) {
+		// temp user
+		var userId = '5fb59a0731422020ec5fb2e2'
+
+		var doctorIds = []
+		var apts = []
+		
+		db.findOne(User, {_id: userId}, null, function(user) {
+			db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Cancelled'}, null, function(appointments) {
+
+				for(var i = 0; i < appointments.length; i++) {
+					doctorIds.push(appointments[i].bookedDoctor)
+				}
+				
+				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
+					
+					for(var j = 0; j < doctors.length; j++) {
+						var details = {
+							doctor: doctors[j].firstname + " " + doctors[j].lastname,
+							date: helper.formatDate(appointments[j].bookedDate),
+							time: helper.getTime(appointments[j].bookedDate)
+						}
+						apts.push(details)
+					}
+					res.render('appointments-cancelled', {appointments: apts, user: user})
+				})
+			})
+		})
+		// res.render('appointments-cancelled')
     },
 
-    bookAppointment: function(req,res){
+    bookAppointment: function(req,res) {
         res.render('book-appointment')
     }
 }

@@ -15,6 +15,7 @@ app.get('/adminClinics', adminController.clinics)
 app.get('/adminDoctors', adminController.doctors)
 app.get('/adminPending', adminController.pending)
 app.post('/addClinic', adminController.addClinic)
+app.post('/deleteClinic', adminController.deleteClinic)
 
 app.get('/upcomingAppointments', appointmentController.upcomingAppointments)
 app.get('/pendingAppointments', appointmentController.pendingAppointments)

@@ -1,3 +1,5 @@
+var toDelete;
+
 function addClinic() {
     $(".form-control").css("border-color", "lightgray");
     
@@ -27,6 +29,21 @@ function addClinic() {
         if (newclinic.clinicAddress.state == "")
             $("#state").css("border-color", "red");
     }
+}
+
+function setDelete(id) {
+    toDelete = id;
+}
+
+function unsetDelete() {
+    toDelete = '';
+}
+
+function deleteClinic() {
+    $.post('/deleteClinic', {id: toDelete}, function(result){
+        if (result)
+            location.reload();
+    })
 }
 
 $(document).ready(function() {

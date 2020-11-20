@@ -25,7 +25,7 @@
             <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                <p>{{doctor.profession}}</p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
                 {{!-- <a href="/login" class="btn edit-btn">logout</a> --}}
             </div>
@@ -75,19 +75,37 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <div class="form-group col-6">
+                        <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
                             <input type="text" class="form-control" id="firstname">
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col">
                             <label for="lastname" class="col-form-label">Last Name</label>
                             <input type="text" class="form-control" id="lastname"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col">
-                            <label for="about" class="col-form-label">About Me</label>
-                            <textarea class="form-control" id="about"></textarea>
+                            <label for="profession">Profession</label>
+                            <select class="form-control" id="profession">
+                                <option>Pediatrician</option>
+                                <option>Gynecologist</option>
+                                <option>Obstetrician</option>
+                                <option>Surgeon</option>
+                                <option>Psychiatrist</option>
+                                <option>Cardiologist</option>
+                                <option>Dermatologist</option>
+                                <option>Endocrinologist</option>
+                                <option>Ophtalmologist</option>
+                                <option>Pulmonologist</option>
+                                <option>Gastroenterologist</option>
+                                <option>Nephrologist</option>
+                                <option>Otolaryngologist</option>
+                                <option>Neurologist</option>
+                                <option>Radiologist</option>
+                                <option>Anesthesiologist</option>
+                                <option>Oncologist</option>
+                            </select>
                         </div>
                     </div>
                 </form>

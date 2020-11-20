@@ -71,23 +71,9 @@
                                 <label for="profession">Profession</label>
                                 <div class="form-group">
                                     <select class="form-control" id="profession">
-                                        <option>Pediatrician</option>
-                                        <option>Gynecologist</option>
-                                        <option>Obstetrician</option>
-                                        <option>Surgeon</option>
-                                        <option>Psychiatrist</option>
-                                        <option>Cardiologist</option>
-                                        <option>Dermatologist</option>
-                                        <option>Endocrinologist</option>
-                                        <option>Ophtalmologist</option>
-                                        <option>Pulmonologist</option>
-                                        <option>Gastroenterologist</option>
-                                        <option>Nephrologist</option>
-                                        <option>Otolaryngologist</option>
-                                        <option>Neurologist</option>
-                                        <option>Radiologist</option>
-                                        <option>Anesthesiologist</option>
-                                        <option>Oncologist</option>
+                                        {{#each professions}}
+                                        <option>{{this}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -111,8 +97,6 @@
                                         {{#each clinics}}
                                         <option>{{clinicName}}</option>
                                         {{/each}}
-                                        {{!-- <option>Clinic 2</option>
-                                        <option>Clinic 3</option> --}}
                                     </select>
                                 </div>
                                 <div class="form-group" id="addRowsHere"></div>

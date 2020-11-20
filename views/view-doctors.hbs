@@ -24,13 +24,13 @@
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
                 <form action="" style="text-align:left;">
-                    <h1>Field</h1>
-                    <input type="radio" id="field1" name="field" value="field1">
-                    <label for="field1">Field 1</label><br>
-                    <input type="radio" id="field2" name="field" value="field2">
-                    <label for="field2">Field 2</label><br>
-                    <input type="radio" id="field3" name="field" value="field3">
-                    <label for="field3">Field 3</label>
+                    <h1>Profession</h1>
+                    
+                    {{#each professions}}
+                    <input type="radio" id="Pediatrician" value="Pediatrician">
+                    <label for="Pediatrician">{{this}}</label><br>
+                    {{/each}}
+
                 </form>
             </div>
             <div class="col">

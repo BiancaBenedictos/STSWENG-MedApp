@@ -47,7 +47,11 @@ const doctorController = {
 		
 		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
 			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
-				res.render('create-appointments', {clinics: clinics})
+				var details = {
+					doctor: doctor,
+					clinics: clinics
+				}
+				res.render('create-appointments', details)
 			})
 		})
     }

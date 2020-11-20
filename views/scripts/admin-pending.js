@@ -1,7 +1,8 @@
 var doctorId
+var doctorClinics
 
 function acceptDoctor() {
-    $.post('/acceptDoctor', {id: doctorId}, function(result){
+    $.post('/acceptDoctor', {id: doctorId, clinics: doctorClinics}, function(result){
         if (result)
             location.reload();
     })
@@ -20,4 +21,9 @@ function setId(id) {
 
 function unsetId() {
     doctorId = '';
+}
+
+function setClinics(clinics) {
+    res = clinics.split(',')
+    doctorClinics = res
 }

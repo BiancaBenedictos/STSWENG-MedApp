@@ -67,7 +67,7 @@ const database = {
         model.updateMany(filter, update, function(error, result) {
             if(error) return callback(false);
             //console.log('Documents modified: ' + result.nModified);
-            return callback(true);
+            // return callback(true);
         });
     },
 

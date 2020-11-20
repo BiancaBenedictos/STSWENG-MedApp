@@ -36,12 +36,12 @@
                 </div>
 
                 {{#each doctors}}
-                <div class="row d-flex flex-wrap mt-4">
-                    <div class="row no-gutters admin-card">
+                <div class="row d-flex flex-wrap">
+                    <div class="row admin-card">
                         <img class="card-img" src="assets/black.png">
                         <div class="card-body">
                             <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                            <p class="card-text">Clinic</p>
+                            {{!-- <p class="card-text">Clinic</p> --}}
                         </div>
                         <div class="card-body cancel">
                             <button class="btn btn-link" data-toggle="modal" data-target="#confirm">

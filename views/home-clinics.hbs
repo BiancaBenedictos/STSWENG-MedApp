@@ -25,15 +25,16 @@
             <!-- <a href="#" value= "others" id="others">others</a> -->
         </div>
 
-        <div class="row d-flex justify-content-center flex-wrap mt-4">
+        <div class="row d-flex justify-content-center flex-wrap">
             {{#each clinics}}
             <div class="card">
-                <img class="card-img-top" src="assets/black.png">
-                <h5 class="card-title card-title-home">{{clinicName}}</h5></a>
-                <div class="card-body card-body-home">
-                    <p class="card-text"><i>{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</i></p>
-                    <a href="/viewDoctors?id={{_id}}" class="view-btn" type="button">view doctors</a>
-                </div>
+                <a href="/viewDoctors?id={{_id}}" style="text-align:center">
+                    <img class="card-img-top ml-auto" src="assets/black.png">
+                    <h5 class="card-title card-title-home">{{clinicName}}</h5></a>
+                    <div class="card-body card-body-home">
+                        <p class="card-text"><i>{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</i></p>
+                    </div>
+                </a>
             </div>
             {{/each}}
         </div>

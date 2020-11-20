@@ -47,5 +47,5 @@ function deleteClinic() {
 }
 
 $(document).ready(function() {
-    console.log("CONNECTED")
+    $(".doctors-0").prop('disabled', false);
 })

@@ -24,33 +24,34 @@
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
                 <img src="assets/black.png">
-                <h1 class="heading">Doctor Name {{doctor.lastname}}</h1>
-                <p>Profession</p>
+                <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
+                <p>{{doctor.profession}}</p>
                 {{!-- <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button> --}}
             </div>
             
             <div class="col">
-                <div class="row view">
+                <div class="row view mb-4">
                     <h1 class="heading">Clinics</h1>
                 </div>
-                {{!-- {{#each clinics}} --}}
-                <div class="row d-flex flex-wrap mt-4">
+
+                {{#each clinics}}
+                <div class="row d-flex flex-wrap">
                     <div class="row admin-card">
-                        <a href="/bookAppointment?id={{_id}}">
+                        <a href="/viewDoctors?id={{_id}}">
                             <img class="card-img" src="assets/black.png">
                         </a>
                         <div class="card-body">
-                            <a href="/bookAppointment?id={{_id}}">
-                                <h5 class="card-title">Clinic Name</h5>
-                                <p class="card-text">Address</p>
+                            <a href="/viewDoctors?id={{_id}}">
+                                <h5 class="card-title">{{clinicName}}</h5>
+                                <p class="card-text">{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</p>
                             </a>
                         </div>
                         <div class="card-body cancel">
-                            <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn" type="button">book</a>
+                            <a href="/bookAppointment?id={{../doctor._id}}" class="btn cancel-btn" type="button">book</a>
                         </div>
                     </div>
                 </div>
-                {{!-- {{/each}} --}}
+                {{/each}}
                
             </div>
         </div>

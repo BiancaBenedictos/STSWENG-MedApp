@@ -27,9 +27,12 @@
             <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                <p>
+                    Age: {{user.age}}<br>
+                    Weight: {{user.weight}}<br>
+                    Height: {{user.height}}<br>
+                </p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
-                {{!-- <a href="/login" class="btn edit-btn">logout</a> --}}
             </div>
             <div class="col">
                 <div class="row options">
@@ -77,17 +80,25 @@
                     <div class="form-group row">
                         <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstname">
+                            <input type="text" class="form-control" id="firstname" value="{{user.firstname}}">
                         </div>
                         <div class="form-group col">
                             <label for="lastname" class="col-form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastname"></textarea>
+                            <input type="text" class="form-control" id="lastname" value="{{user.lastname}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col">
-                            <label for="about" class="col-form-label">About Me</label>
-                            <textarea class="form-control" id="about"></textarea>
+                            <label for="age" class="col-form-label">Age</label>
+                            <input type="Number" class="form-control" id="age" value={{user.age}}>
+                        </div>
+                        <div class="form-group col">
+                            <label for="weight" class="col-form-label">Weight</label>
+                            <input type="Number" class="form-control" id="weight" value={{user.weight}}>
+                        </div>
+                        <div class="form-group col">
+                            <label for="height" class="col-form-label">Height</label>
+                            <input type="Number" class="form-control" id="height" value={{user.height}}>
                         </div>
                     </div>
                 </form>

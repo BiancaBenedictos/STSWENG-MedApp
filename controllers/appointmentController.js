@@ -99,7 +99,6 @@ const appointmentController = {
 				})
 			})
 		})
-		// res.render('appointments-concluded')
     },
     
 	cancelledAppointments: function(req,res) {
@@ -131,11 +130,14 @@ const appointmentController = {
 				})
 			})
 		})
-		// res.render('appointments-cancelled')
     },
 
     bookAppointment: function(req,res) {
-        res.render('book-appointment')
+		var id = req.query.id
+		
+		db.findOne(Doctor, {_id: id}, null, function(doctor) {
+			res.render('book-appointment', {doctor: doctor})
+		})
     }
 }
 

@@ -1,6 +1,7 @@
 const express = require('express')
 const multer  = require('multer')
 
+const navbarController = require('../controllers/navbarController')
 const adminController = require('../controllers/adminController')
 const appointmentController = require('../controllers/appointmentController')
 const doctorController = require('../controllers/doctorController')
@@ -10,6 +11,8 @@ const userController = require('../controllers/userController')
 const app = express()
 
 module.exports = app
+
+app.get('/getName', navbarController.getName);
 
 app.get('/adminClinics', adminController.clinics)
 app.get('/adminDoctors', adminController.doctors)

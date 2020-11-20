@@ -1,3 +1,11 @@
+<script>
+    $(document).ready(function() {
+        $.get('/getName', null, function (result) {
+            $("#navName").text(result);
+        });
+    });
+</script>
+
 <nav class="navbar sticky-top navbar-expand-lg">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-1">
@@ -18,11 +26,10 @@
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <div class="dropdown show ml-auto">
-            <a class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Firstname Lastname
-            </a>
+            
+            <p id="navName" style="display:inline" class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></p>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navName">
                 <a class="dropdown-item" href="/upcomingAppointments">Profile</a>
                 <a class="dropdown-item" href="/createAppointments">Create Appointments (doctor)</a>
                 <a class="dropdown-item" href="/doctorPendingAppointments">Pending Appointments (doctor)</a>

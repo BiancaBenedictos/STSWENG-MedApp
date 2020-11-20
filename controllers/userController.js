@@ -96,29 +96,29 @@ const userController = {
 					}
 				});
 			} else {
-				// const profess = req.body.profession;
-				// var clinics = [];
-				// clinics = req.body.clinics;
+				const profess = req.body.profession;
+				var clinics = [];
+				clinics = req.body.clinics;
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
 						console.log('NO PICTURE');
 
-						var USER = new User({
+						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,
 							firstname: fname,
 							lastname: lname,
-							// clinics: clinics,
-							// profession: profess,
-							// status: 'unverified'
+							clinics: clinics,
+							profession: profess,
+							status: 'unverified'
 						});
 
-						// var credsName = DOCTOR.lastname;
-						// var credFileName = helper.renameCredentials(req, credsName);
-						// DOCTOR.credentials = credFileName;
+						var credsName = DOCTOR.lastname;
+						var credFileName = helper.renameCredentials(req, credsName);
+						DOCTOR.credentials = credFileName;
 
-						db.insertOne(User, USER, function (flag) {
+						db.insertOne(Doctor, DOCTOR, function (flag) {
 							if (flag) {
 								res.redirect('/upcomingAppointments');
 							}
@@ -126,25 +126,25 @@ const userController = {
 					} else {
 						console.log('HAS PICTURE; SAVING...')
 
-						var USER = new User({
+						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,
 							firstname: fname,
 							lastname: lname,
-							// clinics: clinics,
-							// profession: profess,
-							// status: 'unverified'
+							clinics: clinics,
+							profession: profess,
+							status: 'unverified'
 						});
 
-						var picName = USER.firstname;
+						var picName = DOCTOR.firstname;
 						var picFileName = helper.renameAvatar(req, picName);
-						USER.profpic = picFileName; 
+						DOCTOR.profpic = picFileName; 
 
-						// var credsName = DOCTOR.lastname;
-						// var credFileName = helper.renameCredentials(req, credsName);
-						// DOCTOR.credentials = credFileName;
+						var credsName = DOCTOR.lastname;
+						var credFileName = helper.renameCredentials(req, credsName);
+						DOCTOR.credentials = credFileName;
 
-						db.insertOne(User, USER, function (flag) {
+						db.insertOne(Doctor, DOCTOR, function (flag) {
 							if (flag) {
 								res.redirect('/upcomingAppointments');
 							}

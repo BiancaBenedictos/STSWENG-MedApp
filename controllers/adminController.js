@@ -43,9 +43,9 @@ const adminController = {
 	},
 
 	addClinic: function(req,res) {
-		console.log(req.body.newclinic)
 		db.insertOne(Clinic, req.body.newclinic, function(result){
 			console.log(result)
+			res.send(result);
 		})
 	}
 }

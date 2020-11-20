@@ -12,7 +12,7 @@ const adminController = {
     },
     
 	doctors: function(req,res) {
-		db.findMany(Doctor, {status: "Verified"}, null, function(doctors) {
+		db.findMany(Doctor, {status: "verified"}, null, function(doctors) {
 			db.findMany(Clinic, {}, null, function(clinics) {
 				var results = {
 					doctors: doctors,
@@ -26,7 +26,7 @@ const adminController = {
     },
     
 	pending: function(req,res) {
-		db.findMany(Doctor, {status: "Pending"}, null, function(doctors) {
+		db.findMany(Doctor, {status: "unverified"}, null, function(doctors) {
 			// temp since di pa na update yung user model
 			var user = {
 				firstname: "John",

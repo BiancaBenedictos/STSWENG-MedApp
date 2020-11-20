@@ -4,7 +4,7 @@ const Doctor = require('../models/doctorModel.js')
 
 const homeController = {
 	doctors: function(req,res){
-		db.findMany(Doctor, {}, null, function(results) {
+		db.findMany(Doctor, {status: 'verified'}, null, function(results) {
 			if(results != null) {
 				res.render('home-doctors', {doctors: results})
 			}
@@ -23,7 +23,7 @@ const homeController = {
 		var id = req.query.id
 
 		db.findOne(Clinic, {_id: id}, null, function(clinic) {
-			db.findMany(Doctor, {clinics: id}, null, function(doctors) {
+			db.findMany(Doctor, {clinics: id, status: 'verified'}, null, function(doctors) {
 				var results = {
 					clinic: clinic.clinicName,
 					doctors: doctors

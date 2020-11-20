@@ -108,9 +108,11 @@
                                 <label for="clinic">Clinic</label>
                                 <div class="form-group">
                                     <select class="form-control" id="clinic">
-                                        <option>Clinic 1</option>
-                                        <option>Clinic 2</option>
-                                        <option>Clinic 3</option>
+                                        {{#each clinics}}
+                                        <option>{{clinicName}}</option>
+                                        {{/each}}
+                                        {{!-- <option>Clinic 2</option>
+                                        <option>Clinic 3</option> --}}
                                     </select>
                                 </div>
                                 <div class="form-group" id="addRowsHere"></div>

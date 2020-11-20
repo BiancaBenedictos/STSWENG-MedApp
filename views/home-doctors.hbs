@@ -25,14 +25,14 @@
             <!-- <a href="#" value= "others" id="others">others</a> -->
         </div>
 
-        <div class="row d-flex justify-content-center flex-wrap mt-4">
+        <div class="row d-flex justify-content-center flex-wrap">
             {{#each doctors}}
-            <a href="/bookAppointment?id={{_id}}" class="card">
+            <a href="/doctorProfile?id={{_id}}" class="card">
                 <img class="card-img-top" src="assets/black.png">
                 <h5 class="card-title card-title-home">{{firstname}} {{lastname}}</h5>
                 <div class="card-body card-body-home">
                     {{profession}}<br>
-                    <i>Clinic</i>
+                    {{!-- <i>Clinic</i> --}}
                 </div>
             </a>
             {{/each}}

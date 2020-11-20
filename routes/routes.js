@@ -12,7 +12,9 @@ var storage = multer.diskStorage({
     destination: function (req, file, cd) {
         if (file.fieldname === 'picture') {
             cd(null, './public/images');
-        } 
+        } else if (file.fieldname === 'credentials') {
+            cd(null, './public/credentials');
+        }
     },
     filename: function (req, file, cd) {
         cd(null, file.originalname);
@@ -22,6 +24,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 var uploadFilter = upload.fields([
     { name: 'picture', maxCount: 1 },
+    { name: 'credentials', maxCount: 1 }
 ]);
 //MULTER INIT
 

@@ -38,106 +38,124 @@ const userController = {
                 register_active: true,
             });
         } else {
-//			console.log(req.body.firstname);
-//			console.log(req.body.lastname);
-//			console.log(req.body.email);
-//			console.log(req.body.password);
-//			console.log(req.files['picture']);
-
-			//sanitize use inputs
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
 			var password = req.body.password;
-			
-			bcrypt.hash(password, saltRounds, (err, hash) => {
-				if(!req.files['picture']) {
-					console.log('NO PICTURE');
+			var doccheck = req.body.doctorCheck;
 
-					var USER = new User({
-						usertype: 'patient',
-						firstname: fname,
-						lastname: lname,
-						email: email,
-						password: hash
-					});
+			if(doccheck != "on") {
+				bcrypt.hash(password, saltRounds, (err, hash) => {
+					if(!req.files['picture']) {
+						console.log('NO PICTURE');
 
-					db.insertOne(User, USER, function (flag) {
-						if (flag) {
-							res.redirect('/upcomingAppointments');
-						}
-					});
-				}
+						var USER = new User({
+							usertype: 'patient',
+							email: email,
+							password: hash,
+							firstname: fname,
+							lastname: lname
+						});
 
-				else {
-					console.log('HAS PICTURE; SAVING...')
-					var USER = new User({
-						usertype: 'patient',
-						firstname: fname,
-						lastname: lname,
-						email: email,
-						password: hash
-					});
+						db.insertOne(User, USER, function (flag) {
+							if (flag) {
+								res.redirect('/upcomingAppointments');
+							}
+						});
+					}
 
-					var picName = USER.firstname;
-					var picFileName = helper.renameAvatar(req, picName);
-					USER.profpic = picFileName;
-					
-					console.log(USER);
+					else {
+						console.log('HAS PICTURE; SAVING...')
+						var USER = new User({
+							usertype: 'patient',
+							email: email,
+							password: hash,
+							firstname: fname,
+							lastname: lname
+						});
 
-					db.insertOne(User, USER, function(flag) {
-						if (flag){
-							res.redirect('/upcomingAppointments');
-						}
-					});
+						var picName = USER.firstname;
+						var picFileName = helper.renameAvatar(req, picName);
+						USER.profpic = picFileName;
+						
+			//			console.log(USER);
 
-					// db.insertOne(User, USER, function (flag) {
-					// 	console.log('inside insert function....');
-					// 	console.log(flag);
-					// 	if (!flag) {
-					// 		res.redirect('/upcomingAppointments');
-					// 	}
-					// });
-				}
-			});
+						db.insertOne(User, USER, function(flag) {
+							if (flag){
+								res.redirect('/upcomingAppointments');
+							}
+						});
+
+						// db.insertOne(User, USER, function (flag) {
+						// 	console.log('inside insert function....');
+						// 	console.log(flag);
+						// 	if (!flag) {
+						// 		res.redirect('/upcomingAppointments');
+						// 	}
+						// });
+					}
+				});
+			} else {
+				const profess = req.body.profession;
+				var clinics = [];
+				clinics = req.body.clinics;
+
+				bcrypt.hash(password, saltRounds, (err, hash) => {
+					if(!req.files['picture']) {
+						console.log('NO PICTURE');
+
+						var DOCTOR = new Doctor({
+							email: email,
+							password: hash,
+							firstname: fname,
+							lastname: lname,
+							clinics: clinics,
+							profession: profess,
+							status: 'unverified'
+						});
+
+						var credsName = DOCTOR.lastname;
+						var credFileName = helper.renameCredentials(req, credsName);
+						DOCTOR.credentials = credFileName;
+
+						db.insertOne(Doctor, DOCTOR, function (flag) {
+							if (flag) {
+								res.redirect('/upcomingAppointments');
+							}
+						});
+					} else {
+						console.log('HAS PICTURE; SAVING...')
+
+						var DOCTOR = new Doctor({
+							email: email,
+							password: hash,
+							firstname: fname,
+							lastname: lname,
+							clinics: clinics,
+							profession: profess,
+							status: 'unverified'
+						});
+
+						var picName = DOCTOR.firstname;
+						var picFileName = helper.renameAvatar(req, picName);
+						DOCTOR.profpic = picFileName; 
+
+						var credsName = DOCTOR.lastname;
+						var credFileName = helper.renameCredentials(req, credsName);
+						DOCTOR.credentials = credFileName;
+
+						db.insertOne(Doctor, DOCTOR, function (flag) {
+							if (flag) {
+								res.redirect('/upcomingAppointments');
+							}
+						});
+					}
+				});
+
+			}
         
 		}
 	},
-/*
-	postRegisterDoc: function (req, res) {
-		console.log(req.body);
-		var errors = validationResult(req);
-
-		if (!errors.isEmpty()) {
-			errrors = errors.errors;
-
-			var details = {};
-
-			for (let i = 0; i < errors.length; i++) {
-                // remove array indices for wildcard checks
-                details[`${errors[i].param.replace(/\[\d\]/g, '')}Error`] =
-                    errors[i].msg;
-			}
-			res.render('register', {
-                inputs: req.body,
-                details: details,
-                title: 'Register | Med-Aid',
-                register_active: true,
-            });
-		} else {
-			const o = {};
-			for (const field in req.body) {
-				if(req.body.hasOwnProperty(field)) {
-					o[field] = helper.sanitize(req.body[field]);
-				}
-			}
-
-			var doctor = {
-				firstname: o.firstname
-			}
-		}
-	}
-*/
 }
 
 module.exports = userController;

@@ -20,6 +20,16 @@ const helper = {
         return newName + extension;
     },
 
+    renameCredentials: function (req, newName) {
+        var origName = req.files['credentials'][0].originalname;
+        var extension = origName.substring(origName.lastIndexOf('.'));
+        const newURL =
+            req.files['credentials'][0].destination + '/' + newName + extension;
+
+        fs.renameSync(req.files['credentials'][0].path, newURL);
+        return newName + extension;
+    },
+
     formatDate: function (date) {
         var diff_seconds = Math.round((+new Date() - date) / 1000);
 

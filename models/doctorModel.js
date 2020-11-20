@@ -34,10 +34,10 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
 
-    credentials: [{
+    credentials: {
         type: String,
         required: true,
-    }],
+    },
 
     profpic: {
         type: String,

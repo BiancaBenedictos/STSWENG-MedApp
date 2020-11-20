@@ -12,10 +12,12 @@
     <link rel="stylesheet" href="css/admin.css">
 
     <!-- JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
+    <script src="/scripts/admin-pending.js"></script>
+
 </head>
 <body>
     {{> nav}}
@@ -44,10 +46,10 @@
                             <p class="card-text">Clinic</p>
                         </div>
                         <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm">
+                            <button class="btn btn-link" data-toggle="modal" data-target="#accept" onclick="setId('{{_id}}')">
                                 <img src="assets/check.svg" class="icon">
                             </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#reject" onclick="setId('{{_id}}')">
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
@@ -56,11 +58,13 @@
                 {{/each}}
 
             </div>
+        </div>
+    </div>
 </body>
 </html>
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+<div class="modal fade" id="accept" tabindex="-1" role="dialog" aria-labelledby="accept" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">
@@ -71,14 +75,14 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <a class="btn btn-success">Yes</a>
+                <a class="btn btn-success" onclick="acceptDoctor()">Yes</a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Cancel Confirmation Modal -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
+<!-- Reject Confirmation Modal -->
+<div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="reject" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">
@@ -88,8 +92,8 @@
                 Are you sure you want to reject this application? This action cannot be undone.
             </div>
             <div class="modal-footer del-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <a class="btn btn-danger">Yes</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetId()">No</button>
+                <a class="btn btn-danger" onclick="rejectDoctor()">Yes</a>
             </div>
         </div>
     </div>

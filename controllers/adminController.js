@@ -40,6 +40,16 @@ const adminController = {
 				res.render('admin-pending', results)
 			}
 		})
+	},
+
+	acceptDoctor: function(req,res) {
+		db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'})
+		res.send(true)
+	},
+
+	rejectDoctor: function(req,res) {
+		db.deleteOne(Doctor, {_id: req.body.id})
+		res.send(true)
 	}
 }
 

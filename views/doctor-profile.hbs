@@ -23,33 +23,35 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <form action="" style="text-align:left;">
-                    <h1>Field</h1>
-                    <input type="radio" id="field1" name="field" value="field1">
-                    <label for="field1">Field 1</label><br>
-                    <input type="radio" id="field2" name="field" value="field2">
-                    <label for="field2">Field 2</label><br>
-                    <input type="radio" id="field3" name="field" value="field3">
-                    <label for="field3">Field 3</label>
-                </form>
+                <img src="assets/black.png">
+                <h1 class="heading">Doctor Name {{doctor.lastname}}</h1>
+                <p>Profession</p>
+                {{!-- <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button> --}}
             </div>
+            
             <div class="col">
                 <div class="row view">
-                    <h1 class="heading">{{clinic}}</h1>
+                    <h1 class="heading">Clinics</h1>
                 </div>
-                <div class="row timeslots flex-wrap">
-                    {{#each doctors}}
-                    <a href="/doctorProfile?id={{_id}}" class="card-long">
-                        <div class="row no-gutters">
+                {{!-- {{#each clinics}} --}}
+                <div class="row d-flex flex-wrap mt-4">
+                    <div class="row admin-card">
+                        <a href="/bookAppointment?id={{_id}}">
                             <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                                <p class="card-text">{{profession}}</p>
-                            </div>
+                        </a>
+                        <div class="card-body">
+                            <a href="/bookAppointment?id={{_id}}">
+                                <h5 class="card-title">Clinic Name</h5>
+                                <p class="card-text">Address</p>
+                            </a>
                         </div>
-                    </a>
-                    {{/each}}
+                        <div class="card-body cancel">
+                            <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn" type="button">book</a>
+                        </div>
+                    </div>
                 </div>
+                {{!-- {{/each}} --}}
+               
             </div>
         </div>
     </div>

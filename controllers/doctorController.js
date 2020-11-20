@@ -6,7 +6,11 @@ const Appointment = require('../models/appointmentModel.js')
 const helper = require('../helpers/helper');
 
 const doctorController = {
-	pendingAppointments: function(req,res){
+	doctorProfile: function(req, res) {
+		res.render('doctor-profile')
+	},
+
+	pendingAppointments: function(req, res) {
 		// temp doctor
 		var userId = '5fb637e221521a2e38a4165e'
 
@@ -37,8 +41,15 @@ const doctorController = {
 		})
     },
     
-	createAppointments: function(req,res){
-		res.render('create-appointments')
+	createAppointments: function(req, res) {
+		// temp doctor
+		var userId = '5fb59a0731422020ec5fb2e1'
+		
+		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
+				res.render('create-appointments', {clinics: clinics})
+			})
+		})
     }
 }
 

@@ -22,12 +22,21 @@ const homeController = {
 	viewDoctors: function(req,res){
 		var id = req.query.id
 
+		var professions = []
+
 		db.findOne(Clinic, {_id: id}, null, function(clinic) {
-			db.findMany(Doctor, {clinics: id, status: 'verified'}, null, function(doctors) {
+			db.findMany(Doctor, {clinics: id}, null, function(doctors) {
+				for(var i = 0; i < doctors.length; i++) {
+					if(professions.includes(doctors[i].profession) === false)
+						professions.push(doctors[i].profession)
+				}
+
 				var results = {
 					clinic: clinic.clinicName,
-					doctors: doctors
+					doctors: doctors,
+					professions: professions
 				}
+				console.log(results)
 				res.render('view-doctors', results)
 			})
 		})

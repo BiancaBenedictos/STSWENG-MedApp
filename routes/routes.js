@@ -1,6 +1,7 @@
 const express = require('express')
 const multer  = require('multer')
 
+const navbarController = require('../controllers/navbarController')
 const adminController = require('../controllers/adminController')
 const appointmentController = require('../controllers/appointmentController')
 const doctorController = require('../controllers/doctorController')
@@ -60,6 +61,8 @@ app.use((req, res, next) => {
 
 module.exports = app
 
+app.get('/getName', navbarController.getName);
+
 app.get('/adminClinics', adminController.clinics)
 app.get('/adminDoctors', adminController.doctors)
 app.get('/adminPending', adminController.pending)
@@ -70,6 +73,7 @@ app.get('/concludedAppointments', appointmentController.concludedAppointments)
 app.get('/cancelledAppointments', appointmentController.cancelledAppointments)
 app.get('/bookAppointment', appointmentController.bookAppointment)
 
+app.get('/doctorProfile', doctorController.doctorProfile)
 app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 

@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const session = require('express-session');
 const fs = require('fs');
+const helper = require('../helpers/helper');
+const saltRounds = 10;
+
 const db = require('../models/db');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
-const helper = require('../helpers/helper');
-const saltRounds = 10;
+const Clinic = require('../models/clinicModel');
 
 const userController = {
 	getLogin: function(req,res){
@@ -156,6 +158,12 @@ const userController = {
         
 		}
 	},
+	register: function(req,res){
+		db.findMany(Clinic, {}, null, function(clinics) {
+			var professions = Doctor.schema.path('profession').enumValues
+			res.render('register', {clinics: clinics, professions: professions})
+		})
+	}
 }
 
 module.exports = userController;

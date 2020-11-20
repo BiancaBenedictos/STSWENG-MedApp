@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/admin.css">
 
     <!-- JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
@@ -24,27 +24,35 @@
         <div class="row content">
             <div class="col-4 filter">
                 <img src="assets/black.png">
-                <h1 class="heading">Doctor's Name</h1>
-                <p>
-                    Field field field
-                    <br>
-                    Clinic clinic clinic clinic
-                </p>
-                <p><i>address address address address address</i></p>
-                <a href="/login" class="btn edit-btn">logout</a>
+                <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
+                <p>{{doctor.profession}}</p>
             </div>
-            <div class="col appointments">
+            <div class="col appointments" style="height:100%">
                 <div class="row d-flex justify-content-center flex-wrap">
                     <h1 class="heading mt-2">Set Appointment Hours</h1>
                 </div>
                 
                 <form method="post" class="days">
+
                     <div class="form-group row day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col-6" style="align-self:center;text-align:left">
+                            <h1 class="interval">Clinic</h1>
+                        </div>
+                        <div class="col-6 m-0 p-1">
+                            <select class="form-control" id="clinic">
+                                {{#each clinics}}
+                                <option>{{clinicName}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row day-row">
+                        <div class="col-6" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="sunday">
                             <label for="sunday">Sunday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -59,7 +67,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -75,12 +83,13 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="monday">
                             <label for="monday">Monday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -95,7 +104,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -112,11 +121,11 @@
                         </div>
                     </div>
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="tuesday">
                             <label for="tuesday">Tuesday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -131,7 +140,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -148,11 +157,11 @@
                         </div>
                     </div>
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="wednesday">
                             <label for="wednesday">Wednesday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -167,7 +176,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -184,11 +193,11 @@
                         </div>
                     </div>
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="thursday">
                             <label for="thursday">Thursday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -203,7 +212,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -220,11 +229,11 @@
                         </div>
                     </div>
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="friday">
                             <label for="friday">Friday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -239,7 +248,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -256,11 +265,11 @@
                         </div>
                     </div>
                     <div class="row form-group day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col" style="align-self:center;text-align:left">
                             <input class="form-check-input" type="checkbox" value="" id="saturday">
                             <label for="saturday">Saturday</label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="starttime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -275,7 +284,7 @@
                                 <option>6:00 PM</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-3 m-0 p-1 form-group">
                             <select class="form-control" id="endtime">
                                 <option>8:00 AM</option>
                                 <option>9:00 AM</option>
@@ -293,11 +302,11 @@
                     </div>
                     
                     <div class="form-group row day-row">
-                        <div class="col" style="align-self:center">
+                        <div class="col-6" style="align-self:center;text-align:left">
                             <h1 class="interval">Set Interval</h1>
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="starttime">
+                        <div class="col-6 m-0 p-0 form-group">
+                            <select class="form-control" id="interval">
                                 <option>15 minutes</option>
                                 <option>30 minutes</option>
                                 <option>1 hour</option>
@@ -305,7 +314,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group py-4" style="text-align: center;">
+                    <div class="form-group pt-4 pb-0" style="text-align: center;">
                         <button type="submit" class="view-btn">save</button>
                     </div>
                 </form>

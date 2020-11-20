@@ -81,6 +81,16 @@ const helper = {
         return time;
     },
 
+    getTime: function(date) {
+        currentHours = date.getHours()
+        currentHours = ('0' + currentHours).slice(-2)
+
+        currentMinutes = date.getMinutes()
+        currentMinutes = ('0' + currentMinutes).slice(-2)
+
+        return currentHours + ':' + currentMinutes
+    },
+
     parseDate: function (s) {
         if (!moment(s, 'YYYY-MM-DD', true).isValid()) {
             return null;

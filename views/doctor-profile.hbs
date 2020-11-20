@@ -23,33 +23,36 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <form action="" style="text-align:left;">
-                    <h1>Profession</h1>
-                    
-                    {{#each professions}}
-                    <input type="radio" id="Pediatrician" value="Pediatrician">
-                    <label for="Pediatrician">{{this}}</label><br>
-                    {{/each}}
-
-                </form>
+                <img src="assets/black.png">
+                <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
+                <p>{{doctor.profession}}</p>
+                {{!-- <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button> --}}
             </div>
+            
             <div class="col">
-                <div class="row view">
-                    <h1 class="heading">{{clinic}}</h1>
+                <div class="row view mb-4">
+                    <h1 class="heading">Clinics</h1>
                 </div>
-                <div class="row timeslots flex-wrap">
-                    {{#each doctors}}
-                    <a href="/doctorProfile?id={{_id}}" class="card-long">
-                        <div class="row no-gutters">
+
+                {{#each clinics}}
+                <div class="row d-flex flex-wrap">
+                    <div class="row admin-card">
+                        <a href="/viewDoctors?id={{_id}}">
                             <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                                <p class="card-text">{{profession}}</p>
-                            </div>
+                        </a>
+                        <div class="card-body">
+                            <a href="/viewDoctors?id={{_id}}">
+                                <h5 class="card-title">{{clinicName}}</h5>
+                                <p class="card-text">{{clinicAddress.street}}, {{clinicAddress.city}}, {{clinicAddress.state}}</p>
+                            </a>
                         </div>
-                    </a>
-                    {{/each}}
+                        <div class="card-body cancel">
+                            <a href="/bookAppointment?id={{../doctor._id}}" class="btn cancel-btn" type="button">book</a>
+                        </div>
+                    </div>
                 </div>
+                {{/each}}
+               
             </div>
         </div>
     </div>

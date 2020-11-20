@@ -61,6 +61,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="age">Age</label>
+                            <input type="Number" class="form-control" id="age" name="age" required>
+                        </div>
+                        <div class="col">
+                            <label for="weight">Weight</label>
+                            <input type="Number" class="form-control" id="weight" name="weight" required>
+                        </div>
+                        <div class="col">
+                            <label for="height">Height</label>
+                            <input type="Number" class="form-control" id="height" name="height" required>
+                        </div>
+                    </div>
 
                     <input type="checkbox" id="doctorCheck" name="doctorCheck">
                     <label for="doctorCheck">I am a Doctor</label>
@@ -71,23 +85,9 @@
                                 <label for="profession">Profession</label>
                                 <div class="form-group">
                                     <select class="form-control" id="profession" name="profession">
-                                        <option>Pediatrician</option>
-                                        <option>Gynecologist</option>
-                                        <option>Obstetrician</option>
-                                        <option>Surgeon</option>
-                                        <option>Psychiatrist</option>
-                                        <option>Cardiologist</option>
-                                        <option>Dermatologist</option>
-                                        <option>Endocrinologist</option>
-                                        <option>Ophtalmologist</option>
-                                        <option>Pulmonologist</option>
-                                        <option>Gastroenterologist</option>
-                                        <option>Nephrologist</option>
-                                        <option>Otolaryngologist</option>
-                                        <option>Neurologist</option>
-                                        <option>Radiologist</option>
-                                        <option>Anesthesiologist</option>
-                                        <option>Oncologist</option>
+                                        {{#each professions}}
+                                        <option>{{this}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -108,9 +108,9 @@
                                 <label for="clinic">Clinic</label>
                                 <div class="form-group">
                                     <select class="form-control" id="clinic" name="clinic">
-                                        <option>Clinic 1</option>
-                                        <option>Clinic 2</option>
-                                        <option>Clinic 3</option>
+                                        {{#each clinics}}
+                                        <option>{{clinicName}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                                 <div class="form-group" id="addRowsHere"></div>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-6">
-                                <button type="button" id="addClinic" name="addClinic">Add Clinic</button>
+                                <button type="button" id="addClinic" name="addClinic"onclick="add()">Add Clinic</button>
                             </div>
                             <div class="col-6">
                                 <button type="button" id="registerClinic" name="registerClinic">Register Clinic</button>
@@ -131,6 +131,18 @@
                         <button type="submit" class="login-btn">register</button>
                     </div>
                 </form>
+                <script>
+                    function add() {
+                        var str = ` <div class="form-group">
+                                        <select class="form-control" id="clinic">
+                                            {{#each clinics}}
+                                            <option>{{clinicName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>`
+                        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+                    }
+                </script>
             </div>
         </div>
     </div>

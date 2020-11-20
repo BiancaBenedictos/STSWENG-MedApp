@@ -22,8 +22,9 @@ const appointmentController = {
 					doctorIds.push(appointments[i].bookedDoctor)
 				}
 				
-				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
-					
+				Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
+					doctorIds.map(e => doctors.find(s => s._id.equals(e)))
+				).then(doctors => {
 					for(var j = 0; j < doctors.length; j++) {
 						var details = {
 							doctor: doctors[j].firstname + " " + doctors[j].lastname,
@@ -52,8 +53,9 @@ const appointmentController = {
 					doctorIds.push(appointments[i].bookedDoctor)
 				}
 				
-				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
-					
+				Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
+					doctorIds.map(e => doctors.find(s => s._id.equals(e)))
+				).then(doctors => {
 					for(var j = 0; j < doctors.length; j++) {
 						var details = {
 							doctor: doctors[j].firstname + " " + doctors[j].lastname,
@@ -66,7 +68,6 @@ const appointmentController = {
 				})
 			})
 		})
-		// res.render('appointments-pending')
     },
     
 	concludedAppointments: function(req,res) {
@@ -83,8 +84,9 @@ const appointmentController = {
 					doctorIds.push(appointments[i].bookedDoctor)
 				}
 				
-				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
-					
+				Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
+					doctorIds.map(e => doctors.find(s => s._id.equals(e)))
+				).then(doctors => {
 					for(var j = 0; j < doctors.length; j++) {
 						var details = {
 							doctor: doctors[j].firstname + " " + doctors[j].lastname,
@@ -114,8 +116,9 @@ const appointmentController = {
 					doctorIds.push(appointments[i].bookedDoctor)
 				}
 				
-				db.findMany(Doctor, {_id: {$in: doctorIds}}, null, function(doctors) {
-					
+				Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
+					doctorIds.map(e => doctors.find(s => s._id.equals(e)))
+				).then(doctors => {
 					for(var j = 0; j < doctors.length; j++) {
 						var details = {
 							doctor: doctors[j].firstname + " " + doctors[j].lastname,

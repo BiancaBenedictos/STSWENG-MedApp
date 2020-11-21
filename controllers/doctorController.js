@@ -71,6 +71,25 @@ const doctorController = {
 			})
 		})
 	},
+
+	getClinicHours: function(req, res) {
+		var query = {
+			clinicID: req.query.clinicID,
+			doctorID: '5fb59a0731422020ec5fb2e1'		// replace with logged in doctorID
+		}
+		db.findMany(Availability, query, '', function(results){
+			var r = []
+			for (i=0; i < results.length; i++) {
+				r.push({
+					day: results[i].day,
+					start: results[i].startTime.getHours(),
+					end: results[i].endTime.getHours()
+				})
+			}
+			
+			res.send(r);
+		})
+	},
 	
 	setAvailability: function(req, res) {
 		var avail = req.body.avail;

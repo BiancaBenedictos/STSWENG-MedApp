@@ -1,7 +1,19 @@
 <script>
     $(document).ready(function() {
-        $.get('/getName', null, function (result) {
-            $("#navName").text(result);
+        $.get('/getDetails', null, function(result) {
+
+            $("#navName").text(result.name);
+
+            if(result.type == 'user') {
+                $('#create-appointments').prop('hidden', true);
+                $('#admin').prop('hidden', true);
+            }
+            if(result.type == 'doctor') {
+                $('#admin').prop('hidden', true);
+            }
+            if(result.type == 'admin') {
+                $('#create-appointments').prop('hidden', true);
+            }
         });
     });
 </script>
@@ -15,7 +27,7 @@
         </ul>
         <ul class="navbar-nav mr-auto">
             <li>
-                <a class="nav-link" href="/">Med Aid</a>
+                <a class="nav-link" href="/homeDoctors">Med Aid</a>
             </li>
         </ul>
     </div>
@@ -23,34 +35,20 @@
         <input type="text" class="search pl-3" placeholder="Search"/>
     </div>
 
-
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <div class="dropdown show ml-auto">
             
             <p id="navName" style="display:inline" class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></p>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navName">
-                <a class="dropdown-item" href="/upcomingAppointments">Profile</a>
-                <a class="dropdown-item" href="/createAppointments">Create Appointments (doctor)</a>
-                <a class="dropdown-item" href="/doctorPendingAppointments">Pending Appointments (doctor)</a>
-                <a class="dropdown-item" href="/adminPending">Admin</a>
-                <a class="dropdown-item" href="/login">Logout</a>
+                <a class="dropdown-item" href="/upcomingAppointments" id="profile">Profile</a>
+                <a class="dropdown-item" href="/createAppointments" id="create-appointments">Create Appointments</a>
+                {{!-- <a class="dropdown-item" href="/doctorPendingAppointments" id="pending-appointments">Pending Appointments</a> --}}
+                <a class="dropdown-item" href="/adminPending" id="admin">Admin</a>
+                <a class="dropdown-item" href="/">Logout</a>
             </div>
         </div>
     </div>
-
-    {{!-- <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/upcomingAppointments">Profile</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-2">
-            <li>
-                <img class="profile" src="assets/test.png">
-            </li>
-        </ul>
-    </div> --}}
 </nav>
 
 <div class="header"></div>

@@ -12,7 +12,7 @@ const app = express()
 
 module.exports = app
 
-app.get('/getName', navbarController.getName);
+app.get('/getDetails', navbarController.getDetails);
 
 app.get('/adminClinics', adminController.clinics)
 app.get('/adminDoctors', adminController.doctors)
@@ -28,9 +28,12 @@ app.get('/doctorProfile', doctorController.doctorProfile)
 app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 
-app.get('/', homeController.doctors)
+app.get('/homeDoctors', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)
 app.get('/viewDoctors', homeController.viewDoctors)
 
-app.get('/login', userController.login)
-app.get('/register', userController.register)
+app.get('/', userController.getLogin)
+app.post('/', userController.postLogin);
+app.get('/getCheckLogin', userController.getCheckLogin);
+
+app.get('/register', userController.getRegister)

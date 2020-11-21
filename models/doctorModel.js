@@ -48,6 +48,10 @@ const doctorSchema = new mongoose.Schema({
         type: String
     },
 
+    bookedAppointments: [{
+        type: String
+    }],
+
     availability: [{
         type: String
     }]

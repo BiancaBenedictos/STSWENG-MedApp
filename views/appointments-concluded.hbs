@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
     <script src="/helpers/helper.js"></script>
+    <script src="scripts/appointments.js"></script>
 
 </head>
 <body>
@@ -27,17 +28,19 @@
             <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
-                <p>
+                <p id="user-info">
                     Age: {{user.age}}<br>
                     Weight: {{user.weight}}<br>
                     Height: {{user.height}}<br>
                 </p>
+                <p id="doctor-info">{{user.profession}}</p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
             </div>
             <div class="col">
                 <div class="row options">
                     <a href="/upcomingAppointments" id="upcoming">upcoming</a>
-                    <a href="/pendingAppointments" id="pending">pending</a>
+                    <a href="/pendingAppointments" id="user-pending">pending</a>
+                    <a href="/doctorPendingAppointments" id="doctor-pending">pending</a>
                     <a href="/concludedAppointments" id="concluded">concluded</a>
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>

@@ -32,7 +32,17 @@ const appointmentController = {
 							}
 							apts.push(details)
 						}
-						res.render('appointments-upcoming', {appointments: apts, user: user})
+						// db.findMany(Clinic, {}, null, function(clinics) {
+							var professions = Doctor.schema.path('profession').enumValues
+
+							var result = {
+								appointments: apts,
+								user: user,
+								professions: professions
+							}
+
+							res.render('appointments-upcoming', result)
+						// })
 					})
 				})
 			}

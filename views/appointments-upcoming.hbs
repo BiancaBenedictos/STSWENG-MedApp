@@ -71,6 +71,7 @@
             </div>
             <div class="modal-body">
                 <form>
+                    {{!-- Basic Information --}}
                     <div class="form-group row">
                         <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
@@ -83,9 +84,32 @@
                     </div>
                     <div class="form-group row">
                         <div class="form-group col">
+                            <label for="oldPassword" class="col-form-label">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword">
+                        </div>
+                        <div class="form-group col">
+                            <label for="newPassword" class="col-form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label>Profile Picture</label>
+                            <div class="button-wrap">
+                                <label class="button" for="profpic">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Patient Users Only --}}
+                    <div class="form-group row user">
+                        <div class="form-group col">
                             <label for="age" class="col-form-label">Age</label>
                             <input type="Number" class="form-control" id="age" value={{user.age}}>
                         </div>
+                    </div>
+                    <div class="form-group row user">
                         <div class="form-group col">
                             <label for="weight" class="col-form-label">Weight</label>
                             <input type="Number" class="form-control" id="weight" value={{user.weight}}>
@@ -93,6 +117,17 @@
                         <div class="form-group col">
                             <label for="height" class="col-form-label">Height</label>
                             <input type="Number" class="form-control" id="height" value={{user.height}}>
+                        </div>
+                    </div>
+                    
+                    {{!-- Doctor Users Only --}}
+                    <div class="form-group row doctor">
+                        <div class="form-group col">
+                            <label>Credentials</label>
+                            <div class="button-wrap">
+                                <label class="button" for="credentials">Upload File</label>
+                                <input id="credentials" class="form-control" type="file">
+                            </div>
                         </div>
                     </div>
                 </form>

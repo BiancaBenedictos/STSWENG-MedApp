@@ -66,3 +66,24 @@ a {
     bottom: 30px;
     left: 0;
 } */
+
+.button-wrap {
+    position: relative;
+}
+
+.button {
+    position: absolute;
+    display: inline-block;
+    height: 32px;
+    width: 93px;
+    text-align: center;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #133C55;
+    border: 1px solid lightgray;
+    font-size: 12px;
+    color: white;
+}

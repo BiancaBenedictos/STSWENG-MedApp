@@ -23,6 +23,9 @@ const userController = {
 						req.session.name = user.firstname + " " + user.lastname;
 						req.session.userId = user._id;
 						req.session.type = 'user'
+						req.session.age = user.age,
+						req.session.weight = user.weight,
+						req.session.height = user.height
 						res.redirect('/homeDoctors');
 					}
                 });	
@@ -37,6 +40,7 @@ const userController = {
 								req.session.name = doctor.firstname + " " + doctor.lastname;
 								req.session.userId = doctor._id;
 								req.session.type = 'doctor'
+								req.session.profession = doctor.profession
 								res.redirect('/homeDoctors');
 							}
 						});	

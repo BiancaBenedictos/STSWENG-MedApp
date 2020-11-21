@@ -3,6 +3,7 @@ const Clinic = require('../models/clinicModel.js');
 const Doctor = require('../models/doctorModel.js')
 const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
+const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
 
 const doctorController = {
@@ -69,7 +70,20 @@ const doctorController = {
 				res.render('create-appointments', details)
 			})
 		})
-    }
+	},
+	
+	setAvailability: function(req, res) {
+		var avail = req.body.avail;
+
+		for (i=0; i < avail.length; i++) {
+			avail[i].doctorID = '5fb59a0731422020ec5fb2e1'		// replace with logged in doctorID
+			avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
+			avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
+
+			db.upsertOne(Availability, {doctorID: avail[i].doctorID, clinicID: avail[i].clinicID,
+				day: avail[i].day}, avail[i])
+		}
+	}
 }
 
 module.exports = doctorController

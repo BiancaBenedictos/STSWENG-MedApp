@@ -6,7 +6,7 @@ function save() {
     $('input:checked').each(function(){
         checked.push($(this).attr('id'));
     })
-    
+
     if (checkTimeInterval())
         getAvail();
 }
@@ -41,4 +41,5 @@ function getAvail() {
     }    
     
     console.log(avail)
+    $.post('/setAvailability', {avail:avail}, function(){})
 }

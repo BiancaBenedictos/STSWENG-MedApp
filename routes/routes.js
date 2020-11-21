@@ -27,6 +27,7 @@ app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/doctorProfile', doctorController.doctorProfile)
 app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
+app.post('/setAvailability', doctorController.setAvailability)
 
 app.get('/', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)

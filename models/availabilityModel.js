@@ -17,7 +17,7 @@ const availabilitySchema = new mongoose.Schema({
         required: true
     },
 
-    interval: {
+    intervalHours: {
         type: Number,
         required: true
     },

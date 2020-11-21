@@ -17,12 +17,19 @@ const availabilitySchema = new mongoose.Schema({
         required: true
     },
 
+    interval: {
+        type: Number,
+        required: true
+    },
+
     doctorID: {
-        type: String
+        type: String,
+        required: true
     },
 
     clinicID: {
-        type: String
+        type: String,
+        required: true
     }
 });
 

@@ -83,7 +83,8 @@ const doctorController = {
 				r.push({
 					day: results[i].day,
 					start: results[i].startTime.getHours(),
-					end: results[i].endTime.getHours()
+					end: results[i].endTime.getHours(),
+					interval: results[i].intervalHours
 				})
 			}
 			

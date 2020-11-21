@@ -36,7 +36,8 @@ function getAvail() {
             clinicID: $("#clinic").val(),
             day: checked[i],
             startTime: $("." + checked[i] + "#starttime").val(),
-            endTime: $("." + checked[i] + "#endtime").val()
+            endTime: $("." + checked[i] + "#endtime").val(),
+            intervalHours: $("#interval").val()
         })
     }    
     
@@ -51,6 +52,7 @@ function updateHours() {
         })
 
         $.get('/getClinicHours', {clinicID: $("#clinic").val()}, function(results){
+            $("#interval").val(results[0].interval);
             for (i=0; i<results.length; i++) {
                 $("#" + results[i].day).prop('checked', true);
                 $("." + results[i].day + "#starttime").val(results[i].start);

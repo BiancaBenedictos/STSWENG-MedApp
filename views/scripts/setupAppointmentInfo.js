@@ -43,3 +43,26 @@ function getAvail() {
     console.log(avail)
     $.post('/setAvailability', {avail:avail}, function(){})
 }
+
+function updateHours() {
+    $("input").prop('checked', false);
+        $("[class$='day']").each(function(){
+            $(this).val(8)
+        })
+
+        $.get('/getClinicHours', {clinicID: $("#clinic").val()}, function(results){
+            for (i=0; i<results.length; i++) {
+                $("#" + results[i].day).prop('checked', true);
+                $("." + results[i].day + "#starttime").val(results[i].start);
+                $("." + results[i].day + "#endtime").val(results[i].end);
+            }
+        })
+}
+
+$(document).ready(function(){
+    updateHours();
+    
+    $("#clinic").change(function(){
+        updateHours();
+    })
+})

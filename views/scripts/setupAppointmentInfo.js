@@ -6,8 +6,7 @@ function save() {
     $('input:checked').each(function(){
         checked.push($(this).attr('id'));
     })
-
-    console.log(checked)
+    
     if (checkTimeInterval())
         getAvail();
 }
@@ -36,8 +35,8 @@ function getAvail() {
         avail.push({
             clinicID: $("#clinic").val(),
             day: checked[i],
-            startTime: $("." + checked[i] + "#starttime").children(':selected').text(),
-            endTime: $("." + checked[i] + "#endtime").children(':selected').text()
+            startTime: $("." + checked[i] + "#starttime").val(),
+            endTime: $("." + checked[i] + "#endtime").val()
         })
     }    
     

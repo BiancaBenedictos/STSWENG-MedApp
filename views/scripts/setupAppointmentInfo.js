@@ -6,9 +6,10 @@ function save() {
     $('input:checked').each(function(){
         checked.push($(this).attr('id'));
     })
-    
+
     console.log(checked)
-    checkTimeInterval();
+    if (checkTimeInterval())
+        getAvail();
 }
 
 function checkTimeInterval() {
@@ -26,4 +27,19 @@ function checkTimeInterval() {
     }
 
     return valid;
+}
+
+function getAvail() {
+    var avail = []
+    
+    for (i=0; i<checked.length; i++) {
+        avail.push({
+            clinicID: $("#clinic").val(),
+            day: checked[i],
+            startTime: $("." + checked[i] + "#starttime").children(':selected').text(),
+            endTime: $("." + checked[i] + "#endtime").children(':selected').text()
+        })
+    }    
+    
+    console.log(avail)
 }

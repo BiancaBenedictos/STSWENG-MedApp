@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $.get('/getDetails', null, function(result) {
         if(result.type == 'user') {
-            var string = 'Age: ' + result.age + '\nWeight: ' + result.weight + '\neight: ' + result.height
+            var string = 'Age: ' + result.age + '\nWeight: ' + result.weight + '\nHeight: ' + result.height
             $("#user-info").text(string)
 
             $('.doctor').prop('hidden', true);

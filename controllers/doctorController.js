@@ -7,9 +7,10 @@ const helper = require('../helpers/helper');
 
 const doctorController = {
 	doctorProfile: function(req, res) {
-		var userId = req.session.userId
+		var userId = req.query.id
 
 		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+			console.log(doctor)
 			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
 
 				clinics.doctorId = userId

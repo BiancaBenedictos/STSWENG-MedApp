@@ -12,6 +12,7 @@
                 $('#admin').prop('hidden', true);
             }
             if(result.type == 'admin') {
+                $('#profile').prop('hidden', true);
                 $('#create-appointments').prop('hidden', true);
             }
         });
@@ -43,8 +44,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navName">
                 <a class="dropdown-item" href="/upcomingAppointments" id="profile">Profile</a>
                 <a class="dropdown-item" href="/createAppointments" id="create-appointments">Create Appointments</a>
-                {{!-- <a class="dropdown-item" href="/doctorPendingAppointments" id="pending-appointments">Pending Appointments</a> --}}
-                <a class="dropdown-item" href="/adminPending" id="admin">Admin</a>
+                <a class="dropdown-item" href="/adminPending" id="admin">Verify Doctors</a>
                 <a class="dropdown-item" href="/">Logout</a>
             </div>
         </div>

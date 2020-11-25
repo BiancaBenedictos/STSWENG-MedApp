@@ -13,6 +13,8 @@ const appointmentController = {
 		var patientIds = []
 		var apts = []
 		
+		var professions = Doctor.schema.path('profession').enumValues
+
 		db.findOne(User, {_id: userId}, null, function(user) {
 			if(user) {
 				db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Upcoming'}, null, function(appointments) {
@@ -32,17 +34,14 @@ const appointmentController = {
 							}
 							apts.push(details)
 						}
-						// db.findMany(Clinic, {}, null, function(clinics) {
-							var professions = Doctor.schema.path('profession').enumValues
 
-							var result = {
-								appointments: apts,
-								user: user,
-								professions: professions
-							}
+						var result = {
+							appointments: apts,
+							user: user,
+							professions: professions
+						}
 
-							res.render('appointments-upcoming', result)
-						// })
+						res.render('appointments-upcoming', result)
 					})
 				})
 			}

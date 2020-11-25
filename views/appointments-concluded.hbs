@@ -39,6 +39,7 @@
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>
 
+                {{#if appointments}}
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
@@ -47,15 +48,18 @@
                             <h5 class="card-title">{{doctor}}</h5>
                             <p class="card-text">{{date}} · {{time}}</p>
                         </div>
-                        <div class="card-body">
+                        {{!-- <div class="card-body">
                             <p class="date">
                                 <b>date concluded</b><br>
                                 November, 17, 2020
                             </p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 {{/each}}
+                {{else}}
+                <p style="text-align:center">No concluded appointments</p>
+                {{/if}}
             </div>
         </div>
     </div>

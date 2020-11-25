@@ -38,6 +38,7 @@
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>
                 
+                {{#if appointments}}
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
@@ -57,6 +58,9 @@
                     </div>
                 </div>
                 {{/each}}
+                {{else}}
+                <p style="text-align:center">No pending appointments</p>
+                {{/if}}
             </div>
         </div>
     </div>

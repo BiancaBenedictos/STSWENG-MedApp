@@ -25,6 +25,13 @@ const userController = {
 		})
 	},
 
+	getCheckEmail: function(req,res){
+        var email = req.query.email;
+		db.findOne(User, {email:email}, 'email', function(result) {
+			res.send(result);
+		}) 
+	},
+
 	postRegister: function(req, res) {
 		var errors = validationResult(req);
 

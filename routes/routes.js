@@ -55,6 +55,7 @@ app.get('/viewDoctors', homeController.viewDoctors)
 
 app.get('/login', userController.getLogin)
 app.get('/register', userController.getRegister)
+app.get('/getCheckEmail', userController.getCheckEmail);
 
 app.post('/register', 
          uploadFilter,

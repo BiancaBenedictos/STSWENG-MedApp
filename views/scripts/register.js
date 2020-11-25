@@ -18,12 +18,7 @@ $(document).ready(function() {
         if(document.getElementById('doctorCheck').checked == true) docCheck = true
         else docCheck = false
 
-        if(docCheck) {
-            if(document.getElementById("credentials").files.length == 0) credentialsEmpty = true
-            else credentialsEmpty = false
-            return !emailEmpty && !passwordEmpty && !firstnameEmpty && !lastnameEmpty && !cpasswordEmpty && !credentialsEmpty;
-        }
-        else {
+        if(!docCheck) {
             var age = validator.trim($("#age").val());
             var weight = validator.trim($("#weight").val());
             var height = validator.trim($("#height").val());
@@ -35,7 +30,21 @@ $(document).ready(function() {
             return !emailEmpty && !passwordEmpty && !firstnameEmpty && !lastnameEmpty && !cpasswordEmpty && !ageEmpty && !weightEmpty && !heightEmpty;
         }
 
-        // return !emailEmpty && !passwordEmpty && !firstnameEmpty && !lastnameEmpty && !cpasswordEmpty;
+        return !emailEmpty && !passwordEmpty && !firstnameEmpty && !lastnameEmpty && !cpasswordEmpty && !credentialsEmpty;
+    }
+
+    document.getElementById('credentials').onblur = function() {
+        if(document.getElementById("credentials").files.length == 0) credentialsEmpty = true
+        else credentialsEmpty = false
+
+        if(!credentialsEmpty) {
+            document.getElementById("noCreds").innerHTML = "";
+            $("#submitbtn").prop('disabled', false);
+        }
+        else {
+            document.getElementById("noCreds").innerHTML = "Please upload your credentials";
+            $("#submitbtn").prop('disabled', true);
+        }
     }
 
     function isValidEmail(field, callback) {
@@ -162,10 +171,10 @@ $(document).ready(function() {
 
         if (checkBox.checked == true){
             text.style.display = "block"
-            $("#patient").toggle();
+            $("#patient").hide();
         } else {
             text.style.display = "none"
-            $("#patient").toggle();
+            $("#patient").show();
         }
     }
 

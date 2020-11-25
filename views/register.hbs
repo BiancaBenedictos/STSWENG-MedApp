@@ -99,7 +99,8 @@
                                 <label>Credentials</label>
                                 <div class="button-wrap">
                                     <label class="button" for="credentials">Upload File</label>
-                                    <input type="file" id="credentials" name="credentials" class="form-control">
+                                    <input type="file" id="credentials" name="credentials" class="form-control" onblur="hasCreds()">
+                                    <p class="m-0" id="noCreds" style="color:red">Please upload your credentials</p>
                                 </div>
                             </div>
                         </div>

@@ -123,7 +123,9 @@ const userController = {
 							lastname: lname,
 							clinics: clinics,
 							profession: profess,
-							status: 'unverified'
+							status: 'unverified',
+							availability: [],
+							bookedAppointments: []
 						});
 
 						var credsName = DOCTOR.lastname;
@@ -145,7 +147,9 @@ const userController = {
 							lastname: lname,
 							clinics: clinics,
 							profession: profess,
-							status: 'unverified'
+							status: 'unverified',
+							availability: [],
+							bookedAppointments: []
 						});
 
 						var picName = DOCTOR.firstname;

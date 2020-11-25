@@ -49,6 +49,10 @@ const doctorSchema = new mongoose.Schema({
         enum: ['unverified', 'verified'],
     },
 
+    bookedAppointments: [{
+        type: String
+    }],
+
     availability: [{
         type: String,
     }],

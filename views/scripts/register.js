@@ -2,14 +2,14 @@ $(document).ready(function() {
     document.getElementById('doctorCheck').onclick = function() {
         var checkBox = document.getElementById("doctorCheck")
         var text = document.getElementById("doctorFields")
-        var patient = document.getElementById("patient")
+        // var patient = document.getElementById("patient")
 
         if (checkBox.checked == true){
             text.style.display = "block"
-            patient.style.display = "none"
+            // patient.style.display = "none"
         } else {
             text.style.display = "none"
-            patient.style.display = "flex"
+            // patient.style.display = "flex"
         }
     }
 

@@ -249,33 +249,8 @@ const appointmentController = {
 		
 		var times = [];
 
-		db.findOne(Availability, q, "day startTime endTime intervalHours", function(results) {
-			if (results) {
-				var s = results.startTime
-				var e = results.endTime
-				var int = results.intervalHours
-				var ampm = " AM"
-
-				while ( +s <= +e ) {
-					var h = s.getHours() % 12
-					var m = s.getMinutes();
-
-					if (s.getHours() >= 12)
-						ampm = " PM"
-					if (h == 0)
-						h = 12
-
-					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-
-					times.push({time: h + ":" + m + ampm})
-					s.setMinutes(s.getMinutes() + (int * 60))
-				}
-			}
-
-			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], dates: dates, slots: times})
-			})
+		db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
+			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], dates: dates})
 		})
 	},
 	

@@ -38,7 +38,7 @@
             </div>
             <div class="col">
                 <div class="row appointments week justify-content-center">
-                    <span class="heading">{{month}}<br>
+                    <span class="heading month" id="{{month}}">{{month}}<br>
                     {{#each dates}} 
                         <button class="day {{class}}" value="{{day}}" onclick="getSlots('{{day}}', '{{../doctor._id}}', '{{../clinic}}')">{{date}}</button>
                     {{/each}}
@@ -62,7 +62,7 @@
                 Are you sure?
             </div>
             <div class="modal-body del-body">
-                Are you sure you want to book an appointment for 12:00 PM?
+                Are you sure you want to book an appointment for <span id="book-time"></span>?
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

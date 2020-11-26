@@ -12,7 +12,7 @@ const adminController = {
 			})
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -34,7 +34,7 @@ const adminController = {
 			})
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -53,7 +53,7 @@ const adminController = {
 			})
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -67,7 +67,7 @@ const adminController = {
 			res.send(true)
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -80,7 +80,7 @@ const adminController = {
 			res.send(true)
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')

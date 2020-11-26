@@ -54,3 +54,25 @@ a:hover {
 .card-body-home {
     margin-top: 10px;
 }
+
+.error-message {
+    margin: 20px;
+    text-align: center;
+}
+
+.error-btn {
+    background-color: #133C55;
+    width: 150px;
+    height: 35px;
+    border: none;
+    border-radius: 50px;
+    text-align: center;
+    padding: 7px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.error-btn:hover {
+    color: white;
+}

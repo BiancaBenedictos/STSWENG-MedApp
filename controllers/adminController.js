@@ -4,47 +4,87 @@ const Doctor = require('../models/doctorModel.js')
 
 const adminController = {
 	clinics: function(req,res) {
-		db.findMany(Clinic, {}, null, function(results) {
-			if(results != null) {
-				res.render('admin-clinics', {clinics: results})
-			}
-		})
+		if(req.session.type == 'admin') {
+			db.findMany(Clinic, {}, null, function(results) {
+				if(results != null) {
+					res.render('admin-clinics', {clinics: results})
+				}
+			})
+		}
+		else if(req.session.email) {
+			res.redirect('/homeDoctors')
+		}
+		else {
+			res.redirect('/')
+		}
     },
     
 	doctors: function(req,res) {
-		db.findMany(Doctor, {status: "verified"}, null, function(doctors) {
-			db.findMany(Clinic, {}, null, function(clinics) {
-				var results = {
-					doctors: doctors,
-					clinics: clinics
-				}
-				if(results != null) {
-					res.render('admin-doctors', results)
-				}
+		if(req.session.type == 'admin') {
+			db.findMany(Doctor, {status: "verified"}, null, function(doctors) {
+				db.findMany(Clinic, {}, null, function(clinics) {
+					var results = {
+						doctors: doctors,
+						clinics: clinics
+					}
+					if(results != null) {
+						res.render('admin-doctors', results)
+					}
+				})
 			})
-		})
+		}
+		else if(req.session.email) {
+			res.redirect('/homeDoctors')
+		}
+		else {
+			res.redirect('/')
+		}
     },
     
 	pending: function(req,res) {
-		db.findMany(Doctor, {status: "unverified"}, null, function(doctors) {
-			var user = req.session
-			var results = {
-				user: user,
-				doctors: doctors
-			}
-			res.render('admin-pending', results)
-		})
+		if(req.session.type == 'admin') {
+			db.findMany(Doctor, {status: "unverified"}, null, function(doctors) {
+				var user = req.session
+				var results = {
+					user: user,
+					doctors: doctors
+				}
+				res.render('admin-pending', results)
+			})
+		}
+		else if(req.session.email) {
+			res.redirect('/homeDoctors')
+		}
+		else {
+			res.redirect('/')
+		}
 	},
 
 	acceptDoctor: function(req,res) {
-		db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'})
-		db.updateMany(Clinic, {_id: {$in: req.body.clinics}}, {$push: {clinicDoctors: req.body.id}})
-		res.send(true)
+		if(req.session.type == 'admin') {
+			db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'})
+			db.updateMany(Clinic, {_id: {$in: req.body.clinics}}, {$push: {clinicDoctors: req.body.id}})
+			res.send(true)
+		}
+		else if(req.session.email) {
+			res.redirect('/homeDoctors')
+		}
+		else {
+			res.redirect('/')
+		}
 	},
 
 	rejectDoctor: function(req,res) {
-		db.deleteOne(Doctor, {_id: req.body.id})
-		res.send(true)
+		if(req.session.type == 'admin') {
+			db.deleteOne(Doctor, {_id: req.body.id})
+			res.send(true)
+		}
+		else if(req.session.email) {
+			res.redirect('/homeDoctors')
+		}
+		else {
+			res.redirect('/')
+		}
 	}
 }
 

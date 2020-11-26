@@ -25,7 +25,6 @@ const userController = {
 			if(user != null) {
 				bcrypt.compare(password, user.password, function(err, equal) {
 					if(equal){
-						console.log("Patient")
 						req.session.email = req.body.email;
 						req.session.name = user.firstname + " " + user.lastname;
 						req.session.userId = user._id;
@@ -40,7 +39,6 @@ const userController = {
 			else {
 				db.findOne(Doctor, query, null, function(doctor) {
 					if(doctor != null) {
-						console.log("Doctor")
 						bcrypt.compare(password, doctor.password, function(err, equal) {
 							if(equal) {
 								req.session.email = req.body.email;
@@ -55,7 +53,6 @@ const userController = {
 					else {
 						db.findOne(Admin, query, null, function(admin) {
 							if(admin != null) {
-								console.log("Admin")
 								bcrypt.compare(password, admin.password, function(err, equal) {
 									if(equal) {
 										req.session.email = req.body.email;
@@ -286,6 +283,14 @@ const userController = {
         
 		}
 	},
+
+	logout: function(req,res){
+		req.session.destroy(function(err){
+			if(err) throw err;
+
+			res.redirect('/');
+		})
+	}
 }
 
 module.exports = userController;

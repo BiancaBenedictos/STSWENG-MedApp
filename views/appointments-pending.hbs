@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
     <script src="/helpers/helper.js"></script>
+    <script src="scripts/appointments.js"></script>
 
 </head>
 <body>
@@ -27,11 +28,7 @@
             <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
-                <p>
-                    Age: {{user.age}}<br>
-                    Weight: {{user.weight}}<br>
-                    Height: {{user.height}}<br>
-                </p>
+                <p id="user-info" style="white-space: pre-line"></p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
             </div>
             <div class="col">
@@ -42,6 +39,7 @@
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>
 
+                {{#if appointments}}
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
@@ -56,6 +54,9 @@
                     </div>
                 </div>
                 {{/each}}
+                {{else}}
+                <p style="text-align:center">No pending appointments</p>
+                {{/if}}
             </div>
         </div>
     </div>
@@ -74,6 +75,7 @@
             </div>
             <div class="modal-body">
                 <form>
+                    {{!-- Basic Information --}}
                     <div class="form-group row">
                         <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
@@ -86,9 +88,32 @@
                     </div>
                     <div class="form-group row">
                         <div class="form-group col">
+                            <label for="oldPassword" class="col-form-label">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword">
+                        </div>
+                        <div class="form-group col">
+                            <label for="newPassword" class="col-form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label>Profile Picture</label>
+                            <div class="button-wrap">
+                                <label class="button" for="profpic">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Patient Users Only --}}
+                    <div class="form-group row user">
+                        <div class="form-group col">
                             <label for="age" class="col-form-label">Age</label>
                             <input type="Number" class="form-control" id="age" value={{user.age}}>
                         </div>
+                    </div>
+                    <div class="form-group row user">
                         <div class="form-group col">
                             <label for="weight" class="col-form-label">Weight</label>
                             <input type="Number" class="form-control" id="weight" value={{user.weight}}>
@@ -96,6 +121,17 @@
                         <div class="form-group col">
                             <label for="height" class="col-form-label">Height</label>
                             <input type="Number" class="form-control" id="height" value={{user.height}}>
+                        </div>
+                    </div>
+                    
+                    {{!-- Doctor Users Only --}}
+                    <div class="form-group row doctor">
+                        <div class="form-group col">
+                            <label>Credentials</label>
+                            <div class="button-wrap">
+                                <label class="button" for="credentials">Upload File</label>
+                                <input id="credentials" class="form-control" type="file">
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -27,18 +27,12 @@ const adminController = {
     
 	pending: function(req,res) {
 		db.findMany(Doctor, {status: "unverified"}, null, function(doctors) {
-			// temp since di pa na update yung user model
-			var user = {
-				firstname: "John",
-				lastname: "Doe"
-			}
+			var user = req.session
 			var results = {
 				user: user,
 				doctors: doctors
 			}
-			if(results != null) {
-				res.render('admin-pending', results)
-			}
+			res.render('admin-pending', results)
 		})
 	}
 }

@@ -7,10 +7,10 @@ const helper = require('../helpers/helper');
 
 const doctorController = {
 	doctorProfile: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.query.id
 
 		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+			console.log(doctor)
 			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
 
 				clinics.doctorId = userId
@@ -26,8 +26,7 @@ const doctorController = {
 	},
 
 	pendingAppointments: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.session.userId
 
 		var patientIds = []
 		var apts = []
@@ -57,8 +56,7 @@ const doctorController = {
     },
     
 	createAppointments: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.session.userId
 		
 		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
 			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {

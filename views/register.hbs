@@ -58,7 +58,7 @@
                             <label>Profile Picture</label>
                             <div class="button-wrap">
                                 <label class="button" for="picture">Upload File</label>
-                                <input type="file" id="picture" name="picture" class="form-control">
+                                <input type="file" id="picture" name="picture" class="form-control" accept="image/*">
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                 <label>Credentials</label>
                                 <div class="button-wrap">
                                     <label class="button" for="credentials">Upload File</label>
-                                    <input type="file" id="credentials" name="credentials" class="form-control" onblur="hasCreds()">
+                                    <input type="file" id="credentials" name="credentials" class="form-control" onblur="hasCreds()" accept=".pdf">
                                     <p class="m-0" id="noCreds" style="color:red">Please upload your credentials</p>
                                 </div>
                             </div>

@@ -59,6 +59,7 @@
                             <div class="button-wrap">
                                 <label class="button" for="picture">Upload File</label>
                                 <input type="file" id="picture" name="picture" class="form-control" accept="image/*">
+                                <p class="m-0" id="invalidPic" style="color:red"></p>
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
                                 <label>Credentials</label>
                                 <div class="button-wrap">
                                     <label class="button" for="credentials">Upload File</label>
-                                    <input type="file" id="credentials" name="credentials" class="form-control" onblur="hasCreds()" accept=".pdf">
+                                    <input type="file" id="credentials" name="credentials" class="form-control" accept=".pdf">
                                     <p class="m-0" id="noCreds" style="color:red">Please upload your credentials</p>
                                 </div>
                             </div>

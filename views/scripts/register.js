@@ -32,18 +32,59 @@ $(document).ready(function() {
 
         return !emailEmpty && !passwordEmpty && !firstnameEmpty && !lastnameEmpty && !cpasswordEmpty && !credentialsEmpty;
     }
+    
+    document.getElementById('picture').onblur = function() {
+        document.getElementById("invalidPic").innerHTML = "";
+
+        var valid = [".jpg", ".jpeg", ".png"]
+        var input = document.getElementById("picture")
+        if(input.type == 'file') {
+            var filename = input.value
+            if(filename.length > 0) {
+                var isValid = false
+                for(var i = 0; i < valid.length; i++) {
+                    var ext = valid[i]
+                    if(filename.substr(filename.length - ext.length, ext.length).toLowerCase() == ext.toLowerCase()) {
+                        isValid = true
+                        break
+                    }
+                }
+                if(!isValid) {
+                    document.getElementById("invalidPic").innerHTML = "Please upload a valid image file";
+                }
+            }
+        }
+    }
 
     document.getElementById('credentials').onblur = function() {
-        if(document.getElementById("credentials").files.length == 0) credentialsEmpty = true
-        else credentialsEmpty = false
-
-        if(!credentialsEmpty) {
-            document.getElementById("noCreds").innerHTML = "";
-            $("#submitbtn").prop('disabled', false);
-        }
-        else {
+        if(document.getElementById("credentials").files.length == 0) {
+            credentialsEmpty = true
             document.getElementById("noCreds").innerHTML = "Please upload your credentials";
             $("#submitbtn").prop('disabled', true);
+        }
+        else {
+            document.getElementById("noCreds").innerHTML = "";
+            $("#submitbtn").prop('disabled', false);
+
+            var valid = [".pdf"]
+            var input = document.getElementById("credentials")
+            if(input.type == 'file') {
+                var filename = input.value
+                if(filename.length > 0) {
+                    var isValid = false
+                    for(var i = 0; i < valid.length; i++) {
+                        var ext = valid[i]
+                        if(filename.substr(filename.length - ext.length, ext.length).toLowerCase() == ext.toLowerCase()) {
+                            isValid = true
+                            break
+                        }
+                    }
+                    if(!isValid) {
+                        document.getElementById("noCreds").innerHTML = "Please upload a PDF file";
+                        $("#submitbtn").prop('disabled', true);
+                    }
+                }
+            }
         }
     }
 

@@ -1,10 +1,5 @@
 const navbarController = {
-    getDetails: function(req, res){
-        // var details = {
-        //     name: req.session.name,
-        //     type: req.session.type
-        // }
-        // res.send(details);
+    getDetails: function(req, res) {
         res.send(req.session)
     }
 }

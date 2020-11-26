@@ -64,3 +64,6 @@ app.get('/getCheckEmail', userController.getCheckEmail);
 app.post('/register', 
          uploadFilter,
          userController.postRegister)
+
+
+app.get('/logout', userController.logout);

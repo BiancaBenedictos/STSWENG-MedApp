@@ -3,6 +3,7 @@ const Clinic = require('../models/clinicModel.js');
 const Doctor = require('../models/doctorModel.js')
 const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
+const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
 
 const appointmentController = {
@@ -217,12 +218,97 @@ const appointmentController = {
     },
 
     bookAppointment: function(req,res) {
-		var id = req.query.id
+		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+		var date = new Date();
+		var day = date.getDay();
+		days = days.slice(0);
+
+		/*	for month/date header */
+		var sun = new Date()
+		sun.setDate(sun.getDate() - day)
+
+		var dates = []
+
+		for (i=0; i<7; i++) {
+			if (i == day) {
+				dates.push({date: sun.getDate() + i, day: days[i], class: 'active'})
+			} else {
+				dates.push({date: sun.getDate() + i, day: days[i], class: ''})
+			}
+		}
+
+		/* for timeslots */
+
+		var q = {
+			doctorID: req.query.id,
+			clinicID: req.query.c,
+			day: days[day]
+		}
 		
-		db.findOne(Doctor, {_id: id}, null, function(doctor) {
-			res.render('book-appointment', {doctor: doctor})
+		var times = [];
+
+		db.findOne(Availability, q, "day startTime endTime intervalHours", function(results) {
+			if (results) {
+				var s = results.startTime
+				var e = results.endTime
+				var int = results.intervalHours
+				var ampm = " AM"
+
+				while ( +s <= +e ) {
+					var h = s.getHours() % 12
+					var m = s.getMinutes();
+
+					if (s.getHours() >= 12)
+						ampm = " PM"
+					if (h == 0)
+						h = 12
+
+					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+
+					times.push({time: h + ":" + m + ampm})
+					s.setMinutes(s.getMinutes() + (int * 60))
+				}
+			}
+
+			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
+				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], dates: dates, slots: times})
+			})
 		})
-    }
+	},
+	
+	getSlots: function(req,res) {
+		db.findOne(Availability, req.query, "day startTime endTime intervalHours", function(results) {
+			var times = [];
+
+			if (results) {
+				var s = results.startTime
+				var e = results.endTime
+				var int = results.intervalHours
+				var ampm = " AM"
+
+				while ( +s <= +e ) {
+					var h = s.getHours() % 12
+					var m = s.getMinutes();
+
+					if (s.getHours() >= 12)
+						ampm = " PM"
+					if (h == 0)
+						h = 12
+
+					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+
+					times.push(h + ":" + m + ampm)
+					s.setMinutes(s.getMinutes() + (int * 60))
+				}
+			}
+
+			res.send(times)
+		})
+	}
 }
 
 module.exports = appointmentController

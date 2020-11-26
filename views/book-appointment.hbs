@@ -37,14 +37,10 @@
             </div>
             <div class="col">
                 <div class="row appointments week justify-content-center">
-                    <span class="heading">November<br>
-                        <button class="day" value="Sunday">15</button>
-                        <button class="day active" value="Monday">16</button>
-                        <button class="day" value="Tuesday">17</button>
-                        <button class="day" value="Wednesday">18</button>
-                        <button class="day" value="Thursday">19</button>
-                        <button class="day" value="Friday">20</button>
-                        <button class="day" value="Saturday">21</button>
+                    <span class="heading">{{month}}<br>
+                    {{#each dates}} 
+                        <button class="day {{class}}" value="{{day}}">{{date}}</button>
+                    {{/each}}
                     </span>
                 </div>
                 <div class="row justify-content-center">

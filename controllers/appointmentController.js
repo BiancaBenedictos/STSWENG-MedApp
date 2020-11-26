@@ -151,10 +151,10 @@ const appointmentController = {
 		var q = {
 			doctorID: doctor,
 			clinicID: clinic,
-			day: {'$in': days}
+			day: days[day]
 		}
 
-		db.findMany(Availability, q, "day startTime endTime intervalHours", function(results) {
+		db.findOne(Availability, q, "day startTime endTime intervalHours", function(results) {
 			var sun = new Date()
 			var sat = new Date()
 
@@ -170,30 +170,31 @@ const appointmentController = {
 				}
 			}
 
+			var s = results.startTime
+			var e = results.endTime
+			var int = results.intervalHours
+			var times = [];
+			var ampm = " AM"
 
-			
+			while ( +s <= +e ) {
+				var h = s.getHours() % 12
+				var m = s.getMinutes();
 
-			var availabilities = [];
+				if (s.getHours() >= 12)
+					ampm = " PM"
+				if (h == 0)
+					h = 12
 
-			for (i=0; i < results.length; i++) {
-				var s = results[i].startTime
-				var e = results[i].endTime
-				var int = results[i].intervalHours
-				var times = [];
+				h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+				m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 
-				while ( +s <= +e ) {
-					times.push(s.getHours() + ":" + s.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
-					s.setMinutes(s.getMinutes() + (int * 60))
-				}
-
-				availabilities.push({
-					day: days[i],
-					avail: times
-				})
+				times.push({time: h + ":" + m + ampm})
+				s.setMinutes(s.getMinutes() + (int * 60))
 			}
 
+			console.log(times)
 			db.findOne(Doctor, {_id: doctor}, null, function(doctor) {
-				res.render('book-appointment', {doctor: doctor, month: months[date.getMonth()], dates: dates, avail: availabilities})
+				res.render('book-appointment', {doctor: doctor, month: months[date.getMonth()], dates: dates, slots: times})
 			})
 		})
     }

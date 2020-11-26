@@ -57,14 +57,15 @@ app.get('/homeClinics', homeController.clinics)
 app.get('/viewDoctors', homeController.viewDoctors)
 
 app.get('/', userController.getLogin)
-app.post('/', userController.postLogin);
-app.get('/getCheckLogin', userController.getCheckLogin);
+app.post('/', userController.postLogin)
+app.get('/getCheckLogin', userController.getCheckLogin)
 
 app.get('/register', userController.getRegister)
-app.get('/getCheckEmail', userController.getCheckEmail);
+app.get('/getCheckEmail', userController.getCheckEmail)
 app.post('/register', 
          uploadFilter,
          userController.postRegister)
 
+app.get('/logout', userController.logout)
 
-app.get('/logout', userController.logout);
+app.get('/error', userController.error)

@@ -59,7 +59,7 @@ const doctorController = {
 			})
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -81,7 +81,7 @@ const doctorController = {
 			})
 		}
 		else if(req.session.type == 'user' || req.session.type == 'admin') {
-			res.redirect('homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')

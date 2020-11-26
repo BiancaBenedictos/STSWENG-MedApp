@@ -284,12 +284,16 @@ const userController = {
 		}
 	},
 
-	logout: function(req,res){
+	logout: function(req,res) {
 		req.session.destroy(function(err){
 			if(err) throw err;
 
 			res.redirect('/');
 		})
+	},
+
+	error: function(req,res) {
+		res.render('error')
 	}
 }
 

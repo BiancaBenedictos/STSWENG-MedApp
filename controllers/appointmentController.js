@@ -74,7 +74,7 @@ const appointmentController = {
 			})
 		}
 		else if(req.session.type == 'admin') {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -112,7 +112,7 @@ const appointmentController = {
 			})
 		}
 		else if(req.session.type == 'admin') {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -177,7 +177,7 @@ const appointmentController = {
 			})
 		}
 		else if(req.session.type == 'admin') {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -242,7 +242,7 @@ const appointmentController = {
 			})
 		}
 		else if(req.session.type == 'admin') {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')
@@ -287,7 +287,7 @@ const appointmentController = {
 			})
 		}
 		else if(req.session.email) {
-			res.redirect('/homeDoctors')
+			res.redirect('/error')
 		}
 		else {
 			res.redirect('/')

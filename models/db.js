@@ -27,7 +27,7 @@ const database = {
     insertOne: function(model, doc, callback) {
         model.create(doc, function(error, result) {
             if(error) return callback(false);
-            //console.log('Added ' + result);
+            console.log('Added ' + result);
             return callback(result);
         });
     },
@@ -65,9 +65,9 @@ const database = {
 
     updateMany: function(model, filter, update) {
         model.updateMany(filter, update, function(error, result) {
-            if(error) return callback(false);
+            // if(error) return callback(false);
             //console.log('Documents modified: ' + result.nModified);
-            return callback(true);
+            // return callback(true);
         });
     },
 

@@ -24,7 +24,7 @@
             </div>
             <div class="col-1"></div>
             <div class="col">
-                <form action="/">
+                <form method="POST" action="/register" enctype="multipart/form-data">
                     <h1 class="heading">Register</h1>
                     <div class="form-group row">
                         <div class="col-6">
@@ -57,7 +57,7 @@
                             <label>Profile Picture</label>
                             <div class="button-wrap">
                                 <label class="button" for="picture">Upload File</label>
-                                <input id="picture" class="form-control" type="file">
+                                <input type="file" id="picture" name="picture" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <input type="checkbox" id="doctorCheck">
+                    <input type="checkbox" id="doctorCheck" name="doctorCheck">
                     <label for="doctorCheck">I am a Doctor</label>
 
                     <div id="doctorFields" style="display:none">
@@ -98,7 +98,7 @@
                                 <label>Credentials</label>
                                 <div class="button-wrap">
                                     <label class="button" for="credentials">Upload File</label>
-                                    <input id="credentials" class="form-control" type="file">
+                                    <input type="file" id="credentials" name="credentials" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                 <button type="button" id="addClinic" onclick="add()">Add Clinic</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" id="registerClinic">Register Clinic</button>
+                                <button type="button" id="registerClinic" name="registerClinic">Register Clinic</button>
                                 
                             </div>
                         </div>

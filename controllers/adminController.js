@@ -34,6 +34,17 @@ const adminController = {
 			}
 			res.render('admin-pending', results)
 		})
+	},
+
+	acceptDoctor: function(req,res) {
+		db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'})
+		db.updateMany(Clinic, {_id: {$in: req.body.clinics}}, {$push: {clinicDoctors: req.body.id}})
+		res.send(true)
+	},
+
+	rejectDoctor: function(req,res) {
+		db.deleteOne(Doctor, {_id: req.body.id})
+		res.send(true)
 	}
 }
 

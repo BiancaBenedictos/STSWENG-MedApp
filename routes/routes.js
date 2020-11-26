@@ -31,34 +31,6 @@ var uploadFilter = upload.fields([
 
 const app = express();
 
-/*
-//Init Cookie and Body Parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-//Init Sessions
-app.use(
-    session({
-        key: 'user_sid', //user session id
-        secret: 'lifecouldbedream',
-        resave: false,
-        saveUninitialized: true,
-        store: database.sessionStore,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24, // 1 Day.
-        },
-    }),
-);
-
-
-app.use((req, res, next) => {
-    if (req.cookies.user_sid && !req.session.user) {
-        res.clearCookie('user_sid');
-    }
-    next();
-});
-*/
-
 module.exports = app
 
 app.get('/getDetails', navbarController.getDetails);
@@ -87,6 +59,8 @@ app.get('/', userController.getLogin)
 app.post('/', userController.postLogin);
 app.get('/getCheckLogin', userController.getCheckLogin);
 
+app.get('/register', userController.getRegister)
+app.get('/getCheckEmail', userController.getCheckEmail);
 app.post('/register', 
          uploadFilter,
          userController.postRegister)

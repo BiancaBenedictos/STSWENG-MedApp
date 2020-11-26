@@ -124,10 +124,19 @@ const userController = {
 	},
     
 	getRegister: function(req,res){
-		res.render('register', {
-			title: 'Register | Med-Aid',
+		db.findMany(Clinic, {}, null, function(clinics) {
+			var professions = Doctor.schema.path('profession').enumValues
+			res.render('register', {title: 'Register | Med-Aid',
 			register_active: true,
-		});
+			clinics: clinics, professions: professions})
+		})
+	},
+
+	getCheckEmail: function(req,res){
+        var email = req.query.email;
+		db.findOne(User, {email:email}, 'email', function(result) {
+			res.send(result);
+		}) 
 	},
 
 	postRegister: function(req, res) {
@@ -150,20 +159,31 @@ const userController = {
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
+
 			var password = req.body.password;
 			var doccheck = req.body.doctorCheck;
 
 			if(doccheck != "on") {
+				console.log('Patient; registering...')
+				const age = helper.sanitize(req.body.age);
+				const height = helper.sanitize(req.body.height);
+				const weight = helper.sanitize(req.body.weight);
+				var bookedappointments = [];
+
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
 						console.log('NO PICTURE');
 
 						var USER = new User({
-							usertype: 'patient',
 							email: email,
 							password: hash,
 							firstname: fname,
-							lastname: lname
+							lastname: lname,
+							bookedAppointments: bookedappointments,
+							age: age,
+							height: height,
+							weight: weight
+
 						});
 
 						db.insertOne(User, USER, function (flag) {
@@ -176,11 +196,15 @@ const userController = {
 					else {
 						console.log('HAS PICTURE; SAVING...')
 						var USER = new User({
-							usertype: 'patient',
 							email: email,
 							password: hash,
 							firstname: fname,
-							lastname: lname
+							lastname: lname,
+							bookedAppointments: bookedappointments,
+							age: age,
+							height: height,
+							weight: weight
+
 						});
 
 						var picName = USER.firstname;
@@ -194,17 +218,10 @@ const userController = {
 								res.redirect('/upcomingAppointments');
 							}
 						});
-
-						// db.insertOne(User, USER, function (flag) {
-						// 	console.log('inside insert function....');
-						// 	console.log(flag);
-						// 	if (!flag) {
-						// 		res.redirect('/upcomingAppointments');
-						// 	}
-						// });
 					}
 				});
 			} else {
+				console.log('Doctor; registering...');
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;
@@ -220,7 +237,9 @@ const userController = {
 							lastname: lname,
 							clinics: clinics,
 							profession: profess,
-							status: 'unverified'
+							status: 'unverified',
+							availability: [],
+							bookedAppointments: []
 						});
 
 						var credsName = DOCTOR.lastname;
@@ -242,7 +261,9 @@ const userController = {
 							lastname: lname,
 							clinics: clinics,
 							profession: profess,
-							status: 'unverified'
+							status: 'unverified',
+							availability: [],
+							bookedAppointments: []
 						});
 
 						var picName = DOCTOR.firstname;

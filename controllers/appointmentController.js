@@ -3,6 +3,7 @@ const Clinic = require('../models/clinicModel.js');
 const Doctor = require('../models/doctorModel.js')
 const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
+const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
 
 const appointmentController = {
@@ -133,10 +134,67 @@ const appointmentController = {
     },
 
     bookAppointment: function(req,res) {
-		var id = req.query.id
-		
-		db.findOne(Doctor, {_id: id}, null, function(doctor) {
-			res.render('book-appointment', {doctor: doctor})
+		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+		var doctor = req.query.id
+		var clinic = req.query.c;
+		var date = new Date();
+		var day = date.getDay();
+		days = days.slice(0);
+		console.log(days)
+
+		console.log(date)
+		console.log(day)
+		console.log(req.query)
+
+		var q = {
+			doctorID: doctor,
+			clinicID: clinic,
+			day: {'$in': days}
+		}
+
+		db.findMany(Availability, q, "day startTime endTime intervalHours", function(results) {
+			var sun = new Date()
+			var sat = new Date()
+
+			sun.setDate(sun.getDate() - day)
+
+			var dates = []
+
+			for (i=0; i<7; i++) {
+				if (i == day) {
+					dates.push({date: sun.getDate() + i, day: days[i], class: 'active'})
+				} else {
+					dates.push({date: sun.getDate() + i, day: days[i], class: ''})
+				}
+			}
+
+
+			
+
+			var availabilities = [];
+
+			for (i=0; i < results.length; i++) {
+				var s = results[i].startTime
+				var e = results[i].endTime
+				var int = results[i].intervalHours
+				var times = [];
+
+				while ( +s <= +e ) {
+					times.push(s.getHours() + ":" + s.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
+					s.setMinutes(s.getMinutes() + (int * 60))
+				}
+
+				availabilities.push({
+					day: days[i],
+					avail: times
+				})
+			}
+
+			db.findOne(Doctor, {_id: doctor}, null, function(doctor) {
+				res.render('book-appointment', {doctor: doctor, month: months[date.getMonth()], dates: dates, avail: availabilities})
+			})
 		})
     }
 }

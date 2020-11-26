@@ -40,14 +40,17 @@
                 <div class="row appointments week justify-content-center">
                     <span class="heading">{{month}}<br>
                     {{#each dates}} 
-                        <button class="day {{class}}" value="{{day}}">{{date}}</button>
+                        <button class="day {{class}}" value="{{day}}" onclick="getSlots('{{day}}', '{{../doctor._id}}', '{{../clinic}}')">{{date}}</button>
                     {{/each}}
                     </span>
                 </div>
                 <div class="row justify-content-center">
                 </div>
                 <div class="row timeslots flex-wrap">
-                    <button class="time" data-toggle="modal" data-target="#confirm">12:00 PM</button>
+                    {{#each slots}}
+                    <button class="time" data-toggle="modal" data-target="#confirm">{{time}}</button>
+                    {{/each}}
+                    
                     {{!-- <button class="time">12:30 PM</button>
                     <button class="time">1:00 PM</button>
                     <button class="time">1:30 PM</button>

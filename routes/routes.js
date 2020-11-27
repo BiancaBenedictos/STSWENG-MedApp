@@ -47,6 +47,7 @@ app.get('/concludedAppointments', appointmentController.concludedAppointments)
 app.get('/cancelledAppointments', appointmentController.cancelledAppointments)
 app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/getSlots', appointmentController.getSlots)
+app.post('/requestAppointment', appointmentController.requestAppointment)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
 app.get('/doctorPendingAppointments', doctorController.pendingAppointments)

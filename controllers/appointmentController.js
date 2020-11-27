@@ -285,6 +285,34 @@ const appointmentController = {
 
 			res.send(times)
 		})
+	},
+
+	requestAppointment: function(req, res) {
+		var bookTime = new Date(req.body.month + " " + req.body.date + ", 2020 " + req.body.time)
+		var today = new Date();
+
+		if (+bookTime <= +today) {
+			res.send(false)
+		} else {
+			db.findOne(Appointment, {bookedDate: bookTime}, "", function(conflict){
+				if (conflict && conflict.status == "Upcoming")
+					res.send(false);
+				else {
+					var a = {
+						bookedDoctor: req.body.doctor,
+						patient: req.session.id,
+						bookedDate: bookTime, 
+						status: "Pending"
+					}
+					
+					db.insertOne(Appointment, a, function(result) {
+						if (result)
+							res.send(true);
+						else res.send(false)
+					})
+				}
+			})
+		}
 	}
 }
 

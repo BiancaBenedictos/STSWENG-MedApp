@@ -266,6 +266,7 @@ const appointmentController = {
 
 				while ( +s <= +e ) {
 					var h = s.getHours() % 12
+					var h2 = s.getHours()
 					var m = s.getMinutes();
 
 					if (s.getHours() >= 12)
@@ -274,9 +275,10 @@ const appointmentController = {
 						h = 12
 
 					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					h2 = h2.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 
-					times.push(h + ":" + m + ampm)
+					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
 					s.setMinutes(s.getMinutes() + (int * 60))
 				}
 			}

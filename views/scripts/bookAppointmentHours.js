@@ -1,3 +1,5 @@
+var month, date, time;
+
 function getSlots(day, doctor, clinic) {
     var d = $('div.timeslots')
     d.empty()
@@ -16,8 +18,9 @@ function getSlots(day, doctor, clinic) {
 }
 
 function updateBookTime(time) {
-    var month = $("span.month").attr('id');
-    var date = $('button.active').text();
+    month = $("span.month").attr('id');
+    date = $('button.active').text();
+    time = time;
     $("#book-time").text(month + " " + date + ", " + time);
 }
 

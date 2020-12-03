@@ -15,7 +15,8 @@ $(document).ready(function() {
             $('.user').prop('hidden', true);
 
             var link = document.getElementById('pending')
-            link.setAttribute('href', '/doctorPendingAppointments')
+            link.setAttribute('href', '/pendingAppointments');
+            // link.setAttribute('href', '/doctorPendingAppointments')
 
         }
     });

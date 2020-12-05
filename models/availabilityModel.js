@@ -15,6 +15,21 @@ const availabilitySchema = new mongoose.Schema({
     endTime: {
         type: Date,
         required: true
+    },
+
+    intervalHours: {
+        type: Number,
+        required: true
+    },
+
+    doctorID: {
+        type: String,
+        required: true
+    },
+
+    clinicID: {
+        type: String,
+        required: true
     }
 });
 

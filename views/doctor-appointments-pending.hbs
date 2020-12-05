@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
+    <script src="scripts/appointments.js"></script>
+
 </head>
 <body>
     {{> nav}}
@@ -25,24 +27,24 @@
             <div class="col-4 filter">
                 <img src="assets/black.png">
                 <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
-                <p>{{doctor.profession}}</p>
+                <p id="user-info" style="white-space: pre-line"></p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
-                {{!-- <a href="/login" class="btn edit-btn">logout</a> --}}
             </div>
             <div class="col">
                 <div class="row options">
                     <a href="/upcomingAppointments" id="upcoming">upcoming</a>
-                    <a href="#" id="pending">pending</a>
+                    <a href="/pendingAppointments" id="pending">pending</a>
                     <a href="/concludedAppointments" id="concluded">concluded</a>
                     <a href="/cancelledAppointments" id="cancelled">cancelled</a>
                 </div>
                 
+                {{#if appointments}}
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
                         <img class="card-img" src="assets/black.png">
                         <div class="card-body">
-                            <h5 class="card-title">{{patient}}</h5>
+                            <h5 class="card-title">{{doctor}}</h5>
                             <p class="card-text">{{date}} · {{time}}</p>
                         </div>
                         <div class="card-body cancel">
@@ -56,6 +58,9 @@
                     </div>
                 </div>
                 {{/each}}
+                {{else}}
+                <p style="text-align:center">No pending appointments</p>
+                {{/if}}
             </div>
         </div>
     </div>
@@ -74,38 +79,63 @@
             </div>
             <div class="modal-body">
                 <form>
+                    {{!-- Basic Information --}}
                     <div class="form-group row">
                         <div class="form-group col">
                             <label for="firstname" class="col-form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstname">
+                            <input type="text" class="form-control" id="firstname" value="{{user.firstname}}">
                         </div>
                         <div class="form-group col">
                             <label for="lastname" class="col-form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastname"></textarea>
+                            <input type="text" class="form-control" id="lastname" value="{{user.lastname}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="form-group col">
-                            <label for="profession">Profession</label>
-                            <select class="form-control" id="profession">
-                                <option>Pediatrician</option>
-                                <option>Gynecologist</option>
-                                <option>Obstetrician</option>
-                                <option>Surgeon</option>
-                                <option>Psychiatrist</option>
-                                <option>Cardiologist</option>
-                                <option>Dermatologist</option>
-                                <option>Endocrinologist</option>
-                                <option>Ophtalmologist</option>
-                                <option>Pulmonologist</option>
-                                <option>Gastroenterologist</option>
-                                <option>Nephrologist</option>
-                                <option>Otolaryngologist</option>
-                                <option>Neurologist</option>
-                                <option>Radiologist</option>
-                                <option>Anesthesiologist</option>
-                                <option>Oncologist</option>
-                            </select>
+                            <label for="oldPassword" class="col-form-label">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword">
+                        </div>
+                        <div class="form-group col">
+                            <label for="newPassword" class="col-form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label>Profile Picture</label>
+                            <div class="button-wrap">
+                                <label class="button" for="profpic">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Patient Users Only --}}
+                    <div class="form-group row user">
+                        <div class="form-group col">
+                            <label for="age" class="col-form-label">Age</label>
+                            <input type="Number" class="form-control" id="age" value={{user.age}}>
+                        </div>
+                    </div>
+                    <div class="form-group row user">
+                        <div class="form-group col">
+                            <label for="weight" class="col-form-label">Weight</label>
+                            <input type="Number" class="form-control" id="weight" value={{user.weight}}>
+                        </div>
+                        <div class="form-group col">
+                            <label for="height" class="col-form-label">Height</label>
+                            <input type="Number" class="form-control" id="height" value={{user.height}}>
+                        </div>
+                    </div>
+                    
+                    {{!-- Doctor Users Only --}}
+                    <div class="form-group row doctor">
+                        <div class="form-group col">
+                            <label>Credentials</label>
+                            <div class="button-wrap">
+                                <label class="button" for="credentials">Upload File</label>
+                                <input id="credentials" class="form-control" type="file">
+                            </div>
                         </div>
                     </div>
                 </form>

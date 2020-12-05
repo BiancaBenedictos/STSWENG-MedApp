@@ -7,68 +7,85 @@ const helper = require('../helpers/helper');
 
 const doctorController = {
 	doctorProfile: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.query.id
 
-		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
-
-				clinics.doctorId = userId
-
-				var details = {
-					doctor: doctor,
-					clinics: clinics
-				}
-				
-				res.render('doctor-profile', details)
+		if(req.session.email) {
+			db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+				db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
+					clinics.doctorId = userId
+	
+					var details = {
+						doctor: doctor,
+						clinics: clinics
+					}
+					
+					res.render('doctor-profile', details)
+				})
 			})
-		})
+		}
+		else {
+			res.redirect('/')
+		}
 	},
 
 	pendingAppointments: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.session.userId
 
 		var patientIds = []
 		var apts = []
 
-		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-			db.findMany(Appointment, {bookedDoctor: userId, status: 'Pending'}, null, function(appointments) {
-				
-				for(var i = 0; i < appointments.length; i++) {
-					patientIds.push(appointments[i].patient)
-				}
-				
-				User.find({ "_id": { "$in": patientIds } }).then(patients =>
-					patientIds.map(e => patients.find(s => s._id.equals(e)))
-				).then(patients => {
-					for(var j = 0; j < patients.length; j++) {
-						var details = {
-							patient: patients[j].firstname + " " + patients[j].lastname,
-							date: helper.formatDate(appointments[j].bookedDate),
-							time: helper.getTime(appointments[j].bookedDate)
-						}
-						apts.push(details)
+		if(req.session.type == 'doctor') {
+			db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+				db.findMany(Appointment, {bookedDoctor: userId, status: 'Pending'}, null, function(appointments) {
+					
+					for(var i = 0; i < appointments.length; i++) {
+						patientIds.push(appointments[i].patient)
 					}
-					res.render('doctor-appointments-pending', {appointments: apts, doctor: doctor})
+					
+					User.find({ "_id": { "$in": patientIds } }).then(patients =>
+						patientIds.map(e => patients.find(s => s._id.equals(e)))
+					).then(patients => {
+						for(var j = 0; j < patients.length; j++) {
+							var details = {
+								patient: patients[j].firstname + " " + patients[j].lastname,
+								date: helper.formatDate(appointments[j].bookedDate),
+								time: helper.getTime(appointments[j].bookedDate)
+							}
+							apts.push(details)
+						}
+						res.render('doctor-appointments-pending', {appointments: apts, doctor: doctor})
+					})
 				})
 			})
-		})
+		}
+		else if(req.session.email) {
+			res.redirect('/error')
+		}
+		else {
+			res.redirect('/')
+		}
     },
     
 	createAppointments: function(req, res) {
-		// temp doctor
-		var userId = '5fb59a0731422020ec5fb2e1'
+		var userId = req.session.userId
 		
-		db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-			db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
-				var details = {
-					doctor: doctor,
-					clinics: clinics
-				}
-				res.render('create-appointments', details)
+		if(req.session.type == 'doctor') {
+			db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+				db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
+					var details = {
+						doctor: doctor,
+						clinics: clinics
+					}
+					res.render('create-appointments', details)
+				})
 			})
-		})
+		}
+		else if(req.session.type == 'user' || req.session.type == 'admin') {
+			res.redirect('/error')
+		}
+		else {
+			res.redirect('/')
+		}
     }
 }
 

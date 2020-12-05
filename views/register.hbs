@@ -135,8 +135,8 @@
                     </div>
                 </form>
                 <script>
-                    var i = 1
                     function add() {
+                        var i = 1
                         var str = ` <div class="form-group">
                                         <select class="form-control" id="clinic` + i + `" name="clinics[` + i + `]">
                                             {{#each clinics}}
@@ -150,9 +150,10 @@
                     }
 
                     function regClinic() {
+                        var i = 0
                         var input = document.createElement("input")
                         input.id = "clinic" + i
-                        input.name = "clinics[" + i + "]"
+                        input.name = "regclinics[" + i + "]"
                         input.className = "form-control"
 
                         document.getElementById("addRowsHere").appendChild(input)

@@ -197,6 +197,13 @@ const userController = {
 
 						db.insertOne(User, USER, function (flag) {
 							if (flag) {
+								req.session.email = USER.email;
+								req.session.name = USER.firstname + " " + USER.lastname;
+								req.session.userId = USER._id;
+								req.session.type = 'user'
+								req.session.age = USER.age,
+								req.session.weight = USER.weight,
+								req.session.height = USER.height
 								res.redirect('/upcomingAppointments');
 							}
 						});
@@ -218,12 +225,19 @@ const userController = {
 
 						var picName = USER.firstname;
 						var picFileName = helper.renameAvatar(req, picName);
-						USER.profpic = picFileName;
+						USER.profpic = 'images/' + picFileName;
 						
 			//			console.log(USER);
 
 						db.insertOne(User, USER, function(flag) {
 							if (flag){
+								req.session.email = USER.email;
+								req.session.name = USER.firstname + " " + USER.lastname;
+								req.session.userId = USER._id;
+								req.session.type = 'user'
+								req.session.age = USER.age,
+								req.session.weight = USER.weight,
+								req.session.height = USER.height
 								res.redirect('/upcomingAppointments');
 							}
 						});
@@ -234,6 +248,7 @@ const userController = {
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;
+				console.log(req.body.regclinics)
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
@@ -257,6 +272,11 @@ const userController = {
 
 						db.insertOne(Doctor, DOCTOR, function (flag) {
 							if (flag) {
+								req.session.email = DOCTOR.email;
+								req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
+								req.session.userId = DOCTOR._id;
+								req.session.type = 'doctor'
+								req.session.profession = DOCTOR.profession
 								res.redirect('/upcomingAppointments');
 							}
 						});
@@ -277,7 +297,7 @@ const userController = {
 
 						var picName = DOCTOR.firstname;
 						var picFileName = helper.renameAvatar(req, picName);
-						DOCTOR.profpic = picFileName; 
+						DOCTOR.profpic = 'images/' + picFileName; 
 
 						var credsName = DOCTOR.lastname;
 						var credFileName = helper.renameCredentials(req, credsName);
@@ -285,6 +305,11 @@ const userController = {
 
 						db.insertOne(Doctor, DOCTOR, function (flag) {
 							if (flag) {
+								req.session.email = DOCTOR.email;
+								req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
+								req.session.userId = DOCTOR._id;
+								req.session.type = 'doctor'
+								req.session.profession = DOCTOR.profession
 								res.redirect('/upcomingAppointments');
 							}
 						});

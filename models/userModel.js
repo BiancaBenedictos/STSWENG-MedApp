@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 
     profpic: {
         type: String,
-        default: 'portrait.png',
+        default: 'images/portrait.png',
     },
 
     bookedAppointments: [{

@@ -3,16 +3,22 @@
         $.get('/getDetails', null, function(result) {
 
             $("#navName").text(result.name);
-
+            
             if(result.type == 'user') {
+                $('#profile').prop('hidden', true);
                 $('#create-appointments').prop('hidden', true);
                 $('#admin').prop('hidden', true);
             }
             if(result.type == 'doctor') {
+                var a = document.getElementById("profile");
+                var link = "/doctorProfile?id=" + result.userId
+                a.setAttribute('href', link)
+
                 $('#admin').prop('hidden', true);
             }
             if(result.type == 'admin') {
                 $('#profile').prop('hidden', true);
+                $('#appointments').prop('hidden', true);
                 $('#create-appointments').prop('hidden', true);
             }
         });
@@ -42,7 +48,8 @@
             <p id="navName" style="display:inline" class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></p>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navName">
-                <a class="dropdown-item" href="/upcomingAppointments" id="profile">Profile</a>
+                <a class="dropdown-item" id="profile">Profile</a>
+                <a class="dropdown-item" href="/upcomingAppointments" id="appointments">Appointments</a>
                 <a class="dropdown-item" href="/createAppointments" id="create-appointments">Create Appointments</a>
                 <a class="dropdown-item" href="/adminPending" id="admin">Verify Doctors</a>
                 <a class="dropdown-item" href="/logout">Logout</a>

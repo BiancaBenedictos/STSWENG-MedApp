@@ -245,6 +245,10 @@ const userController = {
 				});
 			} else {
 				console.log('Doctor; registering...');
+				
+				console.log(req.body);
+				//console.log(req.body.clinics);
+
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;

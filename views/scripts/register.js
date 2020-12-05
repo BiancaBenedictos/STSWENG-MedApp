@@ -218,12 +218,4 @@ $(document).ready(function() {
             $("#patient").show();
         }
     }
-
-    document.getElementById('registerClinic').onclick = function() {
-        var input = document.createElement("input")
-        input.id = "clinic"
-        input.className = "form-control"
-
-        document.getElementById("addRowsHere").appendChild(input)
-    }
 })

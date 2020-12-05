@@ -248,7 +248,26 @@ const userController = {
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;
-				console.log(req.body.regclinics)
+				
+				// for(var i = 0; i < req.body.newName.length; i++) {
+				// 	var address = {
+				// 		street: req.body.newStreet[i],
+				// 		city: req.body.newCity[i],
+				// 		state: req.body.newState[i]
+				// 	}
+				// 	var clinic = {
+				// 		clinicName: req.body.newName[i],
+				// 		clinicAddress: address,
+				// 		clinicDoctors: [],
+				// 		status: 'unverified'
+				// 	}
+					
+				// 	// console.log(clinic)
+				// 	db.insertOne(Clinic, clinic, function() {})
+				// 	db.findOne(Clinic, clinic, function(result) {
+				// 		console.log(result)
+				// 	})
+				// }
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
@@ -263,7 +282,8 @@ const userController = {
 							profession: profess,
 							status: 'unverified',
 							availability: [],
-							bookedAppointments: []
+							bookedAppointments: [],
+							// newClinics: newClinics
 						});
 
 						var credsName = DOCTOR.lastname;
@@ -292,7 +312,8 @@ const userController = {
 							profession: profess,
 							status: 'unverified',
 							availability: [],
-							bookedAppointments: []
+							bookedAppointments: [],
+							// newClinics: newClinics
 						});
 
 						var picName = DOCTOR.firstname;

@@ -120,13 +120,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-6">
+                            <div class="col">
                                 <button type="button" id="addClinic" name="addClinic" onclick="add()">Add Clinic</button>
                             </div>
-                            <div class="col-6">
-                                <button type="button" id="registerClinic" name="registerClinic" onclick="regClinic()">Register Clinic</button>
+                            {{!-- <div class="col-6">
+                                <button type="button" id="registerClinic" name="registerClinic" onclick="//regClinic()">Register Clinic</button>
                                 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -135,8 +135,11 @@
                     </div>
                 </form>
                 <script>
+                    var i = 1
+                    var j = 0
+                    
                     function add() {
-                        var i = 1
+                        
                         var str = ` <div class="form-group">
                                         <select class="form-control" id="clinic` + i + `" name="clinics[` + i + `]">
                                             {{#each clinics}}
@@ -150,14 +153,34 @@
                     }
 
                     function regClinic() {
-                        var i = 0
-                        var input = document.createElement("input")
-                        input.id = "clinic" + i
-                        input.name = "regclinics[" + i + "]"
-                        input.className = "form-control"
+                        
+                        var str = ` <div class="form-group">
+                                        <label for="name">Clinic Name</label>
+                                        <input class="form-control" id="name" name="newName[` + j + `]">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="street">Street</label>
+                                        <input class="form-control" id="street" name="newStreet[` + j + `]">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input class="form-control" id="city" name="newCity[` + j + `]">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state">State</label>
+                                        <input class="form-control" id="state" name="newState[` + j + `]">
+                                    </div>
+                                  `
+                        
+                        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+                        j++
+                        
+                        //var input = document.createElement("input")
+                        //input.id = "clinic" + i
+                        //input.name = "regclinics[" + i + "]"
+                        //input.className = "form-control"
 
-                        document.getElementById("addRowsHere").appendChild(input)
-                        i++
+                        //document.getElementById("addRowsHere").appendChild(input)
                     }
 
                 </script>

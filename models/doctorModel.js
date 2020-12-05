@@ -57,6 +57,9 @@ const doctorSchema = new mongoose.Schema({
         type: String,
     }],
 
+    // newClinics: [{
+    //     // type: String
+    // }]
 });
 
 // doctorSchema.plugin(mongoosePaginate);

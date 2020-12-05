@@ -14,7 +14,12 @@ const clinicSchema = new mongoose.Schema({
 
     clinicDoctors: [{
         type: String
-    }]
+    }],
+
+    // status: {
+    //     type: String,
+    //     enum: ['unverified', 'verified'],
+    // }
 });
 
 // clinicSchema.plugin(mongoosePaginate);

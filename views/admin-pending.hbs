@@ -38,10 +38,14 @@
 
                 {{#each doctors}}
                 <div class="row d-flex flex-wrap">
-                    <a href="doctorProfile?id={{_id}}" class="row admin-card">
-                        <img class="card-img" src="{{profpic}}">
+                    <div class="row admin-card">
+                        <a href="doctorProfile?id={{_id}}">
+                            <img class="card-img" src="{{profpic}}">
+                        </a>
                         <div class="card-body">
-                            <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                            <a href="doctorProfile?id={{_id}}">
+                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                            </a>
                         </div>
                         <div class="card-body cancel">
                             <button class="btn btn-link" data-toggle="modal" data-target="#accept" onclick="setId('{{_id}}');setClinics('{{clinics}}')">
@@ -51,7 +55,7 @@
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 {{/each}}
 

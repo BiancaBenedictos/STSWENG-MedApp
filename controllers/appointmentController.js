@@ -32,7 +32,8 @@ const appointmentController = {
 								var details = {
 									doctor: doctors[j].firstname + " " + doctors[j].lastname,
 									date: helper.formatDate(appointments[j].bookedDate),
-									time: helper.getTime(appointments[j].bookedDate)
+									time: helper.getTime(appointments[j].bookedDate),
+									profpic: doctors[j].profpic
 								}
 								apts.push(details)
 							}
@@ -62,7 +63,8 @@ const appointmentController = {
 									var details = {
 										doctor: patients[j].firstname + " " + patients[j].lastname,
 										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate)
+										time: helper.getTime(appointments[j].bookedDate),
+										profpic: patients[j].profpic
 									}
 									apts.push(details)
 								}
@@ -107,7 +109,8 @@ const appointmentController = {
 									var details = {
 										doctor: doctors[j].firstname + " " + doctors[j].lastname,
 										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate)
+										time: helper.getTime(appointments[j].bookedDate),
+										profpic: doctors[j].profpic
 									}
 									apts.push(details)
 								}
@@ -138,7 +141,8 @@ const appointmentController = {
 										var details = {
 											doctor: patients[j].firstname + " " + patients[j].lastname,
 											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate)
+											time: helper.getTime(appointments[j].bookedDate),
+											profpic: patients[j].profpic
 										}
 										apts.push(details)
 									}
@@ -158,72 +162,6 @@ const appointmentController = {
 		else {
 			res.redirect('/')
 		}
-
-		// var userId = req.session.userId
-
-		
-		// if(req.session.email) {
-			
-		// 	var doctorIds = []
-		// 	var apts = []
-		// 	db.findOne(User, {_id: userId}, null, function(user) {
-		// 		db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Pending'}, null, function(appointments) {
-		// 			if(appointments) {
-		// 				for(var i = 0; i < appointments.length; i++) {
-		// 					doctorIds.push(appointments[i].bookedDoctor)
-		// 				}
-						
-		// 				Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
-		// 					doctorIds.map(e => doctors.find(s => s._id.equals(e)))
-		// 				).then(doctors => {
-		// 					for(var j = 0; j < doctors.length; j++) {
-		// 						var details = {
-		// 							doctor: doctors[j].firstname + " " + doctors[j].lastname,
-		// 							date: helper.formatDate(appointments[j].bookedDate),
-		// 							time: helper.getTime(appointments[j].bookedDate)
-		// 						}
-		// 						apts.push(details)
-		// 					}
-		// 					res.render('appointments-pending', {appointments: apts, user: user})
-		// 				})
-
-		// 			}
-		// 		})
-		// 	})
-		// }
-		// else if(req.session.type == 'doctor') {
-		// 	var patientIds = []
-		// 	var apts = []
-
-		// 	db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-		// 		db.findMany(Appointment, {bookedDoctor: userId, status: 'Pending'}, null, function(appointments) {
-					
-		// 			for(var i = 0; i < appointments.length; i++) {
-		// 				patientIds.push(appointments[i].patient)
-		// 			}
-					
-		// 			User.find({ "_id": { "$in": patientIds } }).then(patients =>
-		// 				patientIds.map(e => patients.find(s => s._id.equals(e)))
-		// 			).then(patients => {
-		// 				for(var j = 0; j < patients.length; j++) {
-		// 					var details = {
-		// 						patient: patients[j].firstname + " " + patients[j].lastname,
-		// 						date: helper.formatDate(appointments[j].bookedDate),
-		// 						time: helper.getTime(appointments[j].bookedDate)
-		// 					}
-		// 					apts.push(details)
-		// 				}
-		// 				res.render('doctor-appointments-pending', {appointments: apts, doctor: doctor})
-		// 			})
-		// 		})
-		// 	})
-		// }
-		// else if(req.session.type == 'admin') {
-		// 	res.redirect('/error')
-		// }
-		// else {
-		// 	res.redirect('/')
-		// }
     },
     
 	concludedAppointments: function(req,res) {
@@ -251,7 +189,8 @@ const appointmentController = {
 									var details = {
 										doctor: doctors[j].firstname + " " + doctors[j].lastname,
 										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate)
+										time: helper.getTime(appointments[j].bookedDate),
+										profpic: doctors[j].profpic
 									}
 									apts.push(details)
 								}
@@ -282,7 +221,8 @@ const appointmentController = {
 										var details = {
 											doctor: patients[j].firstname + " " + patients[j].lastname,
 											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate)
+											time: helper.getTime(appointments[j].bookedDate),
+											profpic: patients[j].profpic
 										}
 										apts.push(details)
 									}
@@ -329,7 +269,8 @@ const appointmentController = {
 									var details = {
 										doctor: doctors[j].firstname + " " + doctors[j].lastname,
 										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate)
+										time: helper.getTime(appointments[j].bookedDate),
+										profpic: doctors[j].profpic
 									}
 									apts.push(details)
 								}
@@ -360,7 +301,8 @@ const appointmentController = {
 										var details = {
 											doctor: patients[j].firstname + " " + patients[j].lastname,
 											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate)
+											time: helper.getTime(appointments[j].bookedDate),
+											profpic: patients[j].profpic
 										}
 										apts.push(details)
 									}

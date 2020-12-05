@@ -130,9 +130,21 @@ const userController = {
 	},
 
 	getCheckEmail: function(req,res){
-        var email = req.query.email;
-		db.findOne(User, {email:email}, 'email', function(result) {
-			res.send(result);
+        var email = req.query.email
+		db.findOne(User, {email:email}, 'email', function(user) {
+			if(user)
+				res.send(user)
+			else {
+				db.findOne(Doctor, {email:email}, 'email', function(doctor) {
+					if(doctor)
+						res.send(doctor)
+					else {
+						db.findOne(Admin, {email:email}, 'email', function(admin) {
+							res.send(admin)
+						})
+					}
+				})
+			}
 		}) 
 	},
 

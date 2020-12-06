@@ -139,6 +139,7 @@ const appointmentController = {
 								).then(patients => {
 									for(var j = 0; j < patients.length; j++) {
 										var details = {
+											_id: appointments[j]._id,
 											doctor: patients[j].firstname + " " + patients[j].lastname,
 											date: helper.formatDate(appointments[j].bookedDate),
 											time: helper.getTime(appointments[j].bookedDate),
@@ -163,7 +164,22 @@ const appointmentController = {
 			res.redirect('/')
 		}
     },
-    
+	
+	acceptAppointment: function(req, res) {
+		
+		var appointmentId = req.body.id
+
+		db.updateOne(
+            Appointment,
+            { _id: appointmentId },
+            { status: 'Upcoming' },
+            function (result) {
+                res.redirect('/upcomingAppointments');
+            },
+        );
+
+	},
+
 	concludedAppointments: function(req,res) {
 		var userId = req.session.userId
 

@@ -40,6 +40,8 @@ app.get('/adminDoctors', adminController.doctors)
 app.get('/adminPending', adminController.pending)
 app.post('/acceptDoctor', adminController.acceptDoctor)
 app.post('/rejectDoctor', adminController.rejectDoctor)
+app.post('/addClinic', adminController.addClinic)
+app.post('/deleteClinic', adminController.deleteClinic)
 
 app.get('/upcomingAppointments', appointmentController.upcomingAppointments)
 app.get('/pendingAppointments', appointmentController.pendingAppointments)

@@ -407,19 +407,12 @@ const appointmentController = {
 		}
 		
 		var times = [];
-<<<<<<< HEAD
-
-		if(req.session.type == 'user') {
-			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], dates: dates})
-=======
 		if (disabled)
 			disabled = "disabled"
 			
 		if(req.session.type == 'user') {
 			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
 				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
->>>>>>> feature/booking
 			})
 		}
 		else if(req.session.email) {

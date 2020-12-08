@@ -218,49 +218,64 @@ const appointmentController = {
     },
 
     bookAppointment: function(req,res) {
-		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+		var days = ['startWeekday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-		var date = new Date();
+		var today = new Date();
+		today.setHours(0);
+		today.setMinutes(0);
+		today.setSeconds(0);
+		today.setMilliseconds(0);
 
 		/*	for month/date header */
-		var sun;
+		var startWeek;
 
 		if (req.query.date != null)
-			sun = new Date(req.query.date)
-		else sun = new Date()
+			startWeek = new Date(req.query.date)
+		else {
+			startWeek = new Date()
+			startWeek.setHours(0);
+			startWeek.setMinutes(0);
+			startWeek.setSeconds(0);
+			startWeek.setMilliseconds(0);
+		}
 
-		sun.setDate(sun.getDate() - sun.getDay())
+		startWeek.setDate(startWeek.getDate() - startWeek.getDay())
 
 		if (req.query.type == "next")
-			sun.setDate(sun.getDate() + 7)
+			startWeek.setDate(startWeek.getDate() + 7)
 		else if (req.query.type == "prev")
-			sun.setDate(sun.getDate() - 7)
+			startWeek.setDate(startWeek.getDate() - 7)
 			
-		var month = sun.getMonth()
-		var year = sun.getFullYear();
-		var day = sun.getDay();
+		var month = startWeek.getMonth()
+		var year = startWeek.getFullYear();
+		var day = startWeek.getDay();
 		days = days.slice(0);
 
 		var dates = []
-		var str, active
+		var str, active, addClass, disabled = false;
 
 		for (i=0; i<7; i++) {
-			str = months[sun.getMonth()] + " " + sun.getDate() + ", " + sun.getFullYear()
+			str = months[startWeek.getMonth()] + " " + startWeek.getDate() + ", " + startWeek.getFullYear()
 
-			if (sun.getDate() == date.getDate()) {
-				active = true;
-				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: 'active'})
+			if (startWeek > today) {
+				addClass = ''
+			} else if (startWeek < today) {
+				addClass = 'disabled'
+				disabled = true
 			} else {
-				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: ''})
+				active = true;
+				addClass = 'active'
 			}
-			
-			sun.setDate(sun.getDate() + 1)
+
+			dates.push({date: startWeek.getDate(), fulldate: str, day: days[i], class: addClass})
+			startWeek.setDate(startWeek.getDate() + 1)
 		}
 
-		if (!active) 
+		if (!active && !disabled) 
 			dates[0].class = "active"
 
+		console.log(dates)
 		/* for timeslots */
 
 		var q = {
@@ -270,9 +285,10 @@ const appointmentController = {
 		}
 		
 		var times = [];
-
+		if (disabled)
+			disabled = "disabled"
 		db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates})
+			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
 		})
 	},
 	

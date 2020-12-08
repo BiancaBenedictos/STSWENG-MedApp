@@ -47,4 +47,8 @@ function changeWeek(type) {
 
 $(document).ready(function(){
     $("button.active").click()
+
+    var disabled = $("button.disabled")
+    console.log(disabled)
+    disabled.prop('disabled', true)
 })

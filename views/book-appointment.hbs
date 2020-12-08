@@ -24,8 +24,9 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <img src="assets/black.png">
+                <img src="{{doctor.profpic}}">
                 <h1 class="heading doctor" id="{{doctor._id}}">{{doctor.firstname}} {{doctor.lastname}}</h1>
+                
                 <p>{{doctor.profession}}</p>
                 
                 {{#each clinics}}

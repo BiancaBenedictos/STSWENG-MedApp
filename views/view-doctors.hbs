@@ -33,23 +33,31 @@
 
                 </form>
             </div>
+
             <div class="col">
-                <div class="row view">
+                <div class="row view mb-4">
                     <h1 class="heading">{{clinic}}</h1>
                 </div>
-                <div class="row timeslots flex-wrap">
-                    {{#each doctors}}
-                    <a href="/doctorProfile?id={{_id}}" class="card-long">
-                        <div class="row no-gutters">
-                            <img class="card-img" src="assets/black.png">
-                            <div class="card-body">
-                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                                <p class="card-text">{{profession}}</p>
-                            </div>
+
+                {{#each doctors}}
+                <div class="row d-flex flex-wrap">
+                    <div class="row admin-card">
+                        <a href="/doctorProfile?id={{_id}}">
+                            <img class="card-img" src="{{profpic}}">
+                        </a>
+                        <div class="card-body">
+                        <a href="/doctorProfile?id={{_id}}">
+                            <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                            <p class="card-text">{{profession}}</p>
+                            </a>
                         </div>
-                    </a>
-                    {{/each}}
+                        <div class="card-body cancel">
+                            <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn" type="button">book</a>
+                        </div>
+                    </div>
                 </div>
+                {{/each}}
+            
             </div>
         </div>
     </div>

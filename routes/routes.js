@@ -12,9 +12,9 @@ const userController = require('../controllers/userController')
 var storage = multer.diskStorage({
     destination: function (req, file, cd) {
         if (file.fieldname === 'picture') {
-            cd(null, './public/images');
+            cd(null, './views/images');
         } else if (file.fieldname === 'credentials') {
-            cd(null, './public/credentials');
+            cd(null, './views/credentials');
         }
     },
     filename: function (req, file, cd) {
@@ -51,19 +51,24 @@ app.get('/disableSlots', appointmentController.disableSlots)
 app.post('/requestAppointment', appointmentController.requestAppointment)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
-app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
+// app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
+app.post('/acceptAppointment', appointmentController.acceptAppointment);
 
 app.get('/homeDoctors', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)
 app.get('/viewDoctors', homeController.viewDoctors)
 
 app.get('/', userController.getLogin)
-app.post('/', userController.postLogin);
-app.get('/getCheckLogin', userController.getCheckLogin);
+app.post('/', userController.postLogin)
+app.get('/getCheckLogin', userController.getCheckLogin)
 
 app.get('/register', userController.getRegister)
-app.get('/getCheckEmail', userController.getCheckEmail);
+app.get('/getCheckEmail', userController.getCheckEmail)
 app.post('/register', 
          uploadFilter,
          userController.postRegister)
+
+app.get('/logout', userController.logout)
+
+app.get('/error', userController.error)

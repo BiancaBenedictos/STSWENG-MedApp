@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/card.css">
 
     <!-- JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -17,25 +16,13 @@
 </head>
 <body>
     {{> nav}}
-
-    <div class="container-fluid">
-        <div class="row tabs">
-            <a href="/homeDoctors" value="doctors" id="doctors">doctors</a>
-            <a href="/homeClinics" value= "clinics" id="clinics">clinics</a>
-            <!-- <a href="#" value= "others" id="others">others</a> -->
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <h2 class="error-message">Sorry! You don't have access to that page.</h2>
         </div>
-
-        <div class="row d-flex justify-content-center flex-wrap">
-            {{#each doctors}}
-            <a href="/doctorProfile?id={{_id}}" class="card">
-                <img class="card-img-top" src="{{profpic}}">
-                <h5 class="card-title card-title-home">{{firstname}} {{lastname}}</h5>
-                <div class="card-body card-body-home">
-                    {{profession}}<br>
-                    {{!-- <i>Clinic</i> --}}
-                </div>
-            </a>
-            {{/each}}
+        <div class="row justify-content-center">
+            <a href="/homeDoctors" class="error-btn">back to home</a>
         </div>
     </div>
 </body>

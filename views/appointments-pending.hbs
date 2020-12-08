@@ -26,7 +26,7 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <img src="assets/black.png">
+                <img src="{{user.profpic}}">
                 <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
                 <p id="user-info" style="white-space: pre-line"></p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
@@ -43,7 +43,7 @@
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
-                        <img class="card-img" src="assets/black.png">
+                        <img class="card-img" src="{{profpic}}">
                         <div class="card-body">
                             <h5 class="card-title">{{doctor}}</h5>
                             <p class="card-text">{{date}} · {{time}}</p>

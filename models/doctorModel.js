@@ -41,7 +41,7 @@ const doctorSchema = new mongoose.Schema({
 
     profpic: {
         type: String,
-        default: 'portrait.png',
+        default: 'images/portrait.png',
     },
 
     status: {
@@ -57,6 +57,9 @@ const doctorSchema = new mongoose.Schema({
         type: String,
     }],
 
+    // newClinics: [{
+    //     // type: String
+    // }]
 });
 
 // doctorSchema.plugin(mongoosePaginate);

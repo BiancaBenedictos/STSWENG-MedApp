@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
     <script src="scripts/appointments.js"></script>
+    <script src="scripts/booking.js"></script>
 
 </head>
 <body>
@@ -25,8 +26,8 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <img src="assets/black.png">
-                <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
+                <img src="{{user.profpic}}">
+                <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
                 <p id="user-info" style="white-space: pre-line"></p>
                 <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
             </div>
@@ -42,16 +43,16 @@
                 {{#each appointments}}
                 <div class="row d-flex flex-wrap">
                     <div class="row no-gutters admin-card">
-                        <img class="card-img" src="assets/black.png">
+                        <img class="card-img" src="{{profpic}}">
                         <div class="card-body">
-                            <h5 class="card-title">{{patient}}</h5>
+                            <h5 class="card-title">{{doctor}}</h5>
                             <p class="card-text">{{date}} · {{time}}</p>
                         </div>
                         <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm">
+                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm" onclick="setId('{{_id}}')">
                                 <img src="assets/check.svg" class="icon">
                             </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete" onclick="setId('{{_id}}')">
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
@@ -149,7 +150,7 @@
 </div>
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+<div class="modal fade" id="confirm" name="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">
@@ -160,14 +161,14 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <a class="btn btn-success">Yes</a>
+                <a class="btn btn-success" id="add-Upcoming" onclick="acceptbook()">Yes</a>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Reject Confirmation Modal -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
+<div class="modal fade" id="confirm-delete" name="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">

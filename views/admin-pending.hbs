@@ -28,7 +28,6 @@
                 <img src="assets/black.png">
                 <h1 class="heading">{{user.name}}</h1>
                 <p>Admin</p>
-                {{!-- <a href="/login" class="btn edit-btn">logout</a> --}}
             </div>
             <div class="col">
                 <div class="row options">
@@ -40,10 +39,13 @@
                 {{#each doctors}}
                 <div class="row d-flex flex-wrap">
                     <div class="row admin-card">
-                        <img class="card-img" src="assets/black.png">
+                        <a href="doctorProfile?id={{_id}}">
+                            <img class="card-img" src="{{profpic}}">
+                        </a>
                         <div class="card-body">
-                            <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                            {{!-- <p class="card-text">Clinic</p> --}}
+                            <a href="doctorProfile?id={{_id}}">
+                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                            </a>
                         </div>
                         <div class="card-body cancel">
                             <button class="btn btn-link" data-toggle="modal" data-target="#accept" onclick="setId('{{_id}}');setClinics('{{clinics}}')">

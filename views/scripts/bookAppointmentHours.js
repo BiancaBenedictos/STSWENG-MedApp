@@ -58,7 +58,7 @@ function updateBookTime(time12, time24) {
 
 function bookAppointment() {
     $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
-        console.log(res);
+        location.reload()
     })
 }
 

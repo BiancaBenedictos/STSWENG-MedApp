@@ -275,7 +275,6 @@ const appointmentController = {
 		if (!active && !disabled) 
 			dates[0].class = "active"
 
-		console.log(dates)
 		/* for timeslots */
 
 		var q = {
@@ -293,14 +292,21 @@ const appointmentController = {
 	},
 	
 	getSlots: function(req,res) {
-		db.findOne(Availability, req.query, "day startTime endTime intervalHours", function(results) {
-			var times = [];
+		db.findOne(Availability, req.query.q, "day startTime endTime intervalHours", function(results) {
+			var times = []
+			var today = new Date(), slotDate = new Date(req.query.full)
 
 			if (results) {
 				var s = results.startTime
 				var e = results.endTime
 				var int = results.intervalHours
 				var ampm = " AM"
+				var disabled, dHour = 0, dMin = 0
+
+				if (today > slotDate) {
+					dHour = today.getHours()
+					dMin = today.getMinutes()
+				}
 
 				while ( +s <= +e ) {
 					var h = s.getHours() % 12
@@ -312,17 +318,49 @@ const appointmentController = {
 					if (h == 0)
 						h = 12
 
+					if (dHour > h2 && dMin > m)
+						disabled = 'disabled'
+					else disabled = ''
+
 					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					h2 = h2.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 
-					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
+					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00", class: disabled})
 					s.setMinutes(s.getMinutes() + (int * 60))
 				}
 			}
 
 			res.send(times)
 		})
+	},
+
+	disableSlots: function(req, res) {
+		var doctorID = req.query.doctorID, clinicID = req.query.clinicID
+		var start = new Date(req.query.date)
+
+		start.setHours(0);
+		start.setMinutes(0);
+		start.setSeconds(0);
+		start.setMilliseconds(0);
+
+		var end = new Date(start.valueOf())
+		end.setDate(start.getDate() + 1)
+		
+		var bookedTimes = [], h, m;
+
+		Appointment.find({bookedDate: {$gte:start, $lt:end}, bookedDoctor: doctorID, status: "Upcoming"}, "bookedDate", function(err, res2) {
+			if (!err) {
+				for (i=0; i<res2.length; i++) {
+					h = res2[i].bookedDate.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					m = res2[i].bookedDate.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					bookedTimes.push(h + ":" + m + ":00")
+				}
+			}
+
+			res.send(bookedTimes)
+		})
+
 	},
 
 	requestAppointment: function(req, res) {

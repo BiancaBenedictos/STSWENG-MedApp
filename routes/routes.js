@@ -51,6 +51,7 @@ app.get('/getSlots', appointmentController.getSlots)
 app.get('/doctorProfile', doctorController.doctorProfile)
 // app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
+app.post('/acceptAppointment', appointmentController.acceptAppointment);
 
 app.get('/homeDoctors', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)

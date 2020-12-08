@@ -222,6 +222,7 @@ const appointmentController = {
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 		var date = new Date();
+		var year = date.getFullYear();
 		var day = date.getDay();
 		days = days.slice(0);
 
@@ -250,7 +251,7 @@ const appointmentController = {
 		var times = [];
 
 		db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], dates: dates})
+			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], year: year, dates: dates})
 		})
 	},
 	
@@ -288,7 +289,7 @@ const appointmentController = {
 	},
 
 	requestAppointment: function(req, res) {
-		var bookTime = new Date(req.body.month + " " + req.body.date + ", 2020 " + req.body.time)
+		var bookTime = new Date(req.body.month + " " + req.body.date + ", " + req.body. year + " " + req.body.time)
 		var today = new Date();
 
 		if (+bookTime <= +today) {

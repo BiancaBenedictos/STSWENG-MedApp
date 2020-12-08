@@ -1,4 +1,4 @@
-var month, date, time;
+var month, year, date, time;
 
 function getSlots(day, doctor, clinic) {
     var d = $('div.timeslots')
@@ -19,13 +19,14 @@ function getSlots(day, doctor, clinic) {
 
 function updateBookTime(time12, time24) {
     month = $("span.month").attr('id');
+    year = $("span.year").attr('id')
     date = $('button.active').text();
     time = time24;
-    $("#book-time").text(month + " " + date + ", " + time12);
+    $("#book-time").text(month + " " + date + ", " + year + " " + time12);
 }
 
 function bookAppointment() {
-    $.post('/requestAppointment', {month: month, date: date, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
+    $.post('/requestAppointment', {month: month, year: year, date: date, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
         console.log(res);
     })
 }

@@ -38,7 +38,10 @@
             </div>
             <div class="col">
                 <div class="row appointments week justify-content-center">
-                    <span class="heading month" id="{{month}}">{{month}}<br>
+                    <span class="heading">
+                        <span class="month" id="{{month}}">{{month}}</span> 
+                        <span class="year" id="{{year}}">{{year}}</span>
+                        <br>
                     {{#each dates}} 
                         <button class="day {{class}}" value="{{day}}" onclick="getSlots('{{day}}', '{{../doctor._id}}', '{{../clinic}}')">{{date}}</button>
                     {{/each}}

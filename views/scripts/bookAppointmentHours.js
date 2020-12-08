@@ -9,6 +9,7 @@ function getSlots(day, full, doctor, clinic) {
     fulldate = full;
     
     $.get('/getSlots', {day: day, doctorID: doctor, clinicID: clinic}, function(results){
+        console.log(results)
         for (i=0; i<results.length; i++)
             d.append('<button class="time" data-toggle="modal" data-target="#confirm"' +
                         'onclick="updateBookTime(\'' + results[i].H12 + '\', \'' + results[i].H24 + '\')">' + results[i].H12 + '</button>')
@@ -30,6 +31,18 @@ function bookAppointment() {
     $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
         console.log(res);
     })
+}
+
+function changeWeek(type) {
+    var link = window.location.href;
+    var i = link.indexOf("&date=") + 1
+
+    if (i > 0)
+        link = link.slice(0, i)
+
+    link = link + "&date='" + fulldate + "'&type=" + type
+    console.log(link)
+    window.location.replace(link);
 }
 
 $(document).ready(function(){

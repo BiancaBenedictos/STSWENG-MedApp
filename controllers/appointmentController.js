@@ -222,21 +222,34 @@ const appointmentController = {
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 		var date = new Date();
-		var year = date.getFullYear();
-		var day = date.getDay();
-		days = days.slice(0);
 
 		/*	for month/date header */
-		var sun = new Date()
-		sun.setDate(sun.getDate() - day)
+		var sun;
+
+		if (req.query.date != null)
+			sun = new Date(req.query.date)
+		else sun = new Date()
+
+		sun.setDate(sun.getDate() - sun.getDay())
+
+		if (req.query.type == "next")
+			sun.setDate(sun.getDate() + 7)
+		else if (req.query.type == "prev")
+			sun.setDate(sun.getDate() - 7)
+			
+		var month = sun.getMonth()
+		var year = sun.getFullYear();
+		var day = sun.getDay();
+		days = days.slice(0);
 
 		var dates = []
-		var str
+		var str, active
 
 		for (i=0; i<7; i++) {
 			str = months[sun.getMonth()] + " " + sun.getDate() + ", " + sun.getFullYear()
 
 			if (sun.getDate() == date.getDate()) {
+				active = true;
 				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: 'active'})
 			} else {
 				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: ''})
@@ -245,7 +258,8 @@ const appointmentController = {
 			sun.setDate(sun.getDate() + 1)
 		}
 
-		console.log(dates)
+		if (!active) 
+			dates[0].class = "active"
 
 		/* for timeslots */
 
@@ -258,7 +272,7 @@ const appointmentController = {
 		var times = [];
 
 		db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[date.getMonth()], year: year, dates: dates})
+			res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates})
 		})
 	},
 	

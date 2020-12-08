@@ -231,14 +231,21 @@ const appointmentController = {
 		sun.setDate(sun.getDate() - day)
 
 		var dates = []
+		var str
 
 		for (i=0; i<7; i++) {
-			if (i == day) {
-				dates.push({date: sun.getDate() + i, day: days[i], class: 'active'})
+			str = months[sun.getMonth()] + " " + sun.getDate() + ", " + sun.getFullYear()
+
+			if (sun.getDate() == date.getDate()) {
+				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: 'active'})
 			} else {
-				dates.push({date: sun.getDate() + i, day: days[i], class: ''})
+				dates.push({date: sun.getDate(), fulldate: str, day: days[i], class: ''})
 			}
+			
+			sun.setDate(sun.getDate() + 1)
 		}
+
+		console.log(dates)
 
 		/* for timeslots */
 
@@ -289,7 +296,7 @@ const appointmentController = {
 	},
 
 	requestAppointment: function(req, res) {
-		var bookTime = new Date(req.body.month + " " + req.body.date + ", " + req.body. year + " " + req.body.time)
+		var bookTime = new Date(req.body.fulldate + " " + req.body.time)
 		var today = new Date();
 
 		if (+bookTime <= +today) {

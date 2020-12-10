@@ -92,7 +92,7 @@ const doctorController = {
 	getClinicHours: function(req, res) {
 		var query = {
 			clinicID: req.query.clinicID,
-			doctorID: '5fb59a0731422020ec5fb2e1'		// replace with logged in doctorID
+			doctorID: req.session.userId
 		}
 		db.findMany(Availability, query, '', function(results){
 			var r = []
@@ -113,7 +113,7 @@ const doctorController = {
 		var avail = req.body.avail;
 
 		for (i=0; i < avail.length; i++) {
-			avail[i].doctorID = '5fb59a0731422020ec5fb2e1'		// replace with logged in doctorID
+			avail[i].doctorID = req.session.userId
 			avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
 			avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
 

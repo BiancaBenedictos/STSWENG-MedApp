@@ -122,7 +122,9 @@ const appointmentController = {
 								}
 		
 								res.render('appointments-pending', result)
-							})
+							}).catch(function () {
+								res.redirect('/error')
+						   	});
 						}
 					})
 				}
@@ -149,8 +151,9 @@ const appointmentController = {
 									}
 									
 									res.render('doctor-appointments-pending', {appointments: apts, user: doctor})
-								})
-
+								}).catch(function () {
+									res.redirect('/error')
+							   	});
 							}
 						})
 					})
@@ -508,7 +511,7 @@ const appointmentController = {
 				else {
 					var a = {
 						bookedDoctor: req.body.doctor,
-						patient: req.session.id,
+						patient: req.session.userId,
 						bookedDate: bookTime, 
 						status: "Pending"
 					}

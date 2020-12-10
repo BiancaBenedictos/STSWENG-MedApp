@@ -73,6 +73,9 @@ app.post('/register',
          uploadFilter,
          userController.postRegister)
 
+app.get('/editProfile', userController.getEditProfile)
+app.post('/editProfile', userController.postEditProfile)
+
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)

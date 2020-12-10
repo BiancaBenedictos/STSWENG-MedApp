@@ -350,6 +350,33 @@ const userController = {
 		})
 	},
 
+	getEditProfile: function(req,res) {
+		db.findOne(User, {_id: req.session.userId}, null, function(user) {
+			if(user) {
+				res.render('edit-profile', user)
+			}
+			else {
+				db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
+					if(doctor) {
+						db.findMany(Clinic, {}, null, function(clinics) {
+							db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(docClinics) {
+								var professions = Doctor.schema.path('profession').enumValues
+								res.render('doctor-edit-profile', {user: doctor, professions: professions, clinics: clinics, docClinics: docClinics})
+							})
+						})
+					}
+					else {
+						res.render('error')
+					}
+				})
+			}
+		})
+	},
+
+	postEditProfile: function(req,res) {
+		res.render('edit-profile')
+	},
+
 	error: function(req,res) {
 		res.render('error')
 	}

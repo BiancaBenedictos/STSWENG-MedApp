@@ -5,9 +5,9 @@
     justify-content: center;
 }
 
-img {
+/* img {
     width: 100%;
-}
+} */
 
 .heading {
     font-size: 22px;
@@ -45,13 +45,13 @@ a:hover {
     margin-bottom: 15px;
 }
 
-#addClinic, #registerClinic {
+/* #addClinic, #registerClinic {
     height: 40px;
     width: 100%;
     border-radius: 4px;
     border: 1px solid lightgray;
     background-color: white;    
-}
+} */
 
 /* input[type="file"] {
     border: 1px solid lightgray;
@@ -88,8 +88,8 @@ a:hover {
     width: 20px;
 }
 
-.btn {
+/* .btn {
     width: 40px;
     height: 40px;
     padding: 6px;
-}
+} */

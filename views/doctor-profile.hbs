@@ -26,7 +26,6 @@
                 <img src="{{doctor.profpic}}">
                 <h1 class="heading">{{doctor.firstname}} {{doctor.lastname}}</h1>
                 <p>{{doctor.profession}}</p>
-                {{!-- <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button> --}}
             </div>
             
             <div class="col">
@@ -47,7 +46,7 @@
                             </a>
                         </div>
                         <div class="card-body cancel">
-                            <a href="/bookAppointment?id={{../doctor._id}}&c={{_id}}" class="btn cancel-btn" type="button">book</a>
+                            <a href="/bookAppointment?id={{../doctor._id}}&c={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
                         </div>
                     </div>
                 </div>
@@ -58,3 +57,13 @@
     </div>
 </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        $.get('/getDetails', null, function(result) {
+            if(result.type == 'doctor') {
+                $('.book-appointment').prop('hidden', true);
+            }
+        });
+    });
+</script>

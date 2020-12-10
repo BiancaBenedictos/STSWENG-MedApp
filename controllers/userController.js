@@ -173,7 +173,6 @@ const userController = {
 			var doccheck = req.body.doctorCheck;
 
 			if(doccheck != "on") {
-				console.log('Patient; registering...')
 				const age = helper.sanitize(req.body.age);
 				const height = helper.sanitize(req.body.height);
 				const weight = helper.sanitize(req.body.weight);
@@ -181,7 +180,6 @@ const userController = {
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
-						console.log('NO PICTURE');
 
 						var USER = new User({
 							email: email,
@@ -210,7 +208,6 @@ const userController = {
 					}
 
 					else {
-						console.log('HAS PICTURE; SAVING...')
 						var USER = new User({
 							email: email,
 							password: hash,
@@ -227,7 +224,6 @@ const userController = {
 						var picFileName = helper.renameAvatar(req, picName);
 						USER.profpic = 'images/' + picFileName;
 						
-			//			console.log(USER);
 
 						db.insertOne(User, USER, function(flag) {
 							if (flag){
@@ -244,7 +240,6 @@ const userController = {
 					}
 				});
 			} else {
-				console.log('Doctor; registering...');
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;
@@ -271,8 +266,6 @@ const userController = {
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
-						console.log('NO PICTURE');
-
 						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,
@@ -301,8 +294,6 @@ const userController = {
 							}
 						});
 					} else {
-						console.log('HAS PICTURE; SAVING...')
-
 						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,

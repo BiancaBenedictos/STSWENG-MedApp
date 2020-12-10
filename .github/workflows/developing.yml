@@ -6,7 +6,7 @@ name: Developing CI
 on:
   push:
     branches: [ developing ]
-  pull_request:
+  pull_request: 
     branches: [ developing ]
 
 jobs:

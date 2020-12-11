@@ -43,7 +43,7 @@ const adminController = {
 	},
 
 	acceptDoctor: function(req,res) {
-		db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'})
+		db.updateOne(Doctor, {_id: req.body.id}, {status: 'verified'}, function(flag) {})
 		db.updateMany(Clinic, {_id: {$in: req.body.clinics}}, {$push: {clinicDoctors: req.body.id}})
 		res.send(true)
 	},

@@ -173,9 +173,11 @@ const userController = {
 			var doccheck = req.body.doctorCheck;
 
 			if(doccheck != "on") {
+				
 				const age = helper.sanitize(req.body.age);
 				const height = helper.sanitize(req.body.height);
 				const weight = helper.sanitize(req.body.weight);
+				
 				var bookedappointments = [];
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {

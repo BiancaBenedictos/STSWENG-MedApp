@@ -40,6 +40,8 @@ app.get('/adminDoctors', adminController.doctors)
 app.get('/adminPending', adminController.pending)
 app.post('/acceptDoctor', adminController.acceptDoctor)
 app.post('/rejectDoctor', adminController.rejectDoctor)
+app.post('/addClinic', adminController.addClinic)
+app.post('/deleteClinic', adminController.deleteClinic)
 
 app.get('/upcomingAppointments', appointmentController.upcomingAppointments)
 app.get('/pendingAppointments', appointmentController.pendingAppointments)
@@ -47,10 +49,15 @@ app.get('/concludedAppointments', appointmentController.concludedAppointments)
 app.get('/cancelledAppointments', appointmentController.cancelledAppointments)
 app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/getSlots', appointmentController.getSlots)
+app.get('/disableSlots', appointmentController.disableSlots)
+app.post('/requestAppointment', appointmentController.requestAppointment)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
 // app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
+app.post('/acceptAppointment', appointmentController.acceptAppointment);
+app.get('/getClinicHours', doctorController.getClinicHours)
+app.post('/setAvailability', doctorController.setAvailability)
 
 app.get('/homeDoctors', homeController.doctors)
 app.get('/homeClinics', homeController.clinics)
@@ -65,6 +72,9 @@ app.get('/getCheckEmail', userController.getCheckEmail)
 app.post('/register', 
          uploadFilter,
          userController.postRegister)
+
+app.get('/editProfile', userController.getEditProfile)
+app.post('/editProfile', userController.postEditProfile)
 
 app.get('/logout', userController.logout)
 

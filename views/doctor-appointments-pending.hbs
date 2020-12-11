@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
     <script src="scripts/appointments.js"></script>
+    <script src="scripts/booking.js"></script>
 
 </head>
 <body>
@@ -28,7 +29,6 @@
                 <img src="{{user.profpic}}">
                 <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
                 <p id="user-info" style="white-space: pre-line"></p>
-                <button type="button" class="btn edit-btn" data-toggle="modal" data-target="#edit-profile">edit profile</button>
             </div>
             <div class="col">
                 <div class="row options">
@@ -48,10 +48,10 @@
                             <p class="card-text">{{date}} · {{time}}</p>
                         </div>
                         <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm">
+                            <button class="btn btn-link" data-toggle="modal" data-target="#confirm" onclick="setId('{{_id}}')">
                                 <img src="assets/check.svg" class="icon">
                             </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete" onclick="setId('{{_id}}')">
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
@@ -66,90 +66,9 @@
     </div>
 </body>
 </html>
-  
-<!-- Edit Profile Modal -->
-<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="edit-profile" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="edit-profile">Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    {{!-- Basic Information --}}
-                    <div class="form-group row">
-                        <div class="form-group col">
-                            <label for="firstname" class="col-form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstname" value="{{user.firstname}}">
-                        </div>
-                        <div class="form-group col">
-                            <label for="lastname" class="col-form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastname" value="{{user.lastname}}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="form-group col">
-                            <label for="oldPassword" class="col-form-label">Old Password</label>
-                            <input type="password" class="form-control" id="oldPassword">
-                        </div>
-                        <div class="form-group col">
-                            <label for="newPassword" class="col-form-label">New Password</label>
-                            <input type="password" class="form-control" id="newPassword">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="form-group col">
-                            <label>Profile Picture</label>
-                            <div class="button-wrap">
-                                <label class="button" for="profpic">Upload File</label>
-                                <input id="picture" class="form-control" type="file">
-                            </div>
-                        </div>
-                    </div>
-
-                    {{!-- Patient Users Only --}}
-                    <div class="form-group row user">
-                        <div class="form-group col">
-                            <label for="age" class="col-form-label">Age</label>
-                            <input type="Number" class="form-control" id="age" value={{user.age}}>
-                        </div>
-                    </div>
-                    <div class="form-group row user">
-                        <div class="form-group col">
-                            <label for="weight" class="col-form-label">Weight</label>
-                            <input type="Number" class="form-control" id="weight" value={{user.weight}}>
-                        </div>
-                        <div class="form-group col">
-                            <label for="height" class="col-form-label">Height</label>
-                            <input type="Number" class="form-control" id="height" value={{user.height}}>
-                        </div>
-                    </div>
-                    
-                    {{!-- Doctor Users Only --}}
-                    <div class="form-group row doctor">
-                        <div class="form-group col">
-                            <label>Credentials</label>
-                            <div class="button-wrap">
-                                <label class="button" for="credentials">Upload File</label>
-                                <input id="credentials" class="form-control" type="file">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+<div class="modal fade" id="confirm" name="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">
@@ -160,14 +79,14 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <a class="btn btn-success">Yes</a>
+                <a class="btn btn-success" id="add-Upcoming" onclick="acceptbook()">Yes</a>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Reject Confirmation Modal -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
+<div class="modal fade" id="confirm-delete" name="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header del-header">

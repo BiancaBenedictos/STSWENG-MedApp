@@ -1,0 +1,144 @@
+<html>
+<head>
+    <title>Med-Aid</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/view-doctors.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    {{> nav}}
+
+    <div class="container">
+        <div class="row content d-flex flex-wrap">
+            <div class="col-4 filter">
+                <img src="{{user.profpic}}">
+                <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
+                <p>{{user.profession}}</p>
+            </div>
+            <div class="col">
+                <div class="row edit">
+                    <form method="POST" action="/editProfile" enctype="multipart/form-data" style="width:75%">
+                        <div class="form-group pb-4" style="text-align: center;">
+                            <h1 class="heading">Edit Profile</h1>
+                        </div>
+
+                        <div class="form-group row pb-3">
+                            <div class="col-6">
+                                <label for="firstname">First name</label>
+                                <input type="text" class="form-control" id="firstname" name="firstname" value={{user.firstname}}>
+                            </div>
+                            <div class="col-6">
+                                <label for="lastname">Last name</label>
+                                <input type="text" class="form-control" id="lastname" name="lastname" value={{user.lastname}}>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-3">
+                            <div class="col">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value={{user.email}}>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-3">
+                            <div class="col">
+                                <label>Profile Picture</label>
+                                <div class="button-wrap">
+                                    <label class="button" for="picture">Upload File</label>
+                                    <input type="file" id="picture" name="picture" class="form-control" accept="image/*">
+                                    <p class="m-0" id="invalidPic" style="color:red"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-3">
+                            <div class="col">
+                                <label for="profession">Profession</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="profession" name="profession">
+                                        {{#each professions}}
+                                        <option>{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row pb-3">
+                            <div class="col">
+                                <label>Credentials</label>
+                                <div class="button-wrap">
+                                    <label class="button" for="credentials">Upload File</label>
+                                    <input type="file" id="credentials" name="credentials" class="form-control" accept=".pdf">
+                                    {{!-- <p class="m-0" id="noCreds" style="color:red">Please upload your credentials</p> --}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="clinic">Clinic</label>
+                                {{#each docClinics}}
+                                    <div class="input-group mb-2">
+                                        <select class="form-control" id={{_id}} name="clinics[]" style="border-radius:4px">
+                                            <option value={{_id}}>{{clinicName}}</option>
+                                        </select>
+                                        <button class="btn remove-btn" id={{_id}} type="button" onclick="remove(this.id)">
+                                            <i class="icon-remove"></i>
+                                        </button>
+                                    </div>
+                                {{/each}}
+                                <div class="input-group" id="addRowsHere"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-3">
+                            <div class="col">
+                                <button type="button" id="addClinic" name="addClinic" onclick="add()">Add Clinic</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group py-1" style="text-align: center;">
+                            <button type="submit" class="edit-btn" id="submitbtn">save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var i = 1
+
+    function add() {
+        var str = ` <div class="input-group mb-2">
+                        <select class="form-control" id="clinic` + i + `" name="clinics[]" style="border-radius:4px">
+                            {{#each clinics}}
+                            <option value={{_id}}>{{clinicName}}</option>
+                            {{/each}}
+                        </select>
+                        <button class="btn remove-btn" id='remove` + i + `' type="button" onclick="remove(this.id)">
+                            <i class="icon-remove"></i>
+                        </button>
+                    </div>`
+        
+        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+        i++
+    }
+
+    function remove(id) {
+        document.getElementById(id).parentElement.remove()
+    }
+</script>

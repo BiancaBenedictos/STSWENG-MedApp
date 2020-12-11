@@ -85,6 +85,19 @@ const adminController = {
 		else {
 			res.redirect('/')
 		}
+	},
+
+	addClinic: function(req,res) {
+		db.insertOne(Clinic, req.body.newclinic, function(result){
+			console.log(result);
+			res.send(result);
+		})
+	},
+
+	deleteClinic: function(req, res) {
+		console.log(req.body)
+		db.deleteOne(Clinic, {_id: req.body.id})
+		res.send(true)
 	}
 }
 

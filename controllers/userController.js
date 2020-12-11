@@ -173,7 +173,6 @@ const userController = {
 			var doccheck = req.body.doctorCheck;
 
 			if(doccheck != "on") {
-				console.log('Patient; registering...')
 				const age = helper.sanitize(req.body.age);
 				const height = helper.sanitize(req.body.height);
 				const weight = helper.sanitize(req.body.weight);
@@ -181,7 +180,6 @@ const userController = {
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
-						console.log('NO PICTURE');
 
 						var USER = new User({
 							email: email,
@@ -210,7 +208,6 @@ const userController = {
 					}
 
 					else {
-						console.log('HAS PICTURE; SAVING...')
 						var USER = new User({
 							email: email,
 							password: hash,
@@ -227,7 +224,6 @@ const userController = {
 						var picFileName = helper.renameAvatar(req, picName);
 						USER.profpic = 'images/' + picFileName;
 						
-			//			console.log(USER);
 
 						db.insertOne(User, USER, function(flag) {
 							if (flag){
@@ -244,11 +240,6 @@ const userController = {
 					}
 				});
 			} else {
-				console.log('Doctor; registering...');
-				
-				console.log(req.body);
-				//console.log(req.body.clinics);
-
 				const profess = req.body.profession;
 				var clinics = [];
 				clinics = req.body.clinics;
@@ -275,8 +266,6 @@ const userController = {
 
 				bcrypt.hash(password, saltRounds, (err, hash) => {
 					if(!req.files['picture']) {
-						console.log('NO PICTURE');
-
 						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,
@@ -305,8 +294,6 @@ const userController = {
 							}
 						});
 					} else {
-						console.log('HAS PICTURE; SAVING...')
-
 						var DOCTOR = new Doctor({
 							email: email,
 							password: hash,
@@ -352,6 +339,33 @@ const userController = {
 
 			res.redirect('/');
 		})
+	},
+
+	getEditProfile: function(req,res) {
+		db.findOne(User, {_id: req.session.userId}, null, function(user) {
+			if(user) {
+				res.render('edit-profile', user)
+			}
+			else {
+				db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
+					if(doctor) {
+						db.findMany(Clinic, {}, null, function(clinics) {
+							db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(docClinics) {
+								var professions = Doctor.schema.path('profession').enumValues
+								res.render('doctor-edit-profile', {user: doctor, professions: professions, clinics: clinics, docClinics: docClinics})
+							})
+						})
+					}
+					else {
+						res.render('error')
+					}
+				})
+			}
+		})
+	},
+
+	postEditProfile: function(req,res) {
+		res.render('edit-profile')
 	},
 
 	error: function(req,res) {

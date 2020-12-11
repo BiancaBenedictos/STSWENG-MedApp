@@ -181,6 +181,20 @@ $(document).ready(function() {
         }
     }
 
+    function validateNumber(field){
+        var value = validator.trim(field.val());
+
+        if (value > 0)
+        {
+            field.removeClass('is-invalid');
+            field.addClass('is-valid');
+        }
+        else {
+            field.removeClass('is-valid');
+            field.addClass('is-invalid');
+        }
+    }
+
     $("#firstname").keyup(function(){
         validateField($('#firstname'));
     })
@@ -197,13 +211,16 @@ $(document).ready(function() {
         validateField($('#cpassword'))
     })
     $("#age").keyup(function(){
-        validateField($('#age'))
+        validateField($('#age')),
+        validateNumber($('#age'))
     })
     $("#weight").keyup(function(){
-        validateField($('#weight'))
+        validateField($('#weight')),
+        validateNumber($('#weight'))
     })
     $("#height").keyup(function(){
-        validateField($('#height'))
+        validateField($('#height')),
+        validateNumber($('#height'))
     })
 
     document.getElementById('doctorCheck').onclick = function() {

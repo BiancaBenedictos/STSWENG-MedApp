@@ -11,13 +11,13 @@ body {
 
 .options a, .tabs a {
     font-size: 16px;
-    padding: 0 15 0 15;
+    padding: 10 0 0 0;
     font-weight: 600;
 }
 
 .tabs a {
     font-size: 20px;
-    margin-top: 20px;
+    margin: 20 15 10 15;
 }
 
 a:hover {

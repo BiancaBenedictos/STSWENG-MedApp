@@ -111,6 +111,7 @@ const doctorController = {
 	
 	setAvailability: function(req, res) {
 		var avail = req.body.avail;
+		var success = true;
 
 		for (i=0; i < avail.length; i++) {
 			avail[i].doctorID = req.session.userId
@@ -118,8 +119,13 @@ const doctorController = {
 			avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
 
 			db.upsertOne(Availability, {doctorID: avail[i].doctorID, clinicID: avail[i].clinicID,
-				day: avail[i].day}, avail[i])
+				day: avail[i].day}, avail[i], function(result) {
+					if (!result)
+						success = false;
+				})
 		}
+		
+		res.send(success)
 	}
 }
 

@@ -29,9 +29,9 @@
             </div>
             <div class="col">
                 <div class="row options">
-                    <a href="/adminPending" value= "pending" id="pending">pending</a>
-                    <a href="/adminDoctors" value="doctors" id="doctors">doctors</a>
-                    <a href="/adminClinics" value= "clinics" id="clinics">clinics</a>
+                    <a href="/adminPending" id="pending">pending</a>
+                    <a href="/adminDoctors" id="doctors">doctors</a>
+                    <a href="/adminClinics" id="clinics" style="border-bottom:2px solid black">clinics</a>
                 </div>
 
                 <div class="row d-flex flex-wrap">
@@ -44,7 +44,7 @@
                 </div>
 
                 {{#each clinics}}
-                <div class="row d-flex flex-wrap mt-4" id="clinic-{{_id}}">
+                <div class="row d-flex flex-wrap" id="clinic-{{_id}}">
                     <div class="row no-gutters admin-card">
                         <a href="/viewDoctors?id={{_id}}">
                             <img class="card-img" src="assets/clinic.png">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 {{/each}}
-                
+
             </div>
         </div>
     </div>
@@ -121,6 +121,24 @@
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetDelete()">No</button>
                 <a class="btn btn-danger" onclick="deleteClinic()">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Message Modal -->
+<div class="modal fade" id="process-message" tabindex="-1" role="dialog" aria-labelledby="process-message" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header msg-header">
+                
+            </div>
+            <div class="modal-body msg-body">
+                
+            </div>
+            <div class="modal-footer msg-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()">Okay</button>
             </div>
         </div>
     </div>

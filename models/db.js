@@ -72,11 +72,11 @@ const database = {
     },
 
 
-    upsertOne: function(model, filter, update) {
+    upsertOne: function(model, filter, update, callback) {
         model.updateOne(filter, update, {upsert: true}, function(error, result) {
-            // if(error) return callback(false);
-            //console.log('Document modified: ' + result.nModified);
-            // return callback(true);
+            if(error) return callback(false);
+            // console.log('Document modified: ' + result.nModified);
+            return callback(true);
         });
     },
 

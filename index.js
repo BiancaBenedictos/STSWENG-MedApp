@@ -24,6 +24,12 @@ app.use(session({
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
+app.use(function(req, res, next) {
+    if (!req.user)
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next();
+});
+
 app.use('/', routes)
 
 /*

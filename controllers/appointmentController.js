@@ -391,6 +391,7 @@ const appointmentController = {
 				disabled = true
 			} else {
 				active = true;
+				disabled = true;
 				addClass = 'active'
 			}
 

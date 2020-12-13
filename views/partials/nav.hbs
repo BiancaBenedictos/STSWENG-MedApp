@@ -4,7 +4,9 @@
 
             $("#navName").text(result.name);
 
-            $('#admin').prop('hidden', true);
+            $('#verify-doctors').prop('hidden', true);
+            $('#view-doctors').prop('hidden', true);
+            $('#view-clinics').prop('hidden', true);
             //$('#profile').prop('hidden', true);
             $('#create-appointments').prop('hidden', true);;
             
@@ -17,7 +19,9 @@
                 $('#create-appointments').prop('hidden', false);;
             }
             if(result.type == 'admin') {
-                $('#admin').prop('hidden', false);
+            $('#verify-doctors').prop('hidden', false);
+            $('#view-doctors').prop('hidden', false);
+            $('#view-clinics').prop('hidden', false);
                 $('#edit-profile').prop('hidden', true);
                 $('#appointments').prop('hidden', true);
             }
@@ -52,9 +56,9 @@
                 <a class="dropdown-item" href="/editProfile" id="edit-profile">Edit Profile</a>
                 <a class="dropdown-item" href="/upcomingAppointments" id="appointments">Appointments</a>
                 <a class="dropdown-item" href="/createAppointments" id="create-appointments">Set Appointment Hours</a>
-                <a class="dropdown-item" href="/adminPending" id="admin">Verify Doctors</a>
-                <a class="dropdown-item" href="/adminDoctors" id="admin">View Doctors</a>
-                <a class="dropdown-item" href="/adminClinics" id="admin">View Clinics</a>
+                <a class="dropdown-item" href="/adminPending" id="verify-doctors">Verify Doctors</a>
+                <a class="dropdown-item" href="/adminDoctors" id="view-doctors">View Doctors</a>
+                <a class="dropdown-item" href="/adminClinics" id="view-clinics">View Clinics</a>
                 <a class="dropdown-item" href="/logout">Logout</a>
             </div>
         </div>

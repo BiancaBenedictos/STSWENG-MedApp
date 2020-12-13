@@ -67,15 +67,15 @@
                     <div class="form-group row" id="patient">
                         <div class="col">
                             <label for="age">Age</label>
-                            <input type="Number" class="form-control" id="age" name="age">
+                            <input type="Number" class="form-control" id="age" name="age" required>
                         </div>
                         <div class="col">
                             <label for="weight">Weight (in kg)</label>
-                            <input type="Number" class="form-control" id="weight" name="weight">
+                            <input type="Number" class="form-control" id="weight" name="weight" required>
                         </div>
                         <div class="col">
                             <label for="height">Height (in cm)</label>
-                            <input type="Number" class="form-control" id="height" name="height">
+                            <input type="Number" class="form-control" id="height" name="height" required>
                         </div>
                     </div>
 
@@ -163,36 +163,36 @@
                         document.getElementById(id).parentElement.remove()
                     }
 
-                    function regClinic() {
+                    //function regClinic() {
                         
-                        var str = ` <div class="form-group">
-                                        <label for="name">Clinic Name</label>
-                                        <input class="form-control" id="name" name="newName[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="street">Street</label>
-                                        <input class="form-control" id="street" name="newStreet[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input class="form-control" id="city" name="newCity[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <input class="form-control" id="state" name="newState[` + j + `]">
-                                    </div>
-                                  `
+                    //    var str = ` <div class="form-group">
+                    //                    <label for="name">Clinic Name</label>
+                    //                    <input class="form-control" id="name" name="newName[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="street">Street</label>
+                    //                    <input class="form-control" id="street" name="newStreet[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="city">City</label>
+                    //                    <input class="form-control" id="city" name="newCity[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="state">State</label>
+                    //                    <input class="form-control" id="state" name="newState[` + j + `]">
+                    //                </div>
+                    //              `
                         
-                        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
-                        j++
+                    //    document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+                    //    j++
                         
-                        //var input = document.createElement("input")
-                        //input.id = "clinic" + i
-                        //input.name = "regclinics[" + i + "]"
-                        //input.className = "form-control"
+                    //    var input = document.createElement("input")
+                    //    input.id = "clinic" + i
+                    //    input.name = "regclinics[" + i + "]"
+                    //    input.className = "form-control"
 
-                        //document.getElementById("addRowsHere").appendChild(input)
-                    }
+                    //    document.getElementById("addRowsHere").appendChild(input)
+                    //}
 
                 </script>
             </div>

@@ -25,7 +25,7 @@ const validation = {
                 .custom(async value => {
                     // check if email is already used
                     const data = await patient.findOne({
-                        accEmail: value,
+                        email: value,
                     }).exec();
                     // reject if a record is found
                     if (data) return Promise.reject();
@@ -80,7 +80,7 @@ const validation = {
                 .custom(async value => {
                     // check if email is already used
                     const data = await doctor.findOne({
-                        accEmail: value,
+                        email: value,
                     }).exec();
                     // reject if a record is found
                     if (data) return Promise.reject();

@@ -159,7 +159,7 @@
 .timeslots {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin: 20 -15 0 0;
 }
 
 .active {

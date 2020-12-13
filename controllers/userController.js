@@ -150,6 +150,7 @@ const userController = {
 
 	postRegister: function(req, res) {
 		var errors = validationResult(req);
+		console.log(errors);
 
         if (!errors.isEmpty()) {
             errors = errors.errors;

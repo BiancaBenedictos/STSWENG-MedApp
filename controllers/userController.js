@@ -121,10 +121,17 @@ const userController = {
 		})
 	},
     
-	getRegister: function(req,res){
+	getPatientRegister: function(req,res){
+		res.render('user-register', {title: 'Register | Med-Aid',
+		register_active: true})
+	},
+
+	getDoctorRegister: function(req, res) {
 		db.findMany(Clinic, {}, null, function(clinics) {
 			var professions = Doctor.schema.path('profession').enumValues
-			res.render('register', {title: 'Register | Med-Aid',
+			console.log(professions);
+			console.log(clinics);
+			res.render('doctor-register', {title: 'Register | Med-Aid',
 			register_active: true,
 			clinics: clinics, professions: professions})
 		})
@@ -149,8 +156,9 @@ const userController = {
 		}) 
 	},
 
-	postRegister: function(req, res) {
+	postPatientRegister: function(req, res) {
 		var errors = validationResult(req);
+		console.log(errors);
 
         if (!errors.isEmpty()) {
             errors = errors.errors;
@@ -159,7 +167,7 @@ const userController = {
             for (let i = 0; i < errors.length; i++)
                 details[errors[i].param + 'Error'] = errors[i].msg;
 
-            res.render('register', {
+            res.render('user-register', {
                 inputs: req.body,
                 details: details,
                 title: 'Register | Med-Aid',
@@ -171,168 +179,192 @@ const userController = {
 			const email = helper.sanitize(req.body.email);
 
 			var password = req.body.password;
-			var doccheck = req.body.doctorCheck;
-
-			if(doccheck != "on") {
 				
-				const age = helper.sanitize(req.body.age);
-				const height = helper.sanitize(req.body.height);
-				const weight = helper.sanitize(req.body.weight);
-				
-				var bookedappointments = [];
+			const age = helper.sanitize(req.body.age);
+			const height = helper.sanitize(req.body.height);
+			const weight = helper.sanitize(req.body.weight);
+			
+			var bookedappointments = [];
 
-				bcrypt.hash(password, saltRounds, (err, hash) => {
-					if(!req.files['picture']) {
+			bcrypt.hash(password, saltRounds, (err, hash) => {
+				if(!req.files['picture']) {
 
-						var USER = new User({
-							email: email,
-							password: hash,
-							firstname: fname,
-							lastname: lname,
-							bookedAppointments: bookedappointments,
-							age: age,
-							height: height,
-							weight: weight
+					var USER = new User({
+						email: email,
+						password: hash,
+						firstname: fname,
+						lastname: lname,
+						bookedAppointments: bookedappointments,
+						age: age,
+						height: height,
+						weight: weight
 
-						});
+					});
 
-						db.insertOne(User, USER, function (flag) {
-							if (flag) {
-								req.session.email = USER.email;
-								req.session.name = USER.firstname + " " + USER.lastname;
-								req.session.userId = USER._id;
-								req.session.type = 'user'
-								req.session.age = USER.age,
-								req.session.weight = USER.weight,
-								req.session.height = USER.height
-								res.redirect('/upcomingAppointments');
-							}
-						});
-					}
+					db.insertOne(User, USER, function (flag) {
+						if (flag) {
+							req.session.email = USER.email;
+							req.session.name = USER.firstname + " " + USER.lastname;
+							req.session.userId = USER._id;
+							req.session.type = 'user'
+							req.session.age = USER.age,
+							req.session.weight = USER.weight,
+							req.session.height = USER.height
+							res.redirect('/upcomingAppointments');
+						}
+					});
+				}
 
-					else {
-						var USER = new User({
-							email: email,
-							password: hash,
-							firstname: fname,
-							lastname: lname,
-							bookedAppointments: bookedappointments,
-							age: age,
-							height: height,
-							weight: weight
+				else {
+					var USER = new User({
+						email: email,
+						password: hash,
+						firstname: fname,
+						lastname: lname,
+						bookedAppointments: bookedappointments,
+						age: age,
+						height: height,
+						weight: weight
 
-						});
+					});
 
-						var picName = USER.firstname;
-						var picFileName = helper.renameAvatar(req, picName);
-						USER.profpic = 'images/' + picFileName;
-						
-
-						db.insertOne(User, USER, function(flag) {
-							if (flag){
-								req.session.email = USER.email;
-								req.session.name = USER.firstname + " " + USER.lastname;
-								req.session.userId = USER._id;
-								req.session.type = 'user'
-								req.session.age = USER.age,
-								req.session.weight = USER.weight,
-								req.session.height = USER.height
-								res.redirect('/upcomingAppointments');
-							}
-						});
-					}
-				});
-			} else {
-				const profess = req.body.profession;
-				var clinics = [];
-				clinics = req.body.clinics;
-				
-				// for(var i = 0; i < req.body.newName.length; i++) {
-				// 	var address = {
-				// 		street: req.body.newStreet[i],
-				// 		city: req.body.newCity[i],
-				// 		state: req.body.newState[i]
-				// 	}
-				// 	var clinic = {
-				// 		clinicName: req.body.newName[i],
-				// 		clinicAddress: address,
-				// 		clinicDoctors: [],
-				// 		status: 'unverified'
-				// 	}
+					var picName = USER.firstname;
+					var picFileName = helper.renameAvatar(req, picName);
+					USER.profpic = 'images/' + picFileName;
 					
-				// 	// console.log(clinic)
-				// 	db.insertOne(Clinic, clinic, function() {})
-				// 	db.findOne(Clinic, clinic, function(result) {
-				// 		console.log(result)
-				// 	})
-				// }
 
-				bcrypt.hash(password, saltRounds, (err, hash) => {
-					if(!req.files['picture']) {
-						var DOCTOR = new Doctor({
-							email: email,
-							password: hash,
-							firstname: fname,
-							lastname: lname,
-							clinics: clinics,
-							profession: profess,
-							status: 'unverified',
-							availability: [],
-							bookedAppointments: [],
-							// newClinics: newClinics
-						});
+					db.insertOne(User, USER, function(flag) {
+						if (flag){
+							req.session.email = USER.email;
+							req.session.name = USER.firstname + " " + USER.lastname;
+							req.session.userId = USER._id;
+							req.session.type = 'user'
+							req.session.age = USER.age,
+							req.session.weight = USER.weight,
+							req.session.height = USER.height
+							res.redirect('/upcomingAppointments');
+						}
+					});
+				}
+			});
+		}
+	},
 
-						var credsName = DOCTOR.lastname;
-						var credFileName = helper.renameCredentials(req, credsName);
-						DOCTOR.credentials = credFileName;
+	postDoctorRegister: function(req, res) {
+		var errors = validationResult(req);
+		console.log(errors);
 
-						db.insertOne(Doctor, DOCTOR, function (flag) {
-							if (flag) {
-								req.session.email = DOCTOR.email;
-								req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
-								req.session.userId = DOCTOR._id;
-								req.session.type = 'doctor'
-								req.session.profession = DOCTOR.profession
-								res.redirect('/upcomingAppointments');
-							}
-						});
-					} else {
-						var DOCTOR = new Doctor({
-							email: email,
-							password: hash,
-							firstname: fname,
-							lastname: lname,
-							clinics: clinics,
-							profession: profess,
-							status: 'unverified',
-							availability: [],
-							bookedAppointments: [],
-							// newClinics: newClinics
-						});
+        if (!errors.isEmpty()) {
+            errors = errors.errors;
 
-						var picName = DOCTOR.firstname;
-						var picFileName = helper.renameAvatar(req, picName);
-						DOCTOR.profpic = 'images/' + picFileName; 
+            var details = {};
+            for (let i = 0; i < errors.length; i++)
+                details[errors[i].param + 'Error'] = errors[i].msg;
 
-						var credsName = DOCTOR.lastname;
-						var credFileName = helper.renameCredentials(req, credsName);
-						DOCTOR.credentials = credFileName;
+			db.findMany(Clinic, {}, null, function(clinics) {
+				var professions = Doctor.schema.path('profession').enumValues
+				console.log(professions);
+				console.log(clinics);
+				res.render('doctor-register', {title: 'Register | Med-Aid',
+				inputs: req.body,
+                details: details,
+				register_active: true,
+				clinics: clinics, professions: professions})
+			})
+        } else {
+			const fname = helper.sanitize(req.body.firstname);
+			const lname = helper.sanitize(req.body.lastname);
+			const email = helper.sanitize(req.body.email);
 
-						db.insertOne(Doctor, DOCTOR, function (flag) {
-							if (flag) {
-								req.session.email = DOCTOR.email;
-								req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
-								req.session.userId = DOCTOR._id;
-								req.session.type = 'doctor'
-								req.session.profession = DOCTOR.profession
-								res.redirect('/upcomingAppointments');
-							}
-						});
-					}
-				});
+			var password = req.body.password;
 
-			}
-        
+			const profess = req.body.profession;
+			var clinics = [];
+			clinics = req.body.clinics;
+			
+			// for(var i = 0; i < req.body.newName.length; i++) {
+			// 	var address = {
+			// 		street: req.body.newStreet[i],
+			// 		city: req.body.newCity[i],
+			// 		state: req.body.newState[i]
+			// 	}
+			// 	var clinic = {
+			// 		clinicName: req.body.newName[i],
+			// 		clinicAddress: address,
+			// 		clinicDoctors: [],
+			// 		status: 'unverified'
+			// 	}
+				
+			// 	// console.log(clinic)
+			// 	db.insertOne(Clinic, clinic, function() {})
+			// 	db.findOne(Clinic, clinic, function(result) {
+			// 		console.log(result)
+			// 	})
+			// }
+
+			bcrypt.hash(password, saltRounds, (err, hash) => {
+				if(!req.files['picture']) {
+					var DOCTOR = new Doctor({
+						email: email,
+						password: hash,
+						firstname: fname,
+						lastname: lname,
+						clinics: clinics,
+						profession: profess,
+						status: 'unverified',
+						availability: [],
+						bookedAppointments: [],
+						// newClinics: newClinics
+					});
+
+					var credsName = DOCTOR.lastname;
+					var credFileName = helper.renameCredentials(req, credsName);
+					DOCTOR.credentials = credFileName;
+
+					db.insertOne(Doctor, DOCTOR, function (flag) {
+						if (flag) {
+							req.session.email = DOCTOR.email;
+							req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
+							req.session.userId = DOCTOR._id;
+							req.session.type = 'doctor'
+							req.session.profession = DOCTOR.profession
+							res.redirect('/upcomingAppointments');
+						}
+					});
+				} else {
+					var DOCTOR = new Doctor({
+						email: email,
+						password: hash,
+						firstname: fname,
+						lastname: lname,
+						clinics: clinics,
+						profession: profess,
+						status: 'unverified',
+						availability: [],
+						bookedAppointments: [],
+						// newClinics: newClinics
+					});
+
+					var picName = DOCTOR.firstname;
+					var picFileName = helper.renameAvatar(req, picName);
+					DOCTOR.profpic = 'images/' + picFileName; 
+
+					var credsName = DOCTOR.lastname;
+					var credFileName = helper.renameCredentials(req, credsName);
+					DOCTOR.credentials = credFileName;
+
+					db.insertOne(Doctor, DOCTOR, function (flag) {
+						if (flag) {
+							req.session.email = DOCTOR.email;
+							req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
+							req.session.userId = DOCTOR._id;
+							req.session.type = 'doctor'
+							req.session.profession = DOCTOR.profession
+							res.redirect('/upcomingAppointments');
+						}
+					});
+				}
+			})
 		}
 	},
 

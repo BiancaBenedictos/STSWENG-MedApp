@@ -8,6 +8,8 @@ const doctorController = require('../controllers/doctorController')
 const homeController = require('../controllers/homeController')
 const userController = require('../controllers/userController')
 
+const validation = require('../helpers/validation.js');
+
 //MULTER INIT
 var storage = multer.diskStorage({
     destination: function (req, file, cd) {
@@ -67,11 +69,19 @@ app.get('/', userController.getLogin)
 app.post('/', userController.postLogin)
 app.get('/getCheckLogin', userController.getCheckLogin)
 
-app.get('/register', userController.getRegister)
+app.get('/patientRegister', userController.getPatientRegister)
 app.get('/getCheckEmail', userController.getCheckEmail)
-app.post('/register', 
+app.post('/patientRegister', 
          uploadFilter,
-         userController.postRegister)
+         validation.PatientSignupValidation(),
+         userController.postPatientRegister)
+
+app.get('/doctorRegister', userController.getDoctorRegister)
+app.get('/getCheckEmail', userController.getCheckEmail)
+app.post('/doctorRegister', 
+         uploadFilter,
+         validation.DoctorSignupValidation(),
+         userController.postDoctorRegister)
 
 app.get('/editProfile', userController.getEditProfile)
 app.post('/editProfile', userController.postEditProfile)

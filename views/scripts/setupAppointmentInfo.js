@@ -1,4 +1,4 @@
-var checked = [];
+var checked = [], redirect = false;
 
 function save() {
     checked = []
@@ -30,6 +30,7 @@ function checkTimeInterval() {
 
 function getAvail() {
     var avail = []
+    redirect = false;
     
     for (i=0; i<checked.length; i++) {
         avail.push({
@@ -42,7 +43,16 @@ function getAvail() {
     }    
     
     console.log(avail)
-    $.post('/setAvailability', {avail:avail}, function(){})
+    $.post('/setAvailability', {avail:avail}, function(result){
+        if (result) {
+            redirect = true;
+            $(".msg-body").text("Appointment hours successfully updated.")
+        }
+        else 
+            $(".msg-body").text("Something went wrong. Please try again.")
+
+        $("#process-message").modal('show')
+    })
 }
 
 function updateHours() {
@@ -61,10 +71,21 @@ function updateHours() {
         })
 }
 
+function refresh() {
+    if (redirect) {
+        window.location.href = '/upcomingAppointments'
+    } else
+    location.reload()
+}
+
 $(document).ready(function(){
     updateHours();
     
     $("#clinic").change(function(){
         updateHours();
+    })
+
+    $("#process-message").on('hide.bs.modal', function(e) {
+        refresh();
     })
 })

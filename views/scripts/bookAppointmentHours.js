@@ -61,7 +61,7 @@ function bookAppointment() {
         $("#confirm").modal('hide')
 
         if (res) {
-            $(".msg-body").text("Booking successful.")
+            $(".msg-body").text("Booking successful. Please wait for the doctor to accept your appointment schedule.")
         } else {
             $(".msg-body").text("Something went wrong. Please try again.")
         }

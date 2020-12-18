@@ -31,7 +31,8 @@ const userController = {
 						req.session.type = 'user'
 						req.session.age = user.age,
 						req.session.weight = user.weight,
-						req.session.height = user.height
+						req.session.height = user.height,
+						req.session.profpic = user.profpic
 						res.redirect('/homeDoctors');
 					}
                 });	

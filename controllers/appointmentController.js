@@ -512,7 +512,11 @@ const appointmentController = {
 				else {
 					var a = {
 						bookedDoctor: req.body.doctor,
+						doctorName: req.body.doctorName,
+						doctorPic: req.body.doctorPic,
 						patient: req.session.userId,
+						patientName: req.session.name,
+						patientPic: req.session.profpic,
 						bookedDate: bookTime, 
 						status: "Pending"
 					}

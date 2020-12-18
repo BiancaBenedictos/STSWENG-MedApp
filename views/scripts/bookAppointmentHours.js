@@ -57,7 +57,7 @@ function updateBookTime(time12, time24) {
 }
 
 function bookAppointment() {
-    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
+    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id'), doctorName: $("h1.doctor").text(), doctorPic: $(".profpic").attr('src')}, function(res) {
         $("#confirm").modal('hide')
 
         if (res) {

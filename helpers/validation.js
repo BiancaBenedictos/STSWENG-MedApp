@@ -50,12 +50,12 @@ const validation = {
                 .custom((value) => value > 0)
                 .withMessage('Please enter a non-negative number')
                 .notEmpty()
-                .withMessage('Please enter age'),
+                .withMessage('Please enter weight'),
             check('height')
                 .custom((value) => value > 0)
                 .withMessage('Please enter a non-negative number')
                 .notEmpty()
-                .withMessage('Please enter age'),
+                .withMessage('Please enter height'),
         ];
     },
 

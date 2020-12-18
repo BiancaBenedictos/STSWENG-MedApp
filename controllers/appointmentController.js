@@ -518,10 +518,8 @@ const appointmentController = {
 					}
 					
 					db.insertOne(Appointment, a, function(result) {
-						if (result) {
-							db.updateOne(User, {_id: req.session.userId}, {$push: {bookedAppointments:result._id}}, function(flag) {})
+						if (result)
 							res.send(true);
-						}
 						else res.send(false)
 					})
 				}

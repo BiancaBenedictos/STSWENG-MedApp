@@ -317,9 +317,9 @@ const userController = {
 						// newClinics: newClinics
 					});
 
-					var credsName = DOCTOR.lastname;
-					var credFileName = helper.renameCredentials(req, credsName);
-					DOCTOR.credentials = credFileName;
+			//		var credsName = DOCTOR.lastname;
+			//		var credFileName = helper.renameCredentials(req, credsName);
+			//		DOCTOR.credentials = credFileName;
 
 					db.insertOne(Doctor, DOCTOR, function (flag) {
 						if (flag) {

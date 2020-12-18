@@ -172,15 +172,21 @@ const appointmentController = {
 		
 		var appointmentId = req.body.id
 
-		db.updateOne(
-            Appointment,
-            { _id: appointmentId },
-            { status: 'Upcoming' },
-            function (result) {
-                res.redirect('/upcomingAppointments');
-            },
-        );
-
+		db.findOne(Appointment, {_id:appointmentId}, null, function(result) {
+			db.updateOne(
+				Appointment,
+				{ _id: appointmentId },
+				{ status: 'Upcoming' },
+				function (result) {
+					// res.redirect('/upcomingAppointments');
+				},
+			);
+		
+			db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+			res.redirect('/upcomingAppointments')
+		})
 	},
 
 	concludedAppointments: function(req,res) {

@@ -58,6 +58,7 @@ app.get('/doctorProfile', doctorController.doctorProfile)
 // app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 app.post('/acceptAppointment', appointmentController.acceptAppointment);
+app.post('/rejectAppointment', appointmentController.rejectAppointment);
 app.get('/getClinicHours', doctorController.getClinicHours)
 app.post('/setAvailability', doctorController.setAvailability)
 

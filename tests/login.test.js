@@ -1,6 +1,12 @@
-jest.useFakeTimers()
 const httpMocks = require('node-mocks-http');
-const { postLogin } = require('../controllers/userController');
+const controller = require('../controllers/userController');
+
+const time = require('../util/time');
+const sinon = require('sinon');
+sinon.stub(time, 'setTimeout');
+// beforeEach(() => {
+//     jest.useFakeTimers();
+// })
 
 var request  = httpMocks.createRequest({
     method: 'POST',
@@ -9,11 +15,9 @@ var request  = httpMocks.createRequest({
 
 var response = httpMocks.createResponse();
 
-postLogin(request, response);
-
 describe('login is successful', () => {
     it('Status Message is OK', async () => {
-        
+        controller.postLogin(request, response);
         expect(response.statusMessage).toBe("OK");
     });
 })

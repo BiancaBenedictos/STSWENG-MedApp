@@ -1,7 +1,16 @@
-jest.useFakeTimers()
 const httpMocks = require('node-mocks-http');
-const { postPatientRegister } = require('../controllers/userController');
-const { postDoctorRegister } = require('../controllers/userController');
+//const { postPatientRegister } = require('../controllers/userController');
+//const { postDoctorRegister } = require('../controllers/userController');
+const controller = require('../controllers/userController');
+
+const time = require('../util/time');
+const sinon = require('sinon');
+sinon.stub(time, 'setTimeout');
+
+// beforeEach(() => {
+//     jest.useFakeTimers();
+// })
+
 
 var request1  = httpMocks.createRequest({
     method: 'POST',
@@ -35,20 +44,17 @@ var request2 = httpMocks.createRequest({
 
 var response = httpMocks.createResponse();
 
-postPatientRegister(request1, response);
-
 describe('insertion of dummy patient is successful', () => {
     it('object is not null', async () => {
-        
-        expect(response).not.toBe(null);
+        controller.postPatientRegister(request1, response);
+        console.log(response);
+        expect(response.statusCode).toBe(200);
     });
 })
 
-postDoctorRegister(request2, response);
-
 describe('insertion of dummy doctor is successful', () => {
     it('object is not null', async () => {
-        
+        controller.postDoctorRegister(request2, response);
         expect(response).not.toBe(null);
     });
 })

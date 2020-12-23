@@ -1,3 +1,28 @@
+var toCancel;
+
+function setCancel(id) {
+    toCancel = id;
+}
+
+function unsetCancel() {
+    toCancel = '';
+}
+
+function cancelAppointment() {
+    window.alert(toCancel)
+    $.post('/cancelAppointment', {id: toCancel}, function(result){
+        
+        $("#confirm-cancel").modal('hide')
+
+        $(".msg-header").text("Cancel Appointment");
+        if (result) {
+            $(".msg-body").text("Appointment successfully cancelled.")
+        }
+
+        $("#process-message").modal('show')
+    })
+}
+
 $(document).ready(function() {
     $.get('/getDetails', null, function(result) {
         if(result.type == 'user') {

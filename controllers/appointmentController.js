@@ -5,18 +5,24 @@ const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
 const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
+const { now } = require('moment');
 
 const appointmentController = {
 	upcomingAppointments: function(req,res) {
 		var userId = req.session.userId
 		var apts = []
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Upcoming'}, null, function(appointments) {
+					db.updateMany(Appointment, {patient: user._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
@@ -29,9 +35,12 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Upcoming'}, null, function(appointments) {
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
@@ -56,13 +65,18 @@ const appointmentController = {
 	pendingAppointments: function(req,res) {
 		var userId = req.session.userId
 		var apts = []
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Pending'}, null, function(appointments) {
+					db.updateMany(Appointment, {patient: user._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
@@ -75,9 +89,10 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Pending'}, null, function(appointments) {
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
-								console.log(appointments)
 								var details = {
 									_id: appointments[i]._id,
 									user: appointments[i].patientName,
@@ -401,6 +416,15 @@ const appointmentController = {
 				}
 			})
 		}
+	},
+
+	cancelAppointment: function(req, res) {
+		console.log(req.body)
+
+		// db.deleteOne(Appointment, {_id: req.body.id})
+
+		// db.deleteOne(Clinic, {_id: req.body.id})
+		// res.send(true)
 	}
 }
 

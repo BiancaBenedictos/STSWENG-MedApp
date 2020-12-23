@@ -144,9 +144,11 @@ const appointmentController = {
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Concluded'}, null, function(appointments) {
+					Appointment.find({patient: user._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
@@ -159,9 +161,10 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Concluded'}, null, function(appointments) {
+						Appointment.find({bookedDoctor: doctor._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
@@ -190,9 +193,11 @@ const appointmentController = {
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Cancelled'}, null, function(appointments) {
+					Appointment.find({patient: user._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
@@ -205,9 +210,10 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Cancelled'}, null, function(appointments) {
+						Appointment.find({bookedDoctor: doctor._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),

@@ -58,6 +58,7 @@ const database = {
     updateOne: function(model, filter, update, callback) {
         model.updateOne(filter, update, function(error, result) {
             if(error) return callback(false);
+            if(result.nModified == 0) return callback(false);
             console.log('Document modified: ' + result.nModified);
             return callback(true);
         });

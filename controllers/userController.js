@@ -400,7 +400,22 @@ const userController = {
 	},
 
 	postEditProfile: function(req,res) {
-		res.render('edit-profile')
+		db.findOne(User, {_id: req.session.userId}, null, function(user) {
+			var newInfo = req.body
+
+			if(user) {
+				db.updateOne(User, {_id: req.session.userId}, newInfo, function(flag) {
+					res.send(flag)
+				})
+			}
+			// else {
+			// 	db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
+			// 		if(doctor) {
+						
+			// 		}
+			// 	})
+			// }
+		})
 	},
 
 	error: function(req,res) {

@@ -400,19 +400,23 @@ const userController = {
 	},
 
 	postEditProfile: function(req,res) {
-		db.findOne(User, {_id: req.session.userId}, null, function(user) {
-			var newInfo = req.body
+		var newInfo = req.body
 
+		if(req.files['picture']) {
+			var picName = req.body.firstname;
+			var picFileName = helper.renameAvatar(req, picName);
+			newInfo.profpic = 'images/' + picFileName;
+		}
+		
+		db.findOne(User, {_id: req.session.userId}, null, function(user) {
 			if(user) {
 				db.updateOne(User, {_id: req.session.userId}, newInfo, function(flag) {
+					if(req.files['picture']) flag = true
 					res.send(flag)
 				})
 			}
 			// else {
 			// 	db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
-			// 		if(doctor) {
-						
-			// 		}
 			// 	})
 			// }
 		})

@@ -84,7 +84,7 @@ app.post('/doctorRegister',
          userController.postDoctorRegister)
 
 app.get('/editProfile', userController.getEditProfile)
-app.post('/editProfile', userController.postEditProfile)
+app.post('/editProfile', uploadFilter, userController.postEditProfile)
 
 app.post('/changePassword', userController.changePassword)
 

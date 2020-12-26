@@ -17,48 +17,39 @@ function changePassword() {
     })
 }
 
-function editProfile() {
-    // var profpic = ''
-
-    // var fullPath = document.getElementById('picture').value;
-    // if (fullPath) {
-    //     var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-    //     var filename = fullPath.substring(startIndex);
-    //     if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-    //         filename = filename.substring(1);
-    //     }
-    //     profpic = 'images/' + filename
-    // }
-    
-    var newInfo = {
-        firstname: $("#firstname").val(),
-        lastname: $("#lastname").val(),
-        email: $("#email").val(),
-        // profpic: profpic,
-        // profpic: $("#picture").val(),
-        age: $("#age").val(),
-        weight: $("#weight").val(),
-        height: $("#height").val()
-    }
-
-    $.post('/editProfile', newInfo, function(result) {
-        $(".msg-header").text("Edit Profile");
-        if (result) {
-            $(".msg-body").text("Your profile has been updated!")
-        }
-        else {
-            $(".msg-body").text("Your profile was not updated!")
-        }
-
-        $("#process-message").modal('show')
-    })
-}
-
 function refresh() {
     location.reload();
 }
 
 $(document).ready(function() {
+    $("form").submit(function(evt){	 
+            evt.preventDefault();
+            var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/editProfile',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (response) {
+                $(".msg-header").text("Edit Profile");
+                if(response) {
+                    $(".msg-body").text("Your profile has been updated!")
+                }
+                else {
+                    $(".msg-body").text("Your profile was not updated!")
+                }
+                $("#process-message").modal('show')
+            },
+            // fail: function(response) {
+            //     alert("Server error")
+            // }
+        });
+    })
+
     $("#process-message").on('hide.bs.modal', function(e) {
         refresh();
     })

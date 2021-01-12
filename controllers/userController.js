@@ -400,7 +400,36 @@ const userController = {
 	},
 
 	postEditProfile: function(req,res) {
-		res.render('edit-profile')
+		console.log(req.body)
+		console.log(req.session)
+		var userID = mongoose.Types.ObjectId(req.session.userId)
+		console.log(typeof req.session.userId + " | " + typeof userID)
+
+		
+
+		if (req.session.type == 'doctor') {
+			var clinics = req.body.info.clinics
+			
+			console.log(req.body.info)
+			db.findOne(Doctor, {_id: userID}, "clinics", function(resClinics) {
+				var addClinics = clinics.filter( 
+					function(i) { 
+						return this.indexOf(i) < 0; 
+					}, resClinics.clinics).map(s => mongoose.Types.ObjectId(s));
+
+				var removeClinics = resClinics.clinics.filter( 
+					function(i) { 
+						return this.indexOf(i) < 0; 
+					}, clinics).map(s => mongoose.Types.ObjectId(s));
+
+				db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
+				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
+
+				db.updateOne(Doctor, {_id: userID}, req.body.info, function(res) {
+					console.log(res)
+				})
+			})
+		}
 	},
 
 	error: function(req,res) {

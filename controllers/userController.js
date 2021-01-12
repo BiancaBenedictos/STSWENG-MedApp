@@ -425,8 +425,15 @@ const userController = {
 				db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
 				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
 
-				db.updateOne(Doctor, {_id: userID}, req.body.info, function(res) {
-					console.log(res)
+				db.updateOne(Doctor, {_id: userID}, req.body.info, function(results) {
+					console.log(results)
+
+					// update session info
+					req.session.email = req.body.info.email;
+					req.session.name = req.body.info.firstname + " " + req.body.info.lastname;
+					req.session.profession = req.body.info.profession;
+					
+					res.send(true)
 				})
 			})
 		}

@@ -424,7 +424,13 @@ const appointmentController = {
 			var upcomingCount = r.find(obj => {return obj._id === 'Upcoming'})
 			var pendingCount = r.find(obj => {return obj._id === 'Pending'})
 
-			res.send({upcomingCount: upcomingCount.count, pendingCount: pendingCount.count});
+			if (upcomingCount) 
+				upcomingCount = upcomingCount.count
+
+			if (pendingCount)
+				pendingCount = pendingCount.count
+
+			res.send({upcomingCount: upcomingCount, pendingCount: pendingCount});
 		})
 	}
 }

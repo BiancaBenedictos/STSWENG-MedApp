@@ -34,7 +34,17 @@ function saveChanges() {
     // post
     $.post('/editProfile', {info: info}, function(res) {
         console.log(res)
+        $(".msg-header").text("Update Profile Information");
+        if (res) {
+            $(".msg-body").text(res)
+        }
+
+        $("#process-message").modal('show')
     })
+}
+
+function refresh() {
+    location.reload();
 }
 
 $(document).ready(function(){    

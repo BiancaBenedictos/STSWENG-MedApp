@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <select class="form-control" id="profession" name="profession">
                                         {{#each professions}}
-                                        <option>{{this}}</option>
+                                        <option {{class}}>{{name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -118,11 +118,31 @@
             </div>
         </div>
     </div>
+
+    
+    <!-- Message Modal -->
+    <div class="modal fade" id="process-message" tabindex="-1" role="dialog" aria-labelledby="process-message" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header msg-header">
+                    
+                </div>
+                <div class="modal-body msg-body">
+                    
+                </div>
+                <div class="modal-footer msg-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
 <script>
     var i = 1
+
+    $('option[value=' + {{user.profession}} + ']').attr('selected','selected');
 
     function add() {
         var str = ` <div class="input-group mb-2">
@@ -146,19 +166,3 @@
 </script>
 
 
-<!-- Message Modal -->
-<div class="modal fade" id="process-message" tabindex="-1" role="dialog" aria-labelledby="process-message" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header msg-header">
-                
-            </div>
-            <div class="modal-body msg-body">
-                
-            </div>
-            <div class="modal-footer msg-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>

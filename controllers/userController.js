@@ -385,8 +385,17 @@ const userController = {
 				db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
 					if(doctor) {
 						db.findMany(Clinic, {}, null, function(clinics) {
+							
 							db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(docClinics) {
-								var professions = Doctor.schema.path('profession').enumValues
+								var p = Doctor.schema.path('profession').enumValues
+								var professions = [];
+
+								for (i in p) {
+									professions.push({name: p[i], class: ""})
+									if (p[i] == req.session.profession)
+										professions[i].class = 'selected'
+								}
+
 								res.render('doctor-edit-profile', {user: doctor, professions: professions, clinics: clinics, docClinics: docClinics})
 							})
 						})

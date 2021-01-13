@@ -400,17 +400,11 @@ const userController = {
 	},
 
 	postEditProfile: function(req,res) {
-		console.log(req.body)
-		console.log(req.session)
 		var userID = mongoose.Types.ObjectId(req.session.userId)
-		console.log(typeof req.session.userId + " | " + typeof userID)
-
-		
 
 		if (req.session.type == 'doctor') {
 			var clinics = req.body.info.clinics
 			
-			console.log(req.body.info)
 			db.findOne(Doctor, {_id: userID}, "clinics", function(resClinics) {
 				var addClinics = clinics.filter( 
 					function(i) { 

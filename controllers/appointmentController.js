@@ -401,6 +401,31 @@ const appointmentController = {
 				}
 			})
 		}
+	},
+
+	getAppointmentNotifs: function(req, res) {
+		var match;
+		if (req.session.type == 'user') {
+			match = {'patient': req.session.userId}
+		} else if (req.session.type == 'doctor') {
+			match = {'bookedDoctor': req.session.userId}
+		}
+
+		Appointment.aggregate([{
+			$match: match}, { 
+			$group: {
+				_id: '$status',
+				count: { $sum: 1}
+			}
+		}]).exec(function(e, r) {
+			console.log(e)
+			console.log(r)
+			
+			var upcomingCount = r.find(obj => {return obj._id === 'Upcoming'})
+			var pendingCount = r.find(obj => {return obj._id === 'Pending'})
+
+			res.send({upcomingCount: upcomingCount.count, pendingCount: pendingCount.count});
+		})
 	}
 }
 

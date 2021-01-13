@@ -420,14 +420,16 @@ const userController = {
 				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
 
 				db.updateOne(Doctor, {_id: userID}, req.body.info, function(results) {
-					console.log(results)
-
 					// update session info
 					req.session.email = req.body.info.email;
 					req.session.name = req.body.info.firstname + " " + req.body.info.lastname;
 					req.session.profession = req.body.info.profession;
 					
-					res.send(true)
+					if (results) {
+						res.send("Changes to Dr. " + req.session.name + "'s information is saved")
+					} else {
+						res.send("Changes to Dr. " + req.session.name + "'s information failed to save. Please try again.")
+					}
 				})
 			})
 		}

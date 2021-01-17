@@ -1,76 +1,81 @@
-const httpMocks = require('node-mocks-http');
+// const httpMocks = require('node-mocks-http');
 //const { postPatientRegister } = require('../controllers/userController');
 //const { postDoctorRegister } = require('../controllers/userController');
-const controller = require('../controllers/userController');
+// const controller = require('../controllers/userController');
+const supertest = require('supertest');
+const app = require('../index');
+const request = supertest(app);
 
-const time = require('../util/time');
-const sinon = require('sinon');
-sinon.stub(time, 'setTimeout');
 
-// beforeEach(() => {
-//     jest.useFakeTimers();
+// const mongoose = require('mongoose');
+const db = require('../models/db')
+const dbname = 'test';
+const USER = require('../models/userModel');
+const DOCTOR = require('../models/doctorModel');
+
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+};
+
+
+beforeAll(async () => {
+    const url = `mongodb://localhost:27017/${dbname}`;
+    await db.connect(url, options);
+});
+
+// it('Should save patient to database', async done => {
+//     const res = await request.post('/testpatientRegister')
+//     .field('firstname', 'tester2')
+//     .field('lastname', 'tester2')
+//     .field('email', 'tester2@gmail.com')
+//     .field('password', '1234567')
+//     .field('cpassword', '1234567')
+//     .field('age', '21')
+//     .field('weight', '76')
+//     .field('height', '165')
+    
+//     expect(res.status).toBe(200);
+//     done();
 // })
 
+// it('Should find an existing patient in the database', async done => {
+//     db.findOne(USER, {email: 'tester@gmail.com'}, null, function(res){
+//         expect(res.email).toBeTruthy();
+//         expect(res.firstname).toBe('tester');
+//         done();
+//     })
+// })
 
-var request1  = httpMocks.createRequest({
-    method: 'POST',
-    url: '/patientRegister',
-    params: {
-        email: 'g@test.com',
-        password: 'bulokkaman',
-        firstname: 'g',
-        lastname: 'g',
-        age: 24,
-        height: 170,
-        weight: 76
-    }
-});
+// it('Should save doctor to database', async done => {
+//     const res = await request.post('/testpatientRegister')
+//     .set({
+//         'Content-Type': 'multipart/form-data',
+//       })
+//     .field('firstname', 'doctor')
+//     .field('lastname', 'doctor')
+//     .field('email', 'doctor@gmail.com')
+//     .field('password', '1234567')
+//     .field('cpassword', '1234567')
+//     .field('profession', 'Pediatrician')
+//     .field('clinics[]', ['clinic2', 'test'])
+//     .attach('credentials', 'STSWENG-UI.pdf');
+    
+//     expect(res.status).toBe(200);
+//     done();
+// })
 
-var request2 = httpMocks.createRequest({
-    method: 'POST',
-    url: '/doctorRegister',
-    params: {
-        clinics: ['5fb59a0731422020ec5fb2e0'],
-        email: 'abc@yahoo.com',
-        password: 'bulokam',
-        firstname: 'a', 
-        lastname: 'a',
-        profession: 'Pediatrician',
-    },
-    files: {
-        credentials: 'abc.pdf',
-    },
-});
+// it('Should find an existing doctor in the database', async done => {
+//     db.findOne(DOCTOR, {email: 'tester@gmail.com'}, null, function(res){
+//         expect(res.email).toBeTruthy();
+//         expect(res.firstname).toBe('tester');
+//         done();
+//     })
+// })
 
-var response = httpMocks.createResponse();
-
-describe('insertion of dummy patient is successful', () => {
-    it('object is not null', async () => {
-        controller.postPatientRegister(request1, response);
-        console.log(response);
-        expect(response.statusCode).toBe(200);
-    });
-})
-
-describe('insertion of dummy doctor is successful', () => {
-    it('object is not null', async () => {
-        controller.postDoctorRegister(request2, response);
-        expect(response).not.toBe(null);
-    });
-})
-
-////////////////////////// new sht  //////////////////////////
-// var request  = httpMocks.createRequest({
-//     method: 'POST',
-//     url: '/register',
-//     params: {
-//         email: 'g@test.com',
-//         password: 'bulokkaman',
-//         firstname: 'g',
-//         lastname: 'g',
-//         bookedAppointments: [],
-//         age: 24,
-//         height: 170,
-//         weight: 76
-//     }
-// });
+// describe('insertion of dummy doctor is successful', () => {
+//     it('object is not null', async () => {
+//         controller.postDoctorRegister(request2, response);
+//         expect(response).not.toBe(null);
+//     });
+// })

@@ -7,15 +7,15 @@ const Doctor = require('./doctorModel.js')
 const Patient = require('./userModel.js')
 
 //connect to database
-const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
+// const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
 
-const options = {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-};
+// const options = {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true
+// };
 
 const database = {
-    connect: function () {
+    connect: function (url, options) {
         mongoose.connect(url, options, function(error) {
             if(error) 
                 throw error;
@@ -27,7 +27,7 @@ const database = {
     insertOne: function(model, doc, callback) {
         model.create(doc, function(error, result) {
             if(error) return callback(false);
-            console.log('Added ' + result);
+            // console.log('Added ' + result);
             return callback(result);
         });
     },

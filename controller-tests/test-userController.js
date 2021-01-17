@@ -110,8 +110,6 @@ const userControllerTests = {
 						weight: weight
 
 					});
-
-
 					db.insertOne(User, USER, function (flag) {
 						if (flag) {
 							//console.log(USER);
@@ -123,7 +121,9 @@ const userControllerTests = {
 							req.session.weight = USER.weight,
 							req.session.height = USER.height
 						}
-                    });
+					});
+					// const ret = USER.save()
+					res.json(USER);
 				}
 
 				else {
@@ -143,23 +143,23 @@ const userControllerTests = {
 					var picFileName = helper.renameAvatar(req, picName);
 					USER.profpic = 'images/' + picFileName;
 					
-
-					db.insertOne(User, USER, function(flag) {
-						if (flag){
-							req.session.email = USER.email;
-							req.session.name = USER.firstname + " " + USER.lastname;
-							req.session.userId = USER._id;
-							req.session.type = 'user'
-							req.session.age = USER.age,
-							req.session.weight = USER.weight,
-							req.session.height = USER.height
-						}
-                    });
-                    
-                    
+					// db.insertOne(User, USER, function(flag) {
+					// 	if (flag){
+					// 		req.session.email = USER.email;
+					// 		req.session.name = USER.firstname + " " + USER.lastname;
+					// 		req.session.userId = USER._id;
+					// 		req.session.type = 'user'
+					// 		req.session.age = USER.age,
+					// 		req.session.weight = USER.weight,
+					// 		req.session.height = USER.height
+					// 	}
+                    // });
+                    console.log(USER);
+                    const ret = USER.save()
+					res.json(ret);
 				}
 
-				res.send(USER);
+				
 			});
 		}
 	},

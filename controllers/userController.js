@@ -157,6 +157,7 @@ const userController = {
 	},
 
 	postPatientRegister: function(req, res) {
+		console.log(req.body);
 		var errors = validationResult(req);
 		console.log(errors);
 

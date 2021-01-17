@@ -8,6 +8,8 @@ const doctorController = require('../controllers/doctorController')
 const homeController = require('../controllers/homeController')
 const userController = require('../controllers/userController')
 
+const testuser = require('../controller-tests/test-userController');
+
 const validation = require('../helpers/validation.js');
 
 //MULTER INIT
@@ -90,3 +92,14 @@ app.post('/editProfile', userController.postEditProfile)
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)
+
+//tests
+app.post('/testpatientRegister', 
+         uploadFilter,
+         validation.PatientSignupValidation(),
+         testuser.postPatientRegister)
+
+app.post('/testdoctorRegister', 
+         uploadFilter,
+         validation.DoctorSignupValidation(),
+         testuser.postDoctorRegister)

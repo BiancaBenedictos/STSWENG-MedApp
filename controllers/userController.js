@@ -35,7 +35,7 @@ const userController = {
 						req.session.profpic = user.profpic
 						res.redirect('/homeDoctors');
 					}
-                });	
+				});					
 			}
 			else {
 				db.findOne(Doctor, query, null, function(doctor) {
@@ -441,6 +441,8 @@ const userController = {
 					}
 				})
 			})
+		} else {
+			res.send("Not a doctor")
 		}
 	},
 

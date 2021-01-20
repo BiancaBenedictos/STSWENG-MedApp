@@ -20,8 +20,6 @@ var doctorID, clinicIDs
 beforeAll(async (done) => {
     const url = 'mongodb://127.0.0.1/testDB'
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-    await mongoose.connection.db.dropCollection('doctors');
-    await mongoose.connection.db.dropCollection('clinics');
 
     /* PREPARE DB */
     var clinics = [{
@@ -78,9 +76,9 @@ beforeAll(async (done) => {
 })
 
 afterAll(async () => {
-//    await mongoose.disconnect()
     await mongoose.connection.db.dropCollection('sessions');
- //   await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropCollection('doctors');
+    await mongoose.connection.db.dropCollection('clinics');
 })
 
 

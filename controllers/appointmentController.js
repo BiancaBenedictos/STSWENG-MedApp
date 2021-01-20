@@ -417,10 +417,7 @@ const appointmentController = {
 				_id: '$status',
 				count: { $sum: 1}
 			}
-		}]).exec(function(e, r) {
-			console.log(e)
-			console.log(r)
-			
+		}]).exec(function(e, r) {			
 			var upcomingCount = r.find(obj => {return obj._id === 'Upcoming'})
 			var pendingCount = r.find(obj => {return obj._id === 'Pending'})
 

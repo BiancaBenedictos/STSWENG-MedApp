@@ -102,12 +102,10 @@ describe('Update doctor info', () => {
             const editProf = await request.        
                 post('/editProfile').type('form').send(rq)
 
-            Doctor.findOne({ email: 'test@dr.com' }, '-_id firstname lastname email profession clinics', function(err, result) {
+            await Doctor.findOne({ email: 'test@dr.com' }, '-_id firstname lastname email profession clinics', function(err, result) {
                 expect(rq.info).toMatchObject(result)
                 done()
-            }).lean()
-            
-            
+            }).lean()        
 
         } catch (e) {
             console.log(e)

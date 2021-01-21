@@ -7,7 +7,7 @@ const request = supertest.agent(app)
 
 const Doctor = require('../models/doctorModel')
 const User = require('../models/userModel')
-const Appointment = require('../models/AppointmentModel')
+const Appointment = require('../models/appointmentModel')
 
 const mongoose = require('mongoose');
 jest.setTimeout(10000)

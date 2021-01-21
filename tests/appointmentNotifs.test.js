@@ -10,11 +10,9 @@ const User = require('../models/userModel')
 const Appointment = require('../models/AppointmentModel')
 
 const mongoose = require('mongoose');
-const { expectation } = require('sinon');
 jest.setTimeout(10000)
 
 const bcrypt = require('bcrypt');
-const helper = require('../helpers/helper');
 const saltRounds = 10;
 
 var doctorID, userID
@@ -123,7 +121,7 @@ describe('With 3 Upcoming and 2 Pending Appointments', () => {
 function loginUser(info) {
     return async done => {
         try {
-            const login = await request.        
+            await request.        
                 post('/').type('form').send(info)
             
             done()        
@@ -133,12 +131,12 @@ function loginUser(info) {
             console.log("------------ERROR-----------")
         }
     }
-};
+}
 
 function logout() {
     return async done => {
         try {
-            const login = await request.        
+            await request.        
                 get('/logout')
             
             done()        
@@ -148,7 +146,7 @@ function logout() {
             console.log("------------ERROR-----------")
         }
     }
-};
+}
 
 async function makeAccounts(done) {
     /*  INSERT DOCTOR AND USER  */

@@ -24,11 +24,13 @@ beforeAll(async (done) => {
     await makeAccounts(done);    
 })
 
-afterAll(async () => {
-    await mongoose.connection.db.dropCollection('sessions');
-    await mongoose.connection.db.dropCollection('doctors');
-    await mongoose.connection.db.dropCollection('users');
-    await mongoose.connection.db.dropCollection('appointments');
+afterAll((done) => {
+    mongoose.connection.db.dropCollection('sessions');
+    mongoose.connection.db.dropCollection('doctors');
+    mongoose.connection.db.dropCollection('users');
+    mongoose.connection.db.dropCollection('appointments');
+
+    done()
 })
 
 

@@ -31,50 +31,44 @@ afterAll((done) => {
     done()
 })
 
-it('Should save patient to database', async done => {
-    const res = await request.post('/testpatientRegister')
-    .field('firstname', 'tester2')
-    .field('lastname', 'tester2')
-    .field('email', 'tester2@gmail.com')
-    .field('password', '1234567')
-    .field('cpassword', '1234567')
-    .field('age', '21')
-    .field('weight', '76')
-    .field('height', '165')
-    
-    expect(res.status).toBe(200);
-    done();
+describe('logging in and logging out of a patient is successful', () => {
+    it('login a Patient', async done => {
+        const res = await request.post('/').type('form').send({
+            email: 'test@gmail.com', 
+            password: 'test'
+        })
+        // console.log(res.res.statusMessage);
+        expect(res.res.statusCode).toBe(302);
+        expect(res.res.statusMessage).toBe('Found');
+        done();
+    });
+
+    it('logout Patient', async done => {
+        const res = await request.get('/logout')
+        
+        expect(res.res.complete).toBe(true);
+        done();
+    });
 })
 
-it('Should find recently inserted patient in the database', async done => {
-    var user;
-    user = await USER.findOne( {email: "tester2@gmail.com"} );
-    expect(user.email).toBeTruthy();
-    expect(user.firstname).toBe('tester2');
-    done();
-})
+describe('logging in and logging out of a doctor is successful', () => {
+    it('log in a doctor', async done => {
+        const res = await request.post('/').type('form').send({
+            email: 'test@dr.com', 
+            password: 'test'
+        })
+        // console.log(res.res.statusMessage);
+        expect(res.res.statusCode).toBe(302);
+        expect(res.res.statusMessage).toBe('Found');
+        done();
+    });
 
-// it('Should save doctor to database', async done => {
-//     const res = await request.post('/testdoctorRegister')
-//     .attach('credentials', 'creds.pdf')
-//     .field('firstname', "doctor")
-//     .field('lastname', 'doctor')
-//     .field('email', 'doctor@gmail.com')
-//     .field('password', '1234567')
-//     .field('cpassword', '1234567')
-//     .field('profession', 'Pediatrician')
-//     .field('clinics[]', ['clinic2', 'test'])
-
-//     expect(res.status).toBe(200);
-//     done();
-// })
-
-it('Should find an existing doctor in the database', async done => {
-    var doc;
-    doc = await DOCTOR.findOne( {email: "test@dr.com"} );
-    expect(doc.email).toBeTruthy();
-    expect(doc.firstname).toBe('test');
-    done();
+    it('logout Doctor', async done => {
+        const res = await request.get('/logout')
+        
+        expect(res.res.complete).toBe(true);
+        done();
+    });
 })
 
 async function makeAccounts(done) {

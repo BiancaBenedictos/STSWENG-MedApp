@@ -40,7 +40,7 @@ describe('Update patient info', () => {
     it('Login', loginUser())
 
     it('Should save patient to database', async done => {
-        const res = await request.post('/testpatientRegister')
+        const res = await request.post('/editProfile')
         .field('firstname', 'test')
         .field('lastname', 'update')
         .field('email', 'test@gmail.com')
@@ -54,7 +54,7 @@ describe('Update patient info', () => {
 
     it('Should update user info', async done => {
         var user;
-        user = await USER.findOne( {email: "test@gmail.com"} );
+        user = await User.findOne( {email: "test@gmail.com"} );
         expect(user.email).toBeTruthy();
         expect(user.lastname).toBe('update');
         done();

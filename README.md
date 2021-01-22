@@ -26,9 +26,9 @@ The site will be accessible in localhost:<>.
 You may choose to login to any of the existing accounts to navigate through the website.
 | Email | Password | User Type |
 |:---:|:---:|:--:|
-| admin@admin.com | - | admin |
-| - | - | doctor/user |
-| - | - | patient/user |
+| admin@admin.com | a | admin |
+| test@dr.com | test | doctor/user |
+| test@gmail.com | test | patient/user |
 
 ## Authors
 - [Bianca Joy Benedictos](https://www.facebook.com/biancajoyrb)

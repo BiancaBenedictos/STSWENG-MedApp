@@ -39,34 +39,25 @@ describe('Update patient info', () => {
     
     it('Login', loginUser())
 
-    it('Check Updated Patient', async done => {
-        try {
-            await User.findOne({_id:userID}, null, async function(err, res) {
-                rq = {
-                    info: {
-                        email: 'test@gmail.com',
-                        firstname: "test",
-                        lastname: "update",
-                        profpic: "images/test.png",
-                        age: 20,
-                        height: 150,
-                        weight: 50
-                    }
-                }
+    it('Should save patient to database', async done => {
+        const res = await request.post('/testpatientRegister')
+        .field('firstname', 'test')
+        .field('lastname', 'update')
+        .field('email', 'test@gmail.com')
+        .field('age', '20')
+        .field('weight', '150')
+        .field('height', '50')
+        
+        expect(res.status).toBe(200);
+        done();
+    })
 
-                const editProf = await request.        
-                    post('/editProfile').type('form').send(rq)
-
-                await User.findOne({ email: 'test@gmail.com' }, 'email firstname lastname profpic age height weight', function(err, result) {
-                    user = result._id.toString();
-                    delete result._id
-                    expect(rq.info).toMatchObject(result)
-                    done()
-                }).lean()    
-            })
-        } catch (e) {
-            console.log(e)
-        }
+    it('Should update user info', async done => {
+        var user;
+        user = await USER.findOne( {email: "test@gmail.com"} );
+        expect(user.email).toBeTruthy();
+        expect(user.lastname).toBe('update');
+        done();
     })
 
     it('User Logout', logout())

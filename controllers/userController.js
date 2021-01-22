@@ -390,7 +390,7 @@ const userController = {
 								var p = Doctor.schema.path('profession').enumValues
 								var professions = [];
 
-								for (i in p) {
+								for (var i in p) {
 									professions.push({name: p[i], class: ""})
 									if (p[i] == req.session.profession)
 										professions[i].class = 'selected'

@@ -26,7 +26,9 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
 							}
 							apts.push(details)
 						}
@@ -44,7 +46,9 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
 								apts.push(details)
 							}
@@ -80,7 +84,9 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
 							}
 							apts.push(details)
 						}
@@ -98,7 +104,9 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
 								apts.push(details)
 							}
@@ -423,6 +431,14 @@ const appointmentController = {
 		}
 	},
 
+	cancelAppointment: function(req, res) {
+		db.updateOne(Appointment, {_id: req.body.id}, {status: 'Cancelled'}, function(flag){})
+		// db.updateOne(User, {_id: req.body.patient}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.updateOne(Doctor, {_id: req.body.doctor}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.deleteOne(Appointment, {_id: req.body.id})
+		res.send(true)
+  },
+  
 	getAppointmentNotifs: function(req, res) {
 		var match;
 		if (req.session.type == 'user') {

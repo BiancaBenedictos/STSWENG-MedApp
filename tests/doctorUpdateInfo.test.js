@@ -64,7 +64,7 @@ beforeAll(async (done) => {
                 
                 Doctor.findOne({}, '_id', async function(err, result) {
                     doctorID = result._id
-                    await Clinic.updateMany({}, result._id)
+                    await Clinic.updateMany({}, {clinicDoctors: [result._id]})
                     done()
                 })
             })
@@ -75,18 +75,20 @@ beforeAll(async (done) => {
     
 })
 
-afterAll(async () => {
-    await mongoose.connection.db.dropCollection('sessions');
-    await mongoose.connection.db.dropCollection('doctors');
-    await mongoose.connection.db.dropCollection('clinics');
+afterAll((done) => {
+    mongoose.connection.db.dropCollection('sessions');
+    mongoose.connection.db.dropCollection('doctors');
+    mongoose.connection.db.dropCollection('clinics');
+    done()
 })
 
 
 describe('Update doctor info', () => {
-    it('login', loginUser())
-    it('test', async done => {
+    var rq, clinic, doctor;
+    
+    it('Login', loginUser())
+    it('Check Updated Doctor', async done => {
         try {
-            var rq
             await Clinic.findOne({}, "_id", async function(err, res) {
                 rq = {
                     info: {
@@ -97,20 +99,36 @@ describe('Update doctor info', () => {
                         clinics: [res._id.toString()]
                     }
                 }
-            })
 
-            const editProf = await request.        
-                post('/editProfile').type('form').send(rq)
+                clinic = res._id.toString()
+                const editProf = await request.        
+                    post('/editProfile').type('form').send(rq)
 
-            await Doctor.findOne({ email: 'test@dr.com' }, '-_id firstname lastname email profession clinics', function(err, result) {
-                expect(rq.info).toMatchObject(result)
-                done()
-            }).lean()        
+                await Doctor.findOne({ email: 'test@dr.com' }, 'firstname lastname email profession clinics', function(err, result) {
+                    doctor = result._id.toString();
+                    delete result._id
+                    expect(rq.info).toMatchObject(result)
+                    done()
+                }).lean()    
+            })    
 
         } catch (e) {
             console.log(e)
         }
     
+    })
+
+    it('Check Updated Clinics', async done => {
+        try {
+
+            await Clinic.find({clinicDoctors: doctor}, '_id', function(err, result) {
+                expect(result.length).toEqual(1)
+                expect(result[0]._id.toString()).toMatch(clinic)
+                done()
+            }).lean()
+        } catch (e) {
+            console.log(e)
+        }
     })
 })
 
@@ -119,7 +137,7 @@ describe('Update doctor info', () => {
 function loginUser() {
     return async done => {
         try {
-            const login = await request.        
+            await request.        
                 post('/').type('form').send({
                     email: 'test@dr.com',
                     password: 'test'
@@ -133,4 +151,4 @@ function loginUser() {
         }
     }
     
-};
+}

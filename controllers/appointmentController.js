@@ -125,7 +125,7 @@ const appointmentController = {
 				Appointment,
 				{ _id: appointmentId },
 				{ status: 'Upcoming' },
-				function (result) {
+				function (res) {
 					// res.redirect('/upcomingAppointments');
 				},
 			);
@@ -273,7 +273,7 @@ const appointmentController = {
 		var dates = []
 		var str, active, addClass, disabled = false;
 
-		for (i=0; i<7; i++) {
+		for (var i=0; i<7; i++) {
 			str = months[startWeek.getMonth()] + " " + startWeek.getDate() + ", " + startWeek.getFullYear()
 
 			if (startWeek > today) {
@@ -302,7 +302,6 @@ const appointmentController = {
 			day: days[day]
 		}
 		
-		var times = [];
 		if (disabled)
 			disabled = "disabled"
 			
@@ -364,7 +363,7 @@ const appointmentController = {
 	},
 
 	disableSlots: function(req, res) {
-		var doctorID = req.query.doctorID, clinicID = req.query.clinicID
+		var doctorID = req.query.doctorID//, clinicID = req.query.clinicID
 		var start = new Date(req.query.date)
 
 		start.setHours(0);
@@ -379,7 +378,7 @@ const appointmentController = {
 
 		Appointment.find({bookedDate: {$gte:start, $lt:end}, bookedDoctor: doctorID, status: "Upcoming"}, "bookedDate", function(err, res2) {
 			if (!err) {
-				for (i=0; i<res2.length; i++) {
+				for (var i=0; i<res2.length; i++) {
 					h = res2[i].bookedDate.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					m = res2[i].bookedDate.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					bookedTimes.push(h + ":" + m + ":00")
@@ -424,13 +423,32 @@ const appointmentController = {
 		}
 	},
 
-	cancelAppointment: function(req, res) {
-		console.log(req.body)
+	getAppointmentNotifs: function(req, res) {
+		var match;
+		if (req.session.type == 'user') {
+			match = {'patient': req.session.userId}
+		} else if (req.session.type == 'doctor') {
+			match = {'bookedDoctor': req.session.userId}
+		}
 
-		// db.deleteOne(Appointment, {_id: req.body.id})
+		Appointment.aggregate([{
+			$match: match}, { 
+			$group: {
+				_id: '$status',
+				count: { $sum: 1}
+			}
+		}]).exec(function(e, r) {			
+			var upcomingCount = r.find(obj => {return obj._id === 'Upcoming'})
+			var pendingCount = r.find(obj => {return obj._id === 'Pending'})
 
-		// db.deleteOne(Clinic, {_id: req.body.id})
-		// res.send(true)
+			if (upcomingCount) 
+				upcomingCount = upcomingCount.count
+
+			if (pendingCount)
+				pendingCount = pendingCount.count
+
+			res.send({upcomingCount: upcomingCount, pendingCount: pendingCount});
+		})
 	}
 }
 

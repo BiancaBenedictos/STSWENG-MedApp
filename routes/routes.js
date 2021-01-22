@@ -88,6 +88,8 @@ app.post('/doctorRegister',
 app.get('/editProfile', userController.getEditProfile)
 app.post('/editProfile', userController.postEditProfile)
 
+app.post('/changePassword', userController.changePassword)
+
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)

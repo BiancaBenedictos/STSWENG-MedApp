@@ -51,6 +51,7 @@
                         <div class="card-body cancel">
                             <button class="btn cancel-btn ml-auto" data-toggle="modal" data-target="#confirm-cancel" onclick="setCancel('{{_id}}')">cancel</button>
                             {{!-- <button class="btn cancel-btn ml-auto" data-toggle="modal" data-target="#confirm-cancel" onclick="setCancel('{{_id}}');setUser('{{patient}}');setDoctor('{{doctor}}')">cancel</button> --}}
+
                         </div>
                     </div>
                 </div>
@@ -77,6 +78,7 @@
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetCancel()">No</button>
                 {{!-- <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetCancel();unsetUser();unsetDoctor()">No</button> --}}
+
                 <a class="btn btn-danger btn-ok" onclick="cancelAppointment()">Yes</a>
             </div>
         </div>

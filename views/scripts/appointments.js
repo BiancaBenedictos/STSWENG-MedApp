@@ -28,6 +28,9 @@ function unsetCancel() {
 
 function cancelAppointment() {
     // $.post('/cancelAppointment', {id: toCancel, patient: patientId, doctor: doctorId}, function(result){
+
+//     window.alert(toCancel)
+
     $.post('/cancelAppointment', {id: toCancel}, function(result){
         
         $("#confirm-cancel").modal('hide')
@@ -44,7 +47,6 @@ function cancelAppointment() {
 function refresh() {
     location.reload();
 }
-
 $(document).ready(function() {
     $.get('/getDetails', null, function(result) {
         if(result.type == 'user') {

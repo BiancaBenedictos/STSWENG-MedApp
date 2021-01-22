@@ -6,16 +6,16 @@ const Clinic = require('./clinicModel.js')
 const Doctor = require('./doctorModel.js')
 const Patient = require('./userModel.js')
 
-//connect to database
-// const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
+// connect to database
+const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
 
-// const options = {
-//     useUnifiedTopology: true,
-//     useNewUrlParser: true
-// };
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+};
 
 const database = {
-    connect: function (url, options) {
+    connect: function () {
         mongoose.connect(url, options, function(error) {
             if(error) 
                 throw error;

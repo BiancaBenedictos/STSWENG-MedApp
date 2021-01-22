@@ -1,14 +1,11 @@
-// const httpMocks = require('node-mocks-http');
-//const { postPatientRegister } = require('../controllers/userController');
-//const { postDoctorRegister } = require('../controllers/userController');
-// const controller = require('../controllers/userController');
 const supertest = require('supertest');
-const app = require('../index');
+const app = require('../testApp')
 const request = supertest(app);
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-// const mongoose = require('mongoose');
-const db = require('../models/db')
+const mongoose = require('mongoose');
 const dbname = 'test';
 const USER = require('../models/userModel');
 const DOCTOR = require('../models/doctorModel');
@@ -19,63 +16,84 @@ const options = {
 };
 
 
-beforeAll(async () => {
+beforeAll(async (done) => {
+    jest.setTimeout(10000)
     const url = `mongodb://localhost:27017/${dbname}`;
-    await db.connect(url, options);
+    await mongoose.connect(url, options);
+    await makeAccounts(done); 
 });
 
-// it('Should save patient to database', async done => {
-//     const res = await request.post('/testpatientRegister')
-//     .field('firstname', 'tester2')
-//     .field('lastname', 'tester2')
-//     .field('email', 'tester2@gmail.com')
-//     .field('password', '1234567')
-//     .field('cpassword', '1234567')
-//     .field('age', '21')
-//     .field('weight', '76')
-//     .field('height', '165')
+afterAll((done) => {
+    mongoose.connection.db.dropCollection('sessions');
+    mongoose.connection.db.dropCollection('doctors');
+    mongoose.connection.db.dropCollection('users');
+
+    done()
+})
+
+it('Should save patient to database', async done => {
+    const res = await request.post('/testpatientRegister')
+    .field('firstname', 'tester2')
+    .field('lastname', 'tester2')
+    .field('email', 'tester2@gmail.com')
+    .field('password', '1234567')
+    .field('cpassword', '1234567')
+    .field('age', '21')
+    .field('weight', '76')
+    .field('height', '165')
     
-//     expect(res.status).toBe(200);
-//     done();
-// })
+    expect(res.status).toBe(200);
+    done();
+})
 
-// it('Should find an existing patient in the database', async done => {
-//     db.findOne(USER, {email: 'tester@gmail.com'}, null, function(res){
-//         expect(res.email).toBeTruthy();
-//         expect(res.firstname).toBe('tester');
-//         done();
-//     })
-// })
+it('Should find an existing patient in the database', async done => {
+    var user;
+    user = await USER.findOne( {email: "test@gmail.com"} );
+    expect(user.email).toBeTruthy();
+    expect(user.firstname).toBe('test');
+    done();
+})
 
-// it('Should save doctor to database', async done => {
-//     const res = await request.post('/testpatientRegister')
-//     .set({
-//         'Content-Type': 'multipart/form-data',
-//       })
-//     .field('firstname', 'doctor')
-//     .field('lastname', 'doctor')
-//     .field('email', 'doctor@gmail.com')
-//     .field('password', '1234567')
-//     .field('cpassword', '1234567')
-//     .field('profession', 'Pediatrician')
-//     .field('clinics[]', ['clinic2', 'test'])
-//     .attach('credentials', 'STSWENG-UI.pdf');
-    
-//     expect(res.status).toBe(200);
-//     done();
-// })
+it('Should find an existing doctor in the database', async done => {
+    var doc;
+    doc = await DOCTOR.findOne( {email: "test@dr.com"} );
+    expect(doc.email).toBeTruthy();
+    expect(doc.firstname).toBe('test');
+    done();
+})
 
-// it('Should find an existing doctor in the database', async done => {
-//     db.findOne(DOCTOR, {email: 'tester@gmail.com'}, null, function(res){
-//         expect(res.email).toBeTruthy();
-//         expect(res.firstname).toBe('tester');
-//         done();
-//     })
-// })
+async function makeAccounts(done) {
+    /*  INSERT DOCTOR AND USER  */
+    try {
+        bcrypt.hash(`test`, saltRounds, async (err, hash) => {
+            await DOCTOR.create({
+                clinics: [],
+                profpic:"images/test.png",
+                bookedAppointments:[],
+                availability:[],
+                email:"test@dr.com",
+                password: hash,
+                firstname:"test",
+                lastname:"doctor",
+                profession:"Pediatrician",
+                status:"verified",
+                credentials:"doctor.pdf",
+            })
 
-// describe('insertion of dummy doctor is successful', () => {
-//     it('object is not null', async () => {
-//         controller.postDoctorRegister(request2, response);
-//         expect(response).not.toBe(null);
-//     });
-// })
+            await USER.create({
+                email: 'test@gmail.com',
+                password: hash,
+                firstname: "test",
+                lastname: "user",
+                profpic: "images/test.png",
+                bookedAppointments: [],
+                age: 20,
+                height: 180,
+                weight: 50
+            })
+            done()
+        })
+    } catch (ex) {
+        console.log(ex)
+    }
+}

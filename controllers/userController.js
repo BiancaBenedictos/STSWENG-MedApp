@@ -35,7 +35,7 @@ const userController = {
 						req.session.profpic = user.profpic
 						res.redirect('/homeDoctors');
 					}
-                });	
+				});					
 			}
 			else {
 				db.findOne(Doctor, query, null, function(doctor) {
@@ -157,6 +157,7 @@ const userController = {
 	},
 
 	postPatientRegister: function(req, res) {
+		console.log(req.body);
 		var errors = validationResult(req);
 		console.log(errors);
 
@@ -317,9 +318,9 @@ const userController = {
 						// newClinics: newClinics
 					});
 
-					var credsName = DOCTOR.lastname;
-					var credFileName = helper.renameCredentials(req, credsName);
-					DOCTOR.credentials = credFileName;
+			//		var credsName = DOCTOR.lastname;
+			//		var credFileName = helper.renameCredentials(req, credsName);
+			//		DOCTOR.credentials = credFileName;
 
 					db.insertOne(Doctor, DOCTOR, function (flag) {
 						if (flag) {
@@ -385,8 +386,17 @@ const userController = {
 				db.findOne(Doctor, {_id: req.session.userId}, null, function(doctor) {
 					if(doctor) {
 						db.findMany(Clinic, {}, null, function(clinics) {
+							
 							db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(docClinics) {
-								var professions = Doctor.schema.path('profession').enumValues
+								var p = Doctor.schema.path('profession').enumValues
+								var professions = [];
+
+								for (var i in p) {
+									professions.push({name: p[i], class: ""})
+									if (p[i] == req.session.profession)
+										professions[i].class = 'selected'
+								}
+
 								res.render('doctor-edit-profile', {user: doctor, professions: professions, clinics: clinics, docClinics: docClinics})
 							})
 						})
@@ -400,11 +410,100 @@ const userController = {
 	},
 
 	postEditProfile: function(req,res) {
-		res.render('edit-profile')
+		var userID = mongoose.Types.ObjectId(req.session.userId)
+
+		if (req.session.type == 'doctor') {
+			var clinics = req.body.info.clinics
+			
+			db.findOne(Doctor, {_id: userID}, "clinics", function(resClinics) {
+				var addClinics = clinics.filter( 
+					function(i) { 
+						return this.indexOf(i) < 0; 
+					}, resClinics.clinics).map(s => mongoose.Types.ObjectId(s));
+
+				var removeClinics = resClinics.clinics.filter( 
+					function(i) { 
+						return this.indexOf(i) < 0; 
+					}, clinics).map(s => mongoose.Types.ObjectId(s));
+
+				db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
+				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
+
+				db.updateOne(Doctor, {_id: userID}, req.body.info, function(results) {
+					// update session info
+					req.session.email = req.body.info.email;
+					req.session.name = req.body.info.firstname + " " + req.body.info.lastname;
+					req.session.profession = req.body.info.profession;
+					
+					if (results) {
+						res.send("Changes to Dr. " + req.session.name + "'s information is saved")
+					} else {
+						res.send("Changes to Dr. " + req.session.name + "'s information failed to save. Please try again.")
+					}
+				})
+			})
+		} else {
+			var newInfo = req.body
+
+			if(req.files['picture']) {
+				var picName = req.body.firstname;
+				var picFileName = helper.renameAvatar(req, picName);
+				newInfo.profpic = 'images/' + picFileName;
+			}
+			
+			db.findOne(User, {_id: req.session.userId}, null, function(user) {
+				db.updateOne(User, {_id: req.session.userId}, newInfo, function(flag) {
+					if(req.files['picture']) flag = true
+					res.send(flag)
+				})
+			})
+		}
 	},
 
 	error: function(req,res) {
 		res.render('error')
+	},
+
+	changePassword: function(req, res) {
+		var oldPass = req.body.oldPassword
+		var newPass = req.body.newPassword
+
+		db.findOne(User, {_id: req.session.userId}, null, function (user) {
+			if(user != null) {
+				bcrypt.compare(oldPass, user.password, function(err, equal) {
+					if(equal){
+						console.log('equal')
+						bcrypt.hash(newPass, saltRounds, (err, hash) => {
+							db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
+								res.send(true)
+							})
+						})
+					}
+					else {
+						res.send(false)
+					}
+                });	
+			}
+			else {
+				db.findOne(Doctor, {_id: req.session.userId}, null, function (doctor) {
+					if(doctor != null) {
+						bcrypt.compare(oldPass, doctor.password, function(err, equal) {
+							if(equal){
+								console.log('equal')
+								bcrypt.hash(newPass, saltRounds, (err, hash) => {
+									db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
+										res.send(true)
+									})
+								})
+							}
+							else {
+								res.send(false)
+							}
+						});	
+					}
+				})
+			}
+		})
 	}
 }
 

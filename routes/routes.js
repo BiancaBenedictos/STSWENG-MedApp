@@ -53,6 +53,7 @@ app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/getSlots', appointmentController.getSlots)
 app.get('/disableSlots', appointmentController.disableSlots)
 app.post('/requestAppointment', appointmentController.requestAppointment)
+app.post('/cancelAppointment', appointmentController.cancelAppointment)
 app.get('/getAppointmentNotifs', appointmentController.getAppointmentNotifs)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
@@ -86,6 +87,8 @@ app.post('/doctorRegister',
 
 app.get('/editProfile', userController.getEditProfile)
 app.post('/editProfile', userController.postEditProfile)
+
+app.post('/changePassword', userController.changePassword)
 
 app.get('/logout', userController.logout)
 

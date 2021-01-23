@@ -1,3 +1,52 @@
+var toCancel;
+// var patientId;
+// var doctorId;
+
+// function setUser(id) {
+//     patientId = id;
+// }
+
+// function unsetUser() {
+//     patientId = '';
+// }
+
+// function setDoctor(id) {
+//     doctorId = id;
+// }
+
+// function unsetDoctor() {
+//     doctorId = '';
+// }
+
+function setCancel(id) {
+    toCancel = id;
+}
+
+function unsetCancel() {
+    toCancel = '';
+}
+
+function cancelAppointment() {
+    // $.post('/cancelAppointment', {id: toCancel, patient: patientId, doctor: doctorId}, function(result){
+
+//     window.alert(toCancel)
+
+    $.post('/cancelAppointment', {id: toCancel}, function(result){
+        
+        $("#confirm-cancel").modal('hide')
+
+        $(".msg-header").text("Cancel Appointment");
+        if (result) {
+            $(".msg-body").text("Appointment successfully cancelled.")
+        }
+
+        $("#process-message").modal('show')
+    })
+}
+
+function refresh() {
+    location.reload();
+}
 $(document).ready(function() {
     $.get('/getDetails', null, function(result) {
         if(result.type == 'user') {
@@ -20,4 +69,8 @@ $(document).ready(function() {
 
         }
     });
+
+    $("#process-message").on('hide.bs.modal', function(e) {
+        refresh();
+    })
 });

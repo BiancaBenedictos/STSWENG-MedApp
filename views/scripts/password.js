@@ -49,7 +49,6 @@ $(document).ready(function() {
             // }
         });
     })
-
     $("#process-message").on('hide.bs.modal', function(e) {
         refresh();
     })

@@ -442,7 +442,20 @@ const userController = {
 				})
 			})
 		} else {
-			res.send("Not a doctor")
+			var newInfo = req.body
+
+			if(req.files['picture']) {
+				var picName = req.body.firstname;
+				var picFileName = helper.renameAvatar(req, picName);
+				newInfo.profpic = 'images/' + picFileName;
+			}
+			
+			db.findOne(User, {_id: req.session.userId}, null, function(user) {
+				db.updateOne(User, {_id: req.session.userId}, newInfo, function(flag) {
+					if(req.files['picture']) flag = true
+					res.send(flag)
+				})
+			})
 		}
 	},
 

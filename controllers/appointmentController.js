@@ -5,71 +5,54 @@ const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
 const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
+const { now } = require('moment');
 
 const appointmentController = {
 	upcomingAppointments: function(req,res) {
 		var userId = req.session.userId
-
-		var doctorIds = []
-		var patientIds = []
 		var apts = []
-		
-		var professions = Doctor.schema.path('profession').enumValues
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {_id: user.bookedAppointments, status: 'Upcoming'}, null, function(appointments) {
-		
+					db.updateMany(Appointment, {patient: user._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
-							doctorIds.push(appointments[i].bookedDoctor)
+							var details = {
+								_id: appointments[i]._id,
+								user: appointments[i].doctorName,
+								date: helper.getDate(appointments[i].bookedDate),
+								time: helper.getTime(appointments[i].bookedDate),
+								profpic: appointments[i].doctorPic,
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
+							}
+							apts.push(details)
 						}
-						
-						Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
-							doctorIds.map(e => doctors.find(s => s._id.equals(e)))
-						).then(doctors => {
-							for(var j = 0; j < doctors.length; j++) {
-								var details = {
-									doctor: doctors[j].firstname + " " + doctors[j].lastname,
-									date: helper.formatDate(appointments[j].bookedDate),
-									time: helper.getTime(appointments[j].bookedDate),
-									profpic: doctors[j].profpic
-								}
-								apts.push(details)
-							}
-	
-							var result = {
-								appointments: apts,
-								user: user,
-								professions: professions
-							}
-	
-							res.render('appointments-upcoming', result)
-						})
+						res.render('appointments-upcoming', {appointments: apts, user: user})
 					})
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {_id: doctor.bookedAppointments, status: 'Upcoming'}, null, function(appointments) {
-	
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
-								patientIds.push(appointments[i].patient)
-							}
-							
-							User.find({ "_id": { "$in": patientIds } }).then(patients =>
-								patientIds.map(e => patients.find(s => s._id.equals(e)))
-							).then(patients => {
-								for(var j = 0; j < patients.length; j++) {
-									var details = {
-										doctor: patients[j].firstname + " " + patients[j].lastname,
-										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate),
-										profpic: patients[j].profpic
-									}
-									apts.push(details)
+								var details = {
+									_id: appointments[i]._id,
+									user: appointments[i].patientName,
+									date: helper.getDate(appointments[i].bookedDate),
+									time: helper.getTime(appointments[i].bookedDate),
+									profpic: appointments[i].patientPic,
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
-								res.render('appointments-upcoming', {appointments: apts, user: doctor})
-							})
+								apts.push(details)
+							}
+							res.render('appointments-upcoming', {appointments: apts, user: doctor})
 						})
 					})
 				}
@@ -84,77 +67,50 @@ const appointmentController = {
     },
     
 	pendingAppointments: function(req,res) {
-		
 		var userId = req.session.userId
-
-		var doctorIds = []
-		var patientIds = []
 		var apts = []
-		
-		var professions = Doctor.schema.path('profession').enumValues
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Pending'}, null, function(appointments) {
-						if(appointments) {
-							for(var i = 0; i < appointments.length; i++) {
-								doctorIds.push(appointments[i].bookedDoctor)
+					db.updateMany(Appointment, {patient: user._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
+						for(var i = 0; i < appointments.length; i++) {
+							var details = {
+								_id: appointments[i]._id,
+								user: appointments[i].doctorName,
+								date: helper.getDate(appointments[i].bookedDate),
+								time: helper.getTime(appointments[i].bookedDate),
+								profpic: appointments[i].doctorPic,
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
 							}
-							
-							Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
-								doctorIds.map(e => doctors.find(s => s._id.equals(e)))
-							).then(doctors => {
-								for(var j = 0; j < doctors.length; j++) {
-									var details = {
-										doctor: doctors[j].firstname + " " + doctors[j].lastname,
-										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate),
-										profpic: doctors[j].profpic
-									}
-									apts.push(details)
-								}
-		
-								var result = {
-									appointments: apts,
-									user: user,
-									professions: professions
-								}
-		
-								res.render('appointments-pending', result)
-							}).catch(function () {
-								res.redirect('/error')
-						   	});
+							apts.push(details)
 						}
+						res.render('appointments-pending', {appointments: apts, user: user})
 					})
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: userId, status: 'Pending'}, null, function(appointments) {
-							if(appointments) {
-								for(var i = 0; i < appointments.length; i++) {
-									patientIds.push(appointments[i].patient)
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+							for(var i = 0; i < appointments.length; i++) {
+								var details = {
+									_id: appointments[i]._id,
+									user: appointments[i].patientName,
+									date: helper.getDate(appointments[i].bookedDate),
+									time: helper.getTime(appointments[i].bookedDate),
+									profpic: appointments[i].patientPic,
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
-								
-								User.find({ "_id": { "$in": patientIds } }).then(patients =>
-									patientIds.map(e => patients.find(s => s._id.equals(e)))
-								).then(patients => {
-									for(var j = 0; j < patients.length; j++) {
-										var details = {
-											_id: appointments[j]._id,
-											doctor: patients[j].firstname + " " + patients[j].lastname,
-											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate),
-											profpic: patients[j].profpic
-										}
-										apts.push(details)
-									}
-									
-									res.render('doctor-appointments-pending', {appointments: apts, user: doctor})
-								}).catch(function () {
-									res.redirect('/error')
-							   	});
+								apts.push(details)
 							}
+							res.render('doctor-appointments-pending', {appointments: apts, user: doctor})
 						})
 					})
 				}
@@ -172,84 +128,79 @@ const appointmentController = {
 		
 		var appointmentId = req.body.id
 
-		db.updateOne(
-            Appointment,
-            { _id: appointmentId },
-            { status: 'Upcoming' },
-            function (result) {
-                res.redirect('/upcomingAppointments');
-            },
-        );
+		db.findOne(Appointment, {_id:appointmentId}, null, function(result) {
+			db.updateOne(
+				Appointment,
+				{ _id: appointmentId },
+				{ status: 'Upcoming' },
+				function (res) {
+					// res.redirect('/upcomingAppointments');
+				},
+			);
+		
+			db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+			res.redirect('/upcomingAppointments')
+		})
+	},
 
+	rejectAppointment: function(req, res) {
+		var appointmentId = req.body.id
+		console.log(appointmentId)
+		db.findOne(Appointment, {_id:appointmentId}, null, function(result) {
+			db.updateOne(
+				Appointment,
+				{ _id: appointmentId },
+				{ status: 'Cancelled' },
+				function (result) {
+					// res.redirect('/upcomingAppointments');
+				},
+			);
+		
+			db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+			res.redirect('/cancelledAppointments');
+		})
 	},
 
 	concludedAppointments: function(req,res) {
 		var userId = req.session.userId
-
-		var doctorIds = []
-		var patientIds = []
 		var apts = []
-		
-		var professions = Doctor.schema.path('profession').enumValues
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Concluded'}, null, function(appointments) {
-						if(appointments) {
-							for(var i = 0; i < appointments.length; i++) {
-								doctorIds.push(appointments[i].bookedDoctor)
+					Appointment.find({patient: user._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
+						for(var i = 0; i < appointments.length; i++) {
+							var details = {
+								_id: appointments[i]._id,
+								user: appointments[i].doctorName,
+								date: helper.getDate(appointments[i].bookedDate),
+								time: helper.getTime(appointments[i].bookedDate),
+								profpic: appointments[i].doctorPic
 							}
-							
-							Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
-								doctorIds.map(e => doctors.find(s => s._id.equals(e)))
-							).then(doctors => {
-								for(var j = 0; j < doctors.length; j++) {
-									var details = {
-										doctor: doctors[j].firstname + " " + doctors[j].lastname,
-										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate),
-										profpic: doctors[j].profpic
-									}
-									apts.push(details)
-								}
-		
-								var result = {
-									appointments: apts,
-									user: user,
-									professions: professions
-								}
-		
-								res.render('appointments-concluded', result)
-							})
+							apts.push(details)
 						}
+						res.render('appointments-concluded', {appointments: apts, user: user})
 					})
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: userId, status: 'Concluded'}, null, function(appointments) {
-							if(appointments) {
-								for(var i = 0; i < appointments.length; i++) {
-									patientIds.push(appointments[i].patient)
+						Appointment.find({bookedDoctor: doctor._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+							for(var i = 0; i < appointments.length; i++) {
+								var details = {
+									_id: appointments[i]._id,
+									user: appointments[i].patientName,
+									date: helper.getDate(appointments[i].bookedDate),
+									time: helper.getTime(appointments[i].bookedDate),
+									profpic: appointments[i].patientPic
 								}
-								
-								User.find({ "_id": { "$in": patientIds } }).then(patients =>
-									patientIds.map(e => patients.find(s => s._id.equals(e)))
-								).then(patients => {
-									for(var j = 0; j < patients.length; j++) {
-										var details = {
-											doctor: patients[j].firstname + " " + patients[j].lastname,
-											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate),
-											profpic: patients[j].profpic
-										}
-										apts.push(details)
-									}
-									
-									res.render('appointments-concluded', {appointments: apts, user: doctor})
-								})
-
+								apts.push(details)
 							}
+							res.render('appointments-concluded', {appointments: apts, user: doctor})
 						})
 					})
 				}
@@ -265,71 +216,40 @@ const appointmentController = {
     
 	cancelledAppointments: function(req,res) {
 		var userId = req.session.userId
-
-		var doctorIds = []
-		var patientIds = []
 		var apts = []
-		
-		var professions = Doctor.schema.path('profession').enumValues
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Cancelled'}, null, function(appointments) {
-						if(appointments) {
-							for(var i = 0; i < appointments.length; i++) {
-								doctorIds.push(appointments[i].bookedDoctor)
+					Appointment.find({patient: user._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
+						for(var i = 0; i < appointments.length; i++) {
+							var details = {
+								_id: appointments[i]._id,
+								user: appointments[i].doctorName,
+								date: helper.getDate(appointments[i].bookedDate),
+								time: helper.getTime(appointments[i].bookedDate),
+								profpic: appointments[i].doctorPic
 							}
-							
-							Doctor.find({ "_id": { "$in": doctorIds } }).then(doctors =>
-								doctorIds.map(e => doctors.find(s => s._id.equals(e)))
-							).then(doctors => {
-								for(var j = 0; j < doctors.length; j++) {
-									var details = {
-										doctor: doctors[j].firstname + " " + doctors[j].lastname,
-										date: helper.formatDate(appointments[j].bookedDate),
-										time: helper.getTime(appointments[j].bookedDate),
-										profpic: doctors[j].profpic
-									}
-									apts.push(details)
-								}
-		
-								var result = {
-									appointments: apts,
-									user: user,
-									professions: professions
-								}
-		
-								res.render('appointments-cancelled', result)
-							})
+							apts.push(details)
 						}
+						res.render('appointments-cancelled', {appointments: apts, user: user})
 					})
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: userId, status: 'Cancelled'}, null, function(appointments) {
-							if(appointments) {
-								for(var i = 0; i < appointments.length; i++) {
-									patientIds.push(appointments[i].patient)
+						Appointment.find({bookedDoctor: doctor._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+							for(var i = 0; i < appointments.length; i++) {
+								var details = {
+									_id: appointments[i]._id,
+									user: appointments[i].patientName,
+									date: helper.getDate(appointments[i].bookedDate),
+									time: helper.getTime(appointments[i].bookedDate),
+									profpic: appointments[i].patientPic
 								}
-								
-								User.find({ "_id": { "$in": patientIds } }).then(patients =>
-									patientIds.map(e => patients.find(s => s._id.equals(e)))
-								).then(patients => {
-									for(var j = 0; j < patients.length; j++) {
-										var details = {
-											doctor: patients[j].firstname + " " + patients[j].lastname,
-											date: helper.formatDate(appointments[j].bookedDate),
-											time: helper.getTime(appointments[j].bookedDate),
-											profpic: patients[j].profpic
-										}
-										apts.push(details)
-									}
-									
-									res.render('appointments-cancelled', {appointments: apts, user: doctor})
-								})
-
+								apts.push(details)
 							}
+							res.render('appointments-cancelled', {appointments: apts, user: doctor})
 						})
 					})
 				}
@@ -381,7 +301,7 @@ const appointmentController = {
 		var dates = []
 		var str, active, addClass, disabled = false;
 
-		for (i=0; i<7; i++) {
+		for (var i=0; i<7; i++) {
 			str = months[startWeek.getMonth()] + " " + startWeek.getDate() + ", " + startWeek.getFullYear()
 
 			if (startWeek > today) {
@@ -410,7 +330,6 @@ const appointmentController = {
 			day: days[day]
 		}
 		
-		var times = [];
 		if (disabled)
 			disabled = "disabled"
 			
@@ -472,7 +391,7 @@ const appointmentController = {
 	},
 
 	disableSlots: function(req, res) {
-		var doctorID = req.query.doctorID, clinicID = req.query.clinicID
+		var doctorID = req.query.doctorID//, clinicID = req.query.clinicID
 		var start = new Date(req.query.date)
 
 		start.setHours(0);
@@ -487,7 +406,7 @@ const appointmentController = {
 
 		Appointment.find({bookedDate: {$gte:start, $lt:end}, bookedDoctor: doctorID, status: "Upcoming"}, "bookedDate", function(err, res2) {
 			if (!err) {
-				for (i=0; i<res2.length; i++) {
+				for (var i=0; i<res2.length; i++) {
 					h = res2[i].bookedDate.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					m = res2[i].bookedDate.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					bookedTimes.push(h + ":" + m + ":00")
@@ -510,6 +429,7 @@ const appointmentController = {
 				if (conflict && conflict.status == "Upcoming")
 					res.send(false);
 				else {
+					console.log(req.body)
 					var a = {
 						bookedDoctor: req.body.doctor,
 						doctorName: req.body.doctorName,
@@ -529,6 +449,42 @@ const appointmentController = {
 				}
 			})
 		}
+	},
+
+	cancelAppointment: function(req, res) {
+		db.updateOne(Appointment, {_id: req.body.id}, {status: 'Cancelled'}, function(flag){})
+		// db.updateOne(User, {_id: req.body.patient}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.updateOne(Doctor, {_id: req.body.doctor}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.deleteOne(Appointment, {_id: req.body.id})
+		res.send(true)
+  },
+  
+	getAppointmentNotifs: function(req, res) {
+		var match;
+		if (req.session.type == 'user') {
+			match = {'patient': req.session.userId}
+		} else if (req.session.type == 'doctor') {
+			match = {'bookedDoctor': req.session.userId}
+		}
+
+		Appointment.aggregate([{
+			$match: match}, { 
+			$group: {
+				_id: '$status',
+				count: { $sum: 1}
+			}
+		}]).exec(function(e, r) {			
+			var upcomingCount = r.find(obj => {return obj._id === 'Upcoming'})
+			var pendingCount = r.find(obj => {return obj._id === 'Pending'})
+
+			if (upcomingCount) 
+				upcomingCount = upcomingCount.count
+
+			if (pendingCount)
+				pendingCount = pendingCount.count
+
+			res.send({upcomingCount: upcomingCount, pendingCount: pendingCount});
+		})
 	}
 }
 

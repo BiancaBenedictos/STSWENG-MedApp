@@ -26,32 +26,47 @@
             </div>
             <div class="col-1"></div>
             <div class="col">
-                <form method="POST" action="/register" enctype="multipart/form-data">
+                <form method="POST" action="/doctorRegister" enctype="multipart/form-data">
                     <h1 class="heading">Register</h1>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="firstname">First name</label>
-                            <input type="text" class="form-control" id="firstname" name="firstname" required>
+                            <input type="text" class="form-control" id="firstname" name="firstname">
+                            <p style="color: red;">
+                                {{details.firstnameError}}
+                            </p>
                         </div>
                         <div class="col-6">
                             <label for="lastname">Last name</label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" required>
+                            <input type="text" class="form-control" id="lastname" name="lastname">
+                            <p style="color: red;">
+                                {{details.lastnameError}}
+                            </p>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email">
+                            <p style="color: red;">
+                                {{details.emailError}}
+                            </p>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="password">
+                            <p style="color: red;">
+                                {{details.passwordError}}
+                            </p>
                         </div>
                         <div class="col-6">
                             <label for="password">Confirm Password</label>
-                            <input type="password" class="form-control" id="cpassword" name="cpassword" required>
+                            <input type="password" class="form-control" id="cpassword" name="cpassword">
+                            <p style="color: red;">
+                                {{details.cpasswordError}}
+                            </p>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -64,25 +79,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row" id="patient">
-                        <div class="col">
-                            <label for="age">Age</label>
-                            <input type="Number" class="form-control" id="age" name="age">
-                        </div>
-                        <div class="col">
-                            <label for="weight">Weight (in kg)</label>
-                            <input type="Number" class="form-control" id="weight" name="weight">
-                        </div>
-                        <div class="col">
-                            <label for="height">Height (in cm)</label>
-                            <input type="Number" class="form-control" id="height" name="height">
-                        </div>
-                    </div>
 
-                    <input type="checkbox" id="doctorCheck" name="doctorCheck" autocomplete="off">
-                    <label for="doctorCheck">I am a Doctor</label>
-
-                    <div id="doctorFields" style="display:none">
+                    <div id="doctorFields" style="block">
                         <div class="row">
                             <div class="col">
                                 <label for="profession">Profession</label>
@@ -101,8 +99,10 @@
                                 <label>Credentials</label>
                                 <div class="button-wrap">
                                     <label class="button" for="credentials">Upload File</label>
-                                    <input type="file" id="credentials" name="credentials" class="form-control" accept=".pdf" required>
-                                    <p class="m-0" id="noCreds" style="color:red">Please upload your credentials</p>
+                                    <input type="file" id="credentials" name="credentials" class="form-control" accept="application/pdf">
+                                    <p style="color: red;" id="credentialserror">
+                                       {{details.credentialsError}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +138,7 @@
                         <button type="submit" class="login-btn" id="submitbtn">register</button>
                     </div>
                 </form>
+
                 <script>
                     var i = 1
                     var j = 0
@@ -163,36 +164,36 @@
                         document.getElementById(id).parentElement.remove()
                     }
 
-                    function regClinic() {
+                    //function regClinic() {
                         
-                        var str = ` <div class="form-group">
-                                        <label for="name">Clinic Name</label>
-                                        <input class="form-control" id="name" name="newName[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="street">Street</label>
-                                        <input class="form-control" id="street" name="newStreet[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input class="form-control" id="city" name="newCity[` + j + `]">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <input class="form-control" id="state" name="newState[` + j + `]">
-                                    </div>
-                                  `
+                    //    var str = ` <div class="form-group">
+                    //                    <label for="name">Clinic Name</label>
+                    //                    <input class="form-control" id="name" name="newName[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="street">Street</label>
+                    //                    <input class="form-control" id="street" name="newStreet[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="city">City</label>
+                    //                    <input class="form-control" id="city" name="newCity[` + j + `]">
+                    //                </div>
+                    //                <div class="form-group">
+                    //                    <label for="state">State</label>
+                    //                    <input class="form-control" id="state" name="newState[` + j + `]">
+                    //                </div>
+                    //              `
                         
-                        document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
-                        j++
+                    //    document.getElementById('addRowsHere').insertAdjacentHTML('beforeend', str)
+                    //    j++
                         
-                        //var input = document.createElement("input")
-                        //input.id = "clinic" + i
-                        //input.name = "regclinics[" + i + "]"
-                        //input.className = "form-control"
+                    //    var input = document.createElement("input")
+                    //    input.id = "clinic" + i
+                    //    input.name = "regclinics[" + i + "]"
+                    //    input.className = "form-control"
 
-                        //document.getElementById("addRowsHere").appendChild(input)
-                    }
+                    //    document.getElementById("addRowsHere").appendChild(input)
+                    //}
 
                 </script>
             </div>

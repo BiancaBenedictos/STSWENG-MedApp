@@ -15,9 +15,19 @@ function addClinic() {
     if (newclinic.clinicName != "" & newclinic.clinicAddress.street != "" &
         newclinic.clinicAddress.city != "" & newclinic.clinicAddress.state != "") {
         console.log(newclinic);
+
         $.post('/addClinic', {newclinic: newclinic}, function(result){
-            if (result)
-                location.reload();
+            $("#add-clinic").modal('hide')
+            
+            $(".msg-header").text("Add Clinic");
+            if (result) {
+                $(".msg-body").text("Clinic " + newclinic.clinicName + " successfully added.")
+            }
+            else {
+                $(".msg-body").text("Something went wrong. Adding clinic " + newclinic.clinicName + " to database failed.")
+            }
+
+            $("#process-message").modal('show')
         });
     } else {
         if (newclinic.clinicName == "")
@@ -41,11 +51,25 @@ function unsetDelete() {
 
 function deleteClinic() {
     $.post('/deleteClinic', {id: toDelete}, function(result){
-        if (result)
-            location.reload();
+        $("#confirm-delete").modal('hide')
+
+        $(".msg-header").text("Delete Clinic");
+        if (result) {
+            $(".msg-body").text("Clinic successfully deleted.")
+        }
+
+        $("#process-message").modal('show')
     })
+}
+
+function refresh() {
+    location.reload();
 }
 
 $(document).ready(function() {
     $(".doctors-0").prop('disabled', false);
+
+    $("#process-message").on('hide.bs.modal', function(e) {
+        refresh();
+    })
 })

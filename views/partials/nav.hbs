@@ -1,23 +1,33 @@
+
+<script src="scripts/appointmentNotifs.js"></script>
 <script>
     $(document).ready(function() {
         $.get('/getDetails', null, function(result) {
 
-            $("#navName").text(result.name);
+            $("#navUserName").text(result.name);
 
-            $('#admin').prop('hidden', true);
+            $('#verify-doctors').prop('hidden', true);
+            $('#view-doctors').prop('hidden', true);
+            $('#view-clinics').prop('hidden', true);
             //$('#profile').prop('hidden', true);
             $('#create-appointments').prop('hidden', true);;
             
             if(result.type == 'user') {
+                $("#navbar-count").addClass("upcomingCount")
+                $('#pending-appointments').prop('hidden', true);;
             }
             if(result.type == 'doctor') {
                 //var a = document.getElementById("profile");
                 //var link = "/doctorProfile?id=" + result.userId
                 //a.setAttribute('href', link)
+                $("#navbar-count").addClass("totalCount")
+                $("#upcoming-appointments").text("Upcoming Appointments")
                 $('#create-appointments').prop('hidden', false);;
             }
             if(result.type == 'admin') {
-                $('#admin').prop('hidden', false);
+            $('#verify-doctors').prop('hidden', false);
+            $('#view-doctors').prop('hidden', false);
+            $('#view-clinics').prop('hidden', false);
                 $('#edit-profile').prop('hidden', true);
                 $('#appointments').prop('hidden', true);
             }
@@ -45,16 +55,18 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <div class="dropdown show ml-auto">
             
-            <p id="navName" style="display:inline" class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></p>
+            <p id="navName" style="display:inline" class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="navUserName"></span><span class="badge badge-light mx-2" id="navbar-count"></span></p>
+            
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navName">
                 {{!-- <a class="dropdown-item" id="profile">Profile</a> --}}
                 <a class="dropdown-item" href="/editProfile" id="edit-profile">Edit Profile</a>
-                <a class="dropdown-item" href="/upcomingAppointments" id="appointments">Appointments</a>
+                <a class="dropdown-item" href="/pendingAppointments" id="pending-appointments">Pending Appointments <span class="badge badge-secondary pendingCount"></span></a> 
+                <a class="dropdown-item" href="/upcomingAppointments" id="appointments"><span id="upcoming-appointments">Appointments</span> <span class="badge badge-secondary upcomingCount"></span></a>
                 <a class="dropdown-item" href="/createAppointments" id="create-appointments">Set Appointment Hours</a>
-                <a class="dropdown-item" href="/adminPending" id="admin">Verify Doctors</a>
-                <a class="dropdown-item" href="/adminDoctors" id="admin">View Doctors</a>
-                <a class="dropdown-item" href="/adminClinics" id="admin">View Clinics</a>
+                <a class="dropdown-item" href="/adminPending" id="verify-doctors">Verify Doctors</a>
+                <a class="dropdown-item" href="/adminDoctors" id="view-doctors">View Doctors</a>
+                <a class="dropdown-item" href="/adminClinics" id="view-clinics">View Clinics</a>
                 <a class="dropdown-item" href="/logout">Logout</a>
             </div>
         </div>

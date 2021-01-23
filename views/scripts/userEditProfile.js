@@ -36,8 +36,11 @@ $(document).ready(function() {
             processData: false,
             success: function (response) {
                 $(".msg-header").text("Edit Profile");
-                if(response) {
+                if(response == true) {
                     $(".msg-body").text("Your profile has been updated!")
+                }
+                else if(response == 'email') {
+                    $(".msg-body").text("That email is already registered with a different account!")
                 }
                 else {
                     $(".msg-body").text("Your profile was not updated!")

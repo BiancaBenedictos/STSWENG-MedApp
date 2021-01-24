@@ -40,10 +40,10 @@ $(document).ready(function() {
                     $(".msg-body").text("Your profile has been updated!")
                 }
                 else if(response == 'email') {
-                    $(".msg-body").text("That email is already registered with a different account!")
+                    $(".msg-body").text("That email is already registered with a different account! No changes were made.")
                 }
                 else {
-                    $(".msg-body").text("Your profile was not updated!")
+                    $(".msg-body").text("No changes were made! Your profile was not updated.")
                 }
                 $("#process-message").modal('show')
             },

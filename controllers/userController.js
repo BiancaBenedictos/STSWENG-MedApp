@@ -444,18 +444,28 @@ const userController = {
 			})
 		} else {
 			var newInfo = req.body
+			var oldEmail = req.session.email
+			var newEmail = req.body.email
 
 			if(req.files['picture']) {
 				var picName = req.body.firstname;
 				var picFileName = helper.renameAvatar(req, picName);
 				newInfo.profpic = 'images/' + picFileName;
 			}
-			
-			db.findOne(User, {_id: req.session.userId}, null, function(user) {
-				db.updateOne(User, {_id: req.session.userId}, newInfo, function(flag) {
-					if(req.files['picture']) flag = true
-					res.send(flag)
-				})
+
+			db.findOne(User, {email:newEmail}, null, function(user) {
+				if(oldEmail != newEmail && user) {
+					res.send('email')
+				}
+				else {
+					db.updateOne(User, {_id: userID}, newInfo, function(flag) {
+						req.session.name = req.body.firstname + " " + req.body.lastname
+						req.session.email = req.body.email
+
+						if(req.files['picture']) flag = true
+						res.send(flag)
+					})
+				}
 			})
 		}
 	},

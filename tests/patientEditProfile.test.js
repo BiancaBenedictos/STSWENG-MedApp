@@ -14,16 +14,8 @@ const saltRounds = 10;
 
 beforeAll(async (done) => {
     jest.setTimeout(10000)
-    try {
-        const url = 'mongodb://localhost:27017/testDB'
-          await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-          console.log ("connected");
-    } catch (e) {
-          console.log("error connecting to DB: ", e.message);
-    }
-    // const url = 'mongodb://localhost:27017/testDB'
-    // await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-
+    const url = 'mongodb://localhost:27017/testDB'
+    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     await makeAccounts(done);
 })
 
@@ -33,30 +25,44 @@ afterAll((done) => {
     done()
 })
 
-var userID
+var userID1, userID2
 describe('Update patient info', () => {
-    var rq, user;
     
     it('Login', loginUser())
 
-    it('Should save patient to database', async done => {
+    it('Should update user info', async done => {
         const res = await request.post('/editProfile')
-        .field('firstname', 'test')
-        .field('lastname', 'update')
-        .field('email', 'test@gmail.com')
-        .field('age', '20')
-        .field('weight', '150')
-        .field('height', '50')
-        
-        expect(res.status).toBe(200);
+            .field('firstname', 'test')
+            .field('lastname', 'update')
+            .field('email', 'test@gmail.com')
+            .field('age', '20')
+            .field('weight', '150')
+            .field('height', '50')
+
+        var user = await User.findOne( {email: "test@gmail.com"} );
+        expect(user.email).toBeTruthy();
+        expect(user.lastname).toBe('update');
+        expect(user.weight).toBe(150);
         done();
     })
 
-    it('Should update user info', async done => {
-        var user;
-        user = await User.findOne( {email: "test@gmail.com"} );
+    it('Should not update user info', async done => {
+        const res = await request.post('/editProfile')
+            .field('firstname', 'test')
+            .field('lastname', 'update')
+            .field('email', 'test2@gmail.com')
+            .field('age', '20')
+            .field('weight', '180')
+            .field('height', '50')
+
+        // check if user with email "test@gmail.com" still exists --> did not change email
+        var user = await User.findOne( {email: "test@gmail.com"} );
         expect(user.email).toBeTruthy();
         expect(user.lastname).toBe('update');
+
+        // check user with email "test2@gmail.com"
+        var user2 = await User.findOne({email: "test2@gmail.com"})
+        expect(user2.lastname).toBe('two')
         done();
     })
 
@@ -97,14 +103,13 @@ function logout() {
 }
 
 async function makeAccounts(done) {
-    /*  INSERT USER  */
     try {
         bcrypt.hash(`test`, saltRounds, async (err, hash) => {
             await User.create({
                 email: 'test@gmail.com',
                 password: hash,
                 firstname: "test",
-                lastname: "user",
+                lastname: "one",
                 profpic: "images/test.png",
                 bookedAppointments: [],
                 age: 20,
@@ -112,10 +117,28 @@ async function makeAccounts(done) {
                 weight: 50
             })
 
-            await User.findOne({}, '_id', function(err, res) {
-                userID = res._id
+            await User.findOne({email:'test@gmail.com'}, '_id', function(err, res) {
+                userID1 = res._id
+            })
+            done()
+        })
+
+        bcrypt.hash(`test`, saltRounds, async (err, hash) => {
+            await User.create({
+                email: 'test2@gmail.com',
+                password: hash,
+                firstname: "test",
+                lastname: "two",
+                profpic: "images/test.png",
+                bookedAppointments: [],
+                age: 20,
+                height: 180,
+                weight: 50
             })
 
+            await User.findOne({email:'test2@gmail.com'}, '_id', function(err, res) {
+                userID2 = res._id
+            })
             done()
         })
     } catch (ex) {

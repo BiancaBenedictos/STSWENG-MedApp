@@ -6,7 +6,7 @@ const Clinic = require('./clinicModel.js')
 const Doctor = require('./doctorModel.js')
 const Patient = require('./userModel.js')
 
-//connect to database
+// connect to database
 const url = "mongodb+srv://admin:123@meddb.bbgb8.mongodb.net/local_library?retryWrites=true&w=majority";
 
 const options = {
@@ -27,7 +27,7 @@ const database = {
     insertOne: function(model, doc, callback) {
         model.create(doc, function(error, result) {
             if(error) return callback(false);
-            console.log('Added ' + result);
+            // console.log('Added ' + result);
             return callback(result);
         });
     },

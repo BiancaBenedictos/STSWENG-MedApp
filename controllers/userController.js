@@ -33,6 +33,7 @@ const userController = {
 						req.session.weight = user.weight,
 						req.session.height = user.height,
 						req.session.profpic = user.profpic
+						// console.log(req.session);
 						res.redirect('/homeDoctors');
 					}
 				});					
@@ -273,6 +274,7 @@ const userController = {
 				clinics: clinics, professions: professions})
 			})
         } else {
+			console.log("valid doctor");
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
@@ -318,17 +320,20 @@ const userController = {
 						// newClinics: newClinics
 					});
 
-			//		var credsName = DOCTOR.lastname;
-			//		var credFileName = helper.renameCredentials(req, credsName);
-			//		DOCTOR.credentials = credFileName;
+					var credsName = DOCTOR.lastname;
+					var credFileName = helper.renameCredentials(req, credsName);
+					DOCTOR.credentials = credFileName;
 
 					db.insertOne(Doctor, DOCTOR, function (flag) {
+						// console.log(flag);
 						if (flag) {
+							console.log("inserted");
 							req.session.email = DOCTOR.email;
 							req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
 							req.session.userId = DOCTOR._id;
 							req.session.type = 'doctor'
 							req.session.profession = DOCTOR.profession
+							console.log("inserted");
 							res.redirect('/upcomingAppointments');
 						}
 					});

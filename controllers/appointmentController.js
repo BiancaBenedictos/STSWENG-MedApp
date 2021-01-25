@@ -481,6 +481,8 @@ const appointmentController = {
 
 		var end = new Date(start.valueOf())
 		end.setDate(start.getDate() + 1)
+
+		var today = new Date();
 		
 		var bookedTimes = [], h, m;
 
@@ -493,7 +495,9 @@ const appointmentController = {
 				}
 			}
 
-			res.send(bookedTimes)
+			var tH = today.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}), 
+				tM = today.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+			res.send({booked: bookedTimes, currH: tH, currM: tM})
 		})
 
 	},

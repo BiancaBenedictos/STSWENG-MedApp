@@ -18,8 +18,12 @@ function getSlots(day, full, doctor, clinic) {
             $.get('/disableSlots', {date: fulldate, doctorID: doctor, clinicID: clinic}, function(taken) {
                 var disabled = ''
 
-                for (i=0; i<results.length; i++) {
-                    if (taken.indexOf(results[i].H24) > -1) {
+                for (var i=0; i<results.length; i++) {
+                    var H = parseInt(results[i].H24.substr(0, 2)), M = parseInt(results[i].H24.substr(3, 5));
+
+                    if (taken.booked.indexOf(results[i].H24) > -1) {
+                        disabled = 'disabled'
+                    } else if ((taken.currH == H && taken.currM >= M) || taken.currH > H) {
                         disabled = 'disabled'
                     } else disabled = ''
 
@@ -37,10 +41,10 @@ function getSlots(day, full, doctor, clinic) {
 function disableSlots(doctor, clinic) {
     $.get('/disableSlots', {date: fulldate, doctorID: doctor, clinicID: clinic}, function(results) {
         console.log(results)
-        if (results)
-            for (i=0; i < results.length; i++) {
-                $("#" + results[i]).addClass("disabled")
-                $("#" + results[i]).css("border-color", "red")
+        if (results.booked)
+            for (i=0; i < results.booked.length; i++) {
+                $("#" + results.booked[i]).addClass("disabled")
+                $("#" + results.booked[i]).css("border-color", "red")
                 console.log("#" + results[i])
             }
     })

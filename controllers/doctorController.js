@@ -127,6 +127,7 @@ const doctorController = {
 			}
 		} else {
 			db.deleteMany(Availability, {doctorID: req.session.doctorID, clinicID: req.body.clinicID})
+
 		}
 		
 		res.send(success)

@@ -61,8 +61,16 @@ function updateBookTime(time12, time24) {
 }
 
 function bookAppointment() {
-    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id')}, function(res) {
-        location.reload()
+    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id'), doctorName: $("h1.doctor").text(), doctorPic: $(".profpic").attr('src')}, function(res) {
+        $("#confirm").modal('hide')
+
+        if (res) {
+            $(".msg-body").text("Booking successful. Please wait for the doctor to accept your appointment schedule.")
+        } else {
+            $(".msg-body").text("Something went wrong. Please try again.")
+        }
+
+        $("#process-message").modal('show')
     })
 }
 
@@ -81,6 +89,10 @@ function changeWeek(type) {
 function disable() {
     var disabled = $("button.disabled")
     disabled.prop('disabled', true)
+}
+
+function refresh() {
+    location.reload();
 }
 
 $(document).ready(function(){

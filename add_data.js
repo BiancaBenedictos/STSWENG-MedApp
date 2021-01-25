@@ -7,6 +7,10 @@ const Clinic = require('./models/clinicModel.js')
 const Doctor = require('./models/doctorModel.js')
 const Patient = require('./models/userModel.js')
 
+const bcrypt = require('bcrypt');
+const helper = require('./helpers/helper');
+const saltRounds = 10;
+/*
 var appointment = {
     bookedDoctor: "doctor id",
     patient: "patient id",
@@ -57,3 +61,21 @@ var patient = {
 }
 
 db.insertOne(Patient, patient, function(flag){})
+*/
+
+
+const Admin = require('./models/adminModel');
+
+bcrypt.hash(`a`, saltRounds, (err, hash) => {
+        var a = new Doctor({
+            email: `admin@admin.com`,
+            password: hash,
+            firstname: `Admin`,
+            lastname: `User`,
+            profpic: `images/a.png`
+        });
+
+        db.insertOne(Admin, a, function (flag) {
+            console.log(flag)
+        });
+})

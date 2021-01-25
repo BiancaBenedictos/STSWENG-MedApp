@@ -24,7 +24,7 @@
     <div class="container">
         <div class="row content d-flex flex-wrap">
             <div class="col-4 filter">
-                <img src="{{doctor.profpic}}">
+                <img class="profpic" src="{{doctor.profpic}}">
                 <h1 class="heading doctor" id="{{doctor._id}}">{{doctor.firstname}} {{doctor.lastname}}</h1>
                 
                 <p>{{doctor.profession}}</p>
@@ -92,3 +92,21 @@
         </div>
     </div>
 </div>
+
+<!-- Message Modal -->
+<div class="modal fade" id="process-message" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header msg-header">
+                Book Appointment
+            </div>
+            <div class="modal-body msg-body">
+                
+            </div>
+            <div class="modal-footer msg-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+

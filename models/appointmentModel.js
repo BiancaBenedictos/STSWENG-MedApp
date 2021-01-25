@@ -5,7 +5,23 @@ const appointmentSchema = new mongoose.Schema({
         type: String
     },
 
+    doctorName: {
+        type: String
+    },
+
+    doctorPic: {
+        type: String
+    },
+
     patient: {
+        type: String
+    },
+
+    patientName: {
+        type: String
+    },
+
+    patientPic: {
         type: String
     },
 

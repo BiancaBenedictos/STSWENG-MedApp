@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 // const session = require('supertest-session');
 const app = require('../testApp')
-const request = supertest(app);
+const request = supertest.agent(app);
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -176,7 +176,7 @@ function loginUser(info) {
             await request.        
                 post('/').type('form').send(info);
             
-            done()        
+            done()   
         } catch (e) {
             console.log("------------ERROR-----------")
             console.log(e)

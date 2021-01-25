@@ -436,33 +436,14 @@ const appointmentController = {
 				var e = results.endTime
 				var int = results.intervalHours
 				var ampm = " AM"
-				var disabled, dHour = 0, dMin = 0
+				var h, h2, m;
 
-				if (today > slotDate) {
-					dHour = today.getHours()
-					dMin = today.getMinutes()
-				}
-
-				while ( +s <= +e ) {
-					var h = s.getHours() % 12
-					var h2 = s.getHours()
-					var m = s.getMinutes();
-
-					if (s.getHours() >= 12)
-						ampm = " PM"
-					if (h == 0)
-						h = 12
-
-					if (dHour > h2 && dMin > m)
-						disabled = 'disabled'
-					else disabled = ''
-
-					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-					h2 = h2.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-
-					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00", class: disabled})
-					s.setMinutes(s.getMinutes() + (int * 60))
+				for (var dt=new Date(s); dt<=e; dt.setMinutes(dt.getMinutes()+(int*60))) {
+					h = (dt.getHours() % 12).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					h2 = (dt.getHours()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					m = (dt.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+	
+					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
 				}
 			}
 

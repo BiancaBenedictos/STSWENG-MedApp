@@ -43,7 +43,7 @@ function getAvail() {
     }    
     
     console.log(avail)
-    $.post('/setAvailability', {avail:avail}, function(result){
+    $.post('/setAvailability', {avail:avail, clinicID: $("#clinic").val()}, function(result){
         if (result) {
             redirect = true;
             $(".msg-body").text("Appointment hours successfully updated.")

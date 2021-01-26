@@ -113,19 +113,21 @@ const doctorController = {
 		var avail = req.body.avail;
 		var success = true;
 
-		for (i=0; i < avail.length; i++) {
-			// avail[i].doctorID = req.session.userId
-			avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
-			avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
+		if (avail != undefined) {
+			for (i=0; i < avail.length; i++) {
+				avail[i].doctorID = req.session.userId
+				avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
+				avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
+	
+				db.upsertOne(Availability, {doctorID: avail[i].doctorID, clinicID: avail[i].clinicID,
+					day: avail[i].day}, avail[i], function(result) {
+						if (!result)
+							success = false;
+					})
+			}
+		} else {
+			db.deleteMany(Availability, {doctorID: req.session.doctorID, clinicID: req.body.clinicID})
 
-			console.log(avail[i]);
-
-			db.upsertOne(Availability, { doctorID: avail[i].doctorID, clinicID: avail[i].clinicID, day: avail[i].day }, avail[i], function(result) {
-					if (!result)
-						success = false;
-
-					// console.log("inserted successfully");
-			})
 		}
 		
 		res.send(success)

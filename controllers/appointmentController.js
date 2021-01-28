@@ -362,6 +362,9 @@ const appointmentController = {
 					h = (dt.getHours() % 12).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					h2 = (dt.getHours()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 					m = (dt.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+
+					if (h2 > 11) 
+						ampm = " PM";
 	
 					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
 				}

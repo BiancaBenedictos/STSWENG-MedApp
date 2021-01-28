@@ -23,7 +23,7 @@ function getSlots(day, full, doctor, clinic) {
 
                     if (taken.booked.indexOf(results[i].H24) > -1) {
                         disabled = 'disabled'
-                    } else if ((taken.currH == H && taken.currM >= M) || taken.currH > H) {
+                    } else if (taken.sameDay && ((taken.currH == H && taken.currM >= M) || taken.currH > H)) {
                         disabled = 'disabled'
                     } else disabled = ''
 

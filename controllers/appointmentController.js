@@ -374,6 +374,12 @@ const appointmentController = {
 	disableSlots: function(req, res) {
 		var doctorID = req.query.doctorID//, clinicID = req.query.clinicID
 		var start = new Date(req.query.date)
+		var today = new Date();
+		var sameDay = false;
+
+		if (start.getDate() == today.getDate()) {
+			sameDay = true;
+		}
 
 		start.setHours(0);
 		start.setMinutes(0);
@@ -383,7 +389,6 @@ const appointmentController = {
 		var end = new Date(start.valueOf())
 		end.setDate(start.getDate() + 1)
 
-		var today = new Date();
 		
 		var bookedTimes = [], h, m;
 
@@ -398,7 +403,7 @@ const appointmentController = {
 
 			var tH = today.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}), 
 				tM = today.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-			res.send({booked: bookedTimes, currH: tH, currM: tM})
+			res.send({booked: bookedTimes, currH: tH, currM: tM, sameDay: sameDay})
 		})
 
 	},

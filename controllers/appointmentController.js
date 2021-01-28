@@ -377,7 +377,7 @@ const appointmentController = {
 		var today = new Date();
 		var sameDay = false;
 
-		if (start.getDate() == today.getDate()) {
+		if (+start == +today) {
 			sameDay = true;
 		}
 
@@ -419,7 +419,6 @@ const appointmentController = {
 				if (conflict && conflict.status == "Upcoming")
 					res.send(false);
 				else {
-					// console.log(req.body)
 
 					// console.log(req.session);
 					var a = {

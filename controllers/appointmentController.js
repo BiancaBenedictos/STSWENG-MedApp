@@ -365,6 +365,9 @@ const appointmentController = {
 
 					if (h2 > 11) 
 						ampm = " PM";
+					
+					if (h2 == 12)
+						h = 12;
 	
 					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
 				}

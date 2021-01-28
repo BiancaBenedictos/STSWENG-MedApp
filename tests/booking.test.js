@@ -120,12 +120,14 @@ afterAll((done) => {
 })
 
 describe('Book Appointment', () => {
-    var req;
+    var req, date = new Date();
+    date.setDate(date.getDate() + 1);
+    
     it('User login', loginUser({email: 'test@gmail.com', password: 'test'}))
 
     it('book appointment', async done => {
         req = {
-            fulldate: 'January 28, 2021',
+            fulldate: (date.toDateString()),
             time: '10:39:00',
             doctor: doctorID.toString(),
             doctorName: 'test update',

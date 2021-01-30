@@ -21,8 +21,8 @@
     {{> nav}}
     
     <div class="container">
-        <div class="row content d-flex flex-wrap">
-            <div class="col-4 filter">
+        <div class="row content d-flex flex-wrap  justify-content-center">
+            {{!-- <div class="col-4 filter">
                 <form action="" style="text-align:left;">
                     <h1>Profession</h1>
                     
@@ -32,33 +32,49 @@
                     {{/each}}
 
                 </form>
-            </div>
+            </div> --}}
 
-            <div class="col">
-                <div class="row view mb-4">
+            {{!-- <div class="col ml-1"> --}}
+                
+                <div class="row view" style="width:84%">
                     <h1 class="heading">{{clinic}}</h1>
                 </div>
 
-                {{#each doctors}}
-                <div class="row d-flex flex-wrap">
-                    <div class="row admin-card">
-                        <a href="/doctorProfile?id={{_id}}">
-                            <img class="card-img" src="{{profpic}}">
+                <div class="row d-flex justify-content-center flex-wrap">
+                    {{#each doctors}}
+                    
+                    <div class="card">
+                        <a href="/doctorProfile?id={{_id}}" style="text-align:center">
+                            <img class="card-img-top ml-auto" src="{{profpic}}">
+                            <h5 class="card-title card-title-home">{{firstname}} {{lastname}}</h5></a>
+                            <div class="card-body card-body-home">
+                                <p class="card-text"><i>{{profession}}</i></p>
+                            </div>
+                            <div class="card-body">
+                                <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                            </div>
                         </a>
-                        <div class="card-body">
-                        <a href="/doctorProfile?id={{_id}}">
-                            <h5 class="card-title">{{firstname}} {{lastname}}</h5>
-                            <p class="card-text">{{profession}}</p>
-                            </a>
-                        </div>
-                        <div class="card-body cancel">
-                            <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
-                        </div>
                     </div>
+                    
+                    {{!-- <div class="row d-flex flex-wrap">
+                        <div class="row admin-card">
+                            <a href="/doctorProfile?id={{_id}}">
+                                <img class="card-img" src="{{profpic}}">
+                            </a>
+                            <div class="card-body">
+                            <a href="/doctorProfile?id={{_id}}">
+                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                                <p class="card-text">{{profession}}</p>
+                                </a>
+                            </div>
+                            <div class="card-body cancel">
+                                <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                            </div>
+                        </div>
+                    </div> --}}
+                    {{/each}}
                 </div>
-                {{/each}}
-            
-            </div>
+            {{!-- </div> --}}
         </div>
     </div>
 </body>

@@ -454,42 +454,43 @@ const userController = {
 		var oldPass = req.body.oldPassword
 		var newPass = req.body.newPassword
 
-		db.findOne(User, {_id: req.session.userId}, null, function (user) {
-			if(user != null) {
-				bcrypt.compare(oldPass, user.password, function(err, equal) {
-					if(equal){
-						console.log('equal')
-						bcrypt.hash(newPass, saltRounds, (err, hash) => {
-							db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
-								res.send(true)
+		if(!req.body.newPassword) {
+			res.send('empty')
+		}
+		else {
+			if(req.session.type = 'user') {
+				db.findOne(User, {_id: req.session.userId}, null, function (user) {
+					bcrypt.compare(oldPass, user.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
+								})
 							})
-						})
-					}
-					else {
-						res.send(false)
-					}
-                });	
+						}
+						else {
+							res.send(false)
+						}
+					});
+				})
 			}
 			else {
 				db.findOne(Doctor, {_id: req.session.userId}, null, function (doctor) {
-					if(doctor != null) {
-						bcrypt.compare(oldPass, doctor.password, function(err, equal) {
-							if(equal){
-								console.log('equal')
-								bcrypt.hash(newPass, saltRounds, (err, hash) => {
-									db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
-										res.send(true)
-									})
+					bcrypt.compare(oldPass, doctor.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
 								})
-							}
-							else {
-								res.send(false)
-							}
-						});	
-					}
+							})
+						}
+						else {
+							res.send(false)
+						}
+					});	
 				})
 			}
-		})
+		}
 	}
 }
 

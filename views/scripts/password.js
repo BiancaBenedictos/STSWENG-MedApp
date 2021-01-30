@@ -6,7 +6,10 @@ function changePassword() {
         $("#change-password").modal('hide')
             
         $(".msg-header").text("Change Password");
-        if (result) {
+        if(result == 'empty') {
+            $(".msg-body").text("You cannot have an empty password.")
+        }
+        else if(result) {
             $(".msg-body").text("Your password has been changed!")
         }
         else {

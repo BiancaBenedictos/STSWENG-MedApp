@@ -8,6 +8,8 @@ const doctorController = require('../controllers/doctorController')
 const homeController = require('../controllers/homeController')
 const userController = require('../controllers/userController')
 
+const testuser = require('../controller-tests/test-userController');
+
 const validation = require('../helpers/validation.js');
 
 //MULTER INIT
@@ -53,12 +55,14 @@ app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/getSlots', appointmentController.getSlots)
 app.get('/disableSlots', appointmentController.disableSlots)
 app.post('/requestAppointment', appointmentController.requestAppointment)
+app.post('/cancelAppointment', appointmentController.cancelAppointment)
 app.get('/getAppointmentNotifs', appointmentController.getAppointmentNotifs)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
 // app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 app.post('/acceptAppointment', appointmentController.acceptAppointment);
+app.post('/rejectAppointment', appointmentController.rejectAppointment);
 app.get('/getClinicHours', doctorController.getClinicHours)
 app.post('/setAvailability', doctorController.setAvailability)
 
@@ -85,10 +89,23 @@ app.post('/doctorRegister',
          userController.postDoctorRegister)
 
 app.get('/editProfile', userController.getEditProfile)
-app.post('/editProfile', userController.postEditProfile)
+app.post('/editProfile', uploadFilter, userController.postEditProfile)
+
+app.post('/changePassword', userController.changePassword)
 
 app.post('/changePassword', userController.changePassword)
 
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)
+
+//tests
+app.post('/testpatientRegister', 
+         uploadFilter,
+         validation.PatientSignupValidation(),
+         testuser.postPatientRegister)
+
+app.post('/testdoctorRegister', 
+         uploadFilter,
+         validation.DoctorSignupValidation(),
+         testuser.postDoctorRegister)

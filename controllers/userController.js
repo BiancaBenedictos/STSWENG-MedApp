@@ -33,6 +33,7 @@ const userController = {
 						req.session.weight = user.weight,
 						req.session.height = user.height,
 						req.session.profpic = user.profpic
+						// console.log(req.session);
 						res.redirect('/homeDoctors');
 					}
 				});					
@@ -157,6 +158,7 @@ const userController = {
 	},
 
 	postPatientRegister: function(req, res) {
+		console.log(req.body);
 		var errors = validationResult(req);
 		console.log(errors);
 
@@ -272,6 +274,7 @@ const userController = {
 				clinics: clinics, professions: professions})
 			})
         } else {
+			console.log("valid doctor");
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
@@ -322,12 +325,15 @@ const userController = {
 					DOCTOR.credentials = credFileName;
 
 					db.insertOne(Doctor, DOCTOR, function (flag) {
+						// console.log(flag);
 						if (flag) {
+							console.log("inserted");
 							req.session.email = DOCTOR.email;
 							req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
 							req.session.userId = DOCTOR._id;
 							req.session.type = 'doctor'
 							req.session.profession = DOCTOR.profession
+							console.log("inserted");
 							res.redirect('/upcomingAppointments');
 						}
 					});
@@ -442,7 +448,30 @@ const userController = {
 				})
 			})
 		} else {
-			res.send("Not a doctor")
+			var newInfo = req.body
+			var oldEmail = req.session.email
+			var newEmail = req.body.email
+
+			if(req.files['picture']) {
+				var picName = req.body.firstname;
+				var picFileName = helper.renameAvatar(req, picName);
+				newInfo.profpic = 'images/' + picFileName;
+			}
+
+			db.findOne(User, {email:newEmail}, null, function(user) {
+				if(oldEmail != newEmail && user) {
+					res.send('email')
+				}
+				else {
+					db.updateOne(User, {_id: userID}, newInfo, function(flag) {
+						req.session.name = req.body.firstname + " " + req.body.lastname
+						req.session.email = req.body.email
+
+						if(req.files['picture']) flag = true
+						res.send(flag)
+					})
+				}
+			})
 		}
 	},
 

@@ -25,11 +25,12 @@
                 $('#create-appointments').prop('hidden', false);;
             }
             if(result.type == 'admin') {
-            $('#verify-doctors').prop('hidden', false);
-            $('#view-doctors').prop('hidden', false);
-            $('#view-clinics').prop('hidden', false);
+                $('#verify-doctors').prop('hidden', false);
+                $('#view-doctors').prop('hidden', false);
+                $('#view-clinics').prop('hidden', false);
                 $('#edit-profile').prop('hidden', true);
                 $('#appointments').prop('hidden', true);
+                $('#pending-appointments').prop('hidden', true);;
             }
         });
     });

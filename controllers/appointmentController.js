@@ -440,7 +440,8 @@ const appointmentController = {
 					patientName: req.session.name,
 					patientPic: req.session.profpic,
 					bookedDate: bookTime, 
-					status: "Pending"
+					status: "Pending",
+					clinic: req.body.clinic
 					}
 
 					//for testing (comment this block of code when running node server) and uncomment the commented block above 

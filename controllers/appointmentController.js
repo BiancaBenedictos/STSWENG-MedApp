@@ -28,6 +28,7 @@ const appointmentController = {
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
 								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 								// patient: appointments[i].patient,
 								// doctor: appointments[i].bookedDoctor
 							}
@@ -48,6 +49,7 @@ const appointmentController = {
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
 									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 									// patient: appointments[i].patient,
 									// doctor: appointments[i].bookedDoctor
 								}
@@ -86,6 +88,7 @@ const appointmentController = {
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
 								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 								// patient: appointments[i].patient,
 								// doctor: appointments[i].bookedDoctor
 							}
@@ -106,6 +109,7 @@ const appointmentController = {
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
 									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 									// patient: appointments[i].patient,
 									// doctor: appointments[i].bookedDoctor
 								}
@@ -181,7 +185,8 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -197,7 +202,8 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}
@@ -230,7 +236,8 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -246,7 +253,8 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}

@@ -482,8 +482,8 @@ const userController = {
 	changePassword: function(req, res) {
 		var oldPass = req.body.oldPassword
 		var newPass = req.body.newPassword
-
-		if(!req.body.newPassword) {
+		
+		if(!newPass) {
 			res.send('empty')
 		}
 		else {

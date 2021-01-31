@@ -8,6 +8,10 @@ const doctorController = require('../controllers/doctorController')
 const homeController = require('../controllers/homeController')
 const userController = require('../controllers/userController')
 
+const testuser = require('../controller-tests/test-userController');
+
+const validation = require('../helpers/validation.js');
+
 //MULTER INIT
 var storage = multer.diskStorage({
     destination: function (req, file, cd) {
@@ -51,11 +55,14 @@ app.get('/bookAppointment', appointmentController.bookAppointment)
 app.get('/getSlots', appointmentController.getSlots)
 app.get('/disableSlots', appointmentController.disableSlots)
 app.post('/requestAppointment', appointmentController.requestAppointment)
+app.post('/cancelAppointment', appointmentController.cancelAppointment)
+app.get('/getAppointmentNotifs', appointmentController.getAppointmentNotifs)
 
 app.get('/doctorProfile', doctorController.doctorProfile)
 // app.get('/doctorPendingAppointments', doctorController.pendingAppointments)
 app.get('/createAppointments', doctorController.createAppointments)
 app.post('/acceptAppointment', appointmentController.acceptAppointment);
+app.post('/rejectAppointment', appointmentController.rejectAppointment);
 app.get('/getClinicHours', doctorController.getClinicHours)
 app.post('/setAvailability', doctorController.setAvailability)
 
@@ -67,15 +74,38 @@ app.get('/', userController.getLogin)
 app.post('/', userController.postLogin)
 app.get('/getCheckLogin', userController.getCheckLogin)
 
-app.get('/register', userController.getRegister)
+app.get('/patientRegister', userController.getPatientRegister)
 app.get('/getCheckEmail', userController.getCheckEmail)
-app.post('/register', 
+app.post('/patientRegister', 
          uploadFilter,
-         userController.postRegister)
+         validation.PatientSignupValidation(),
+         userController.postPatientRegister)
+
+app.get('/doctorRegister', userController.getDoctorRegister)
+app.get('/getCheckEmail', userController.getCheckEmail)
+app.post('/doctorRegister', 
+         uploadFilter,
+         validation.DoctorSignupValidation(),
+         userController.postDoctorRegister)
 
 app.get('/editProfile', userController.getEditProfile)
-app.post('/editProfile', userController.postEditProfile)
+app.post('/editProfile', uploadFilter, userController.postEditProfile)
+
+app.post('/changePassword', userController.changePassword)
+
+app.post('/changePassword', userController.changePassword)
 
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)
+
+//tests
+app.post('/testpatientRegister', 
+         uploadFilter,
+         validation.PatientSignupValidation(),
+         testuser.postPatientRegister)
+
+app.post('/testdoctorRegister', 
+         uploadFilter,
+         validation.DoctorSignupValidation(),
+         testuser.postDoctorRegister)

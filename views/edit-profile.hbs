@@ -18,6 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     
     <script src="/scripts/userEditProfile.js"></script>
+    <script src="/scripts/password.js"></script>
 </head>
 <body>
     {{> nav}}
@@ -90,35 +91,6 @@
 </body>
 </html>
 
-<!-- Change Password Modal -->
-<div class="modal fade" id="change-password" tabindex="-1" role="dialog" aria-labelledby="change-password" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Change Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="oldPassword" class="col-form-label">Current Password</label>
-                        <input type="password" class="form-control" id="oldPassword">
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword" class="col-form-label">New Password</label>
-                        <input type="password" class="form-control" id="newPassword">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="changePassword();">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     function remove(id) {
         document.getElementById(id).parentElement.remove()

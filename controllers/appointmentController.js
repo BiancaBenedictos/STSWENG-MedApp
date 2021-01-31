@@ -338,6 +338,14 @@ const appointmentController = {
 			clinicID: req.query.c,
 			day: days[day]
 		}
+
+		//month = startWeek.getMonth()
+		year = startWeek.getFullYear();
+		var monthStr = months[month];
+
+		if (month != startWeek.getMonth()) {
+			monthStr = monthStr + "-" + months[startWeek.getMonth()]
+		}
 		
 		if (disabled)
 			disabled = "disabled"
@@ -348,6 +356,7 @@ const appointmentController = {
 					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
 				}
 				else res.redirect('/error');
+
 			})
 		}
 		else if(req.session.email) {
@@ -361,7 +370,7 @@ const appointmentController = {
 	getSlots: function(req,res) {
 		db.findOne(Availability, req.query.q, "day startTime endTime intervalHours", function(results) {
 			var times = []
-			var today = new Date(), slotDate = new Date(req.query.full)
+			var slotDate = new Date(req.query.full)
 
 			if (results) {
 				var s = results.startTime
@@ -385,7 +394,8 @@ const appointmentController = {
 				}
 			}
 
-			res.send(times)
+			var fulldate = slotDate.toDateString();
+			res.send({times: times, date: fulldate.substr(4)});
 		})
 	},
 

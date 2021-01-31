@@ -14,7 +14,7 @@ const CLINIC = require('../models/clinicModel')
 const APPOINTMENT = require('../models/appointmentModel')
 const AVAILABILITY = require('../models/availabilityModel')
 
-var doctorID, userID;
+var doctorID, userID, IDclinics;
 // var testSession = null;
 
 const options = {
@@ -120,19 +120,23 @@ afterAll((done) => {
 })
 
 describe('Book Appointment', () => {
-    var req;
+    var req, date = new Date();
+    date.setDate(date.getDate() + 1);
+    
     it('User login', loginUser({email: 'test@gmail.com', password: 'test'}))
 
     it('book appointment', async done => {
         req = {
-            fulldate: 'January 28, 2021',
-            time: '10:39:00',
+            fulldate: (date.toDateString()),
+            time: '10:00:00',
             doctor: doctorID.toString(),
             doctorName: 'test update',
             doctorPic: 'images/test.png',
             userId: userID.toString(),
             name: 'test user',
-            profpic: 'images/test.png'
+            profpic: 'images/test.png',
+            clinic: IDclinics[0].toString(),
+            clinicName: 'Test Clinic'
         }
 
         const response = await request.post('/requestAppointment').type('form').send(req);

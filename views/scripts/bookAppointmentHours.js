@@ -67,7 +67,17 @@ function updateBookTime(time12, time24, bookdate) {
 }
 
 function bookAppointment() {
-    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id'), doctorName: $("h1.doctor").text(), doctorPic: $(".profpic").attr('src')}, function(res) {
+    var link = window.location.href;
+    var s = link.indexOf("&c="), e = link.indexOf("&date=");
+    var clinic;
+
+    if (i >= 0) {
+        clinic = link.slice(s + 3, e);
+    } else clinic = link.slicee(s);
+
+    console.log(clinic);
+
+    $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id'), doctorName: $("h1.doctor").text(), doctorPic: $(".profpic").attr('src'), clinic: clinic}, function(res) {
         $("#confirm").modal('hide')
 
         if (res) {
@@ -82,7 +92,7 @@ function bookAppointment() {
 
 function changeWeek(type) {
     var link = window.location.href;
-    var i = link.indexOf("&date=") + 1
+    var i = link.indexOf("&date=")
 
     if (i > 0)
         link = link.slice(0, i)

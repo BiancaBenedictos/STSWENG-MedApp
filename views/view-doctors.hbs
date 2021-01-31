@@ -51,7 +51,7 @@
                                 <p class="card-text"><i>{{profession}}</i></p>
                             </div>
                             <div class="card-body">
-                                <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                                <a href="/bookAppointment?id={{_id}}&c={{../clinicID}}" class="btn cancel-btn book-appointment" type="button">book</a>
                             </div>
                         </a>
                     </div>
@@ -71,10 +71,13 @@
                                 <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
                             </div>
                         </div>
+                        <div class="card-body cancel">
+                            <a href="/bookAppointment?id={{_id}}&c={{../clinicID}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                        </div>
+                    </div>
                     </div> --}}
                     {{/each}}
                 </div>
-            {{!-- </div> --}}
         </div>
     </div>
 </body>

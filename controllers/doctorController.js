@@ -12,6 +12,11 @@ const doctorController = {
 
 		if(req.session.email) {
 			db.findOne(Doctor, {_id: userId}, null, function(doctor) {
+				if (!doctor) {
+					res.redirect('/error');
+					return;
+				}
+				
 				db.findMany(Clinic, {_id: {$in: doctor.clinics}}, null, function(clinics) {
 					clinics.doctorId = userId
 	

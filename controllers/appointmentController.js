@@ -6,6 +6,7 @@ const Appointment = require('../models/appointmentModel.js')
 const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
 const { now } = require('moment');
+const mongoose = require('mongoose');
 
 const appointmentController = {
 	upcomingAppointments: function(req,res) {
@@ -27,6 +28,7 @@ const appointmentController = {
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
 								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 								// patient: appointments[i].patient,
 								// doctor: appointments[i].bookedDoctor
 							}
@@ -47,6 +49,7 @@ const appointmentController = {
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
 									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 									// patient: appointments[i].patient,
 									// doctor: appointments[i].bookedDoctor
 								}
@@ -85,6 +88,7 @@ const appointmentController = {
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
 								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 								// patient: appointments[i].patient,
 								// doctor: appointments[i].bookedDoctor
 							}
@@ -105,6 +109,7 @@ const appointmentController = {
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
 									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 									// patient: appointments[i].patient,
 									// doctor: appointments[i].bookedDoctor
 								}
@@ -180,7 +185,8 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -196,7 +202,8 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}
@@ -229,7 +236,8 @@ const appointmentController = {
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -245,7 +253,8 @@ const appointmentController = {
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}
@@ -343,7 +352,11 @@ const appointmentController = {
 			
 		if(req.session.type == 'user') {
 			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: monthStr, year: year, dates: dates, disabled: disabled})
+				if (doctor && doctor.clinics.includes(q.clinicID) ) {
+					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
+				}
+				else res.redirect('/error');
+
 			})
 		}
 		else if(req.session.email) {
@@ -434,39 +447,47 @@ const appointmentController = {
 				if (conflict && conflict.status == "Upcoming")
 					res.send(false);
 				else {
+					db.findOne(Clinic, {_id: mongoose.Types.ObjectId(req.body.clinic)}, "clinicName", function(clinic) {
+						if (!clinic){
+							res.send(false);
+							return;
+						}
 
-					// console.log(req.session);
-					var a = {
-					bookedDoctor: req.body.doctor,
-					doctorName: req.body.doctorName,
-					doctorPic: req.body.doctorPic,
-					patient: req.session.userId,
-					patientName: req.session.name,
-					patientPic: req.session.profpic,
-					bookedDate: bookTime, 
-					status: "Pending"
-					}
-
-					//for testing (comment this block of code when running node server) and uncomment the commented block above 
-					/*var a = {
-						bookedDoctor: req.body.doctor,
-						doctorName: req.body.doctorName,
-						doctorPic: req.body.doctorPic,
-						patient: req.body.userId,
-						patientName: req.body.name,
-						patientPic: req.body.profpic,
-						bookedDate: bookTime, 
-						status: "Pending"
-					}*/
-					
-					// console.log(a);
-
-					db.insertOne(Appointment, a, function(result) {
-						// console.log(result);
-						if (result)
-							res.send(true);
-						else res.send(false)
+						var a = {
+							bookedDoctor: req.body.doctor,
+							doctorName: req.body.doctorName,
+							doctorPic: req.body.doctorPic,
+							patient: req.session.userId,
+							patientName: req.session.name,
+							patientPic: req.session.profpic,
+							bookedDate: bookTime, 
+							status: "Pending",
+							clinic: req.body.clinic,
+							clinicName: clinic.clinicName
+						}
+		
+							//for testing (comment this block of code when running node server) and uncomment the commented block above 
+							/*var a = {
+								bookedDoctor: req.body.doctor,
+								doctorName: req.body.doctorName,
+								doctorPic: req.body.doctorPic,
+								patient: req.body.userId,
+								patientName: req.body.name,
+								patientPic: req.body.profpic,
+								bookedDate: bookTime, 
+								status: "Pending"
+							}*/
+							
+							// console.log(a);
+		
+							db.insertOne(Appointment, a, function(result) {
+								// console.log(result);
+								if (result)
+									res.send(true);
+								else res.send(false)
+							})
 					})
+
 				}
 			})
 		}

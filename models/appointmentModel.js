@@ -25,6 +25,14 @@ const appointmentSchema = new mongoose.Schema({
         type: String
     },
 
+    clinic: {
+        type: String
+    },
+
+    clinicName: {
+        type: String
+    },
+
     bookedDate: {
         type: Date,
         default: Date(-8640000000000000),

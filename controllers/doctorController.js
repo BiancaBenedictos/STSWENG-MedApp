@@ -118,8 +118,6 @@ const doctorController = {
 			avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
 			avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
 
-			console.log(avail[i]);
-
 			db.upsertOne(Availability, { doctorID: avail[i].doctorID, clinicID: avail[i].clinicID, day: avail[i].day }, avail[i], function(result) {
 					if (!result)
 						success = false;

@@ -462,10 +462,29 @@ const userController = {
 				if(oldEmail != newEmail && user) {
 					res.send('email')
 				}
+				else if(!req.body.firstname || ! req.body.lastname) {
+					res.send('name')
+				}
+				else if(!req.body.email) {
+					res.send('no email')
+				}
+				else if(req.body.age < 0 || !req.body.age) {
+					res.send('age')
+				}
+				else if(req.body.weight < 0 || !req.body.weight) {
+					res.send('weight')
+				}
+				else if(req.body.height < 0 || !req.body.height) {
+					res.send('height')
+				}
 				else {
 					db.updateOne(User, {_id: userID}, newInfo, function(flag) {
 						req.session.name = req.body.firstname + " " + req.body.lastname
 						req.session.email = req.body.email
+						req.session.age = req.body.age
+						req.session.weight = req.body.weight
+						req.session.height = req.body.height
+						req.session.profpic = newInfo.profpic
 
 						if(req.files['picture']) flag = true
 						res.send(flag)

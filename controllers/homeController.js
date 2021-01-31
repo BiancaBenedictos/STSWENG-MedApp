@@ -48,6 +48,7 @@ const homeController = {
 
 					var results = {
 						clinic: clinic.clinicName,
+						clinicID: clinic._id,
 						doctors: doctors,
 						professions: professions
 					}

@@ -98,6 +98,7 @@ app.post('/changePassword', userController.changePassword)
 app.get('/logout', userController.logout)
 
 app.get('/error', userController.error)
+app.get('*', userController.error)
 
 //tests
 app.post('/testpatientRegister', 

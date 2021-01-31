@@ -462,10 +462,29 @@ const userController = {
 				if(oldEmail != newEmail && user) {
 					res.send('email')
 				}
+				else if(!req.body.firstname || ! req.body.lastname) {
+					res.send('name')
+				}
+				else if(!req.body.email) {
+					res.send('no email')
+				}
+				else if(req.body.age < 0 || !req.body.age) {
+					res.send('age')
+				}
+				else if(req.body.weight < 0 || !req.body.weight) {
+					res.send('weight')
+				}
+				else if(req.body.height < 0 || !req.body.height) {
+					res.send('height')
+				}
 				else {
 					db.updateOne(User, {_id: userID}, newInfo, function(flag) {
 						req.session.name = req.body.firstname + " " + req.body.lastname
 						req.session.email = req.body.email
+						req.session.age = req.body.age
+						req.session.weight = req.body.weight
+						req.session.height = req.body.height
+						req.session.profpic = newInfo.profpic
 
 						if(req.files['picture']) flag = true
 						res.send(flag)
@@ -483,42 +502,43 @@ const userController = {
 		var oldPass = req.body.oldPassword
 		var newPass = req.body.newPassword
 
-		db.findOne(User, {_id: req.session.userId}, null, function (user) {
-			if(user != null) {
-				bcrypt.compare(oldPass, user.password, function(err, equal) {
-					if(equal){
-						console.log('equal')
-						bcrypt.hash(newPass, saltRounds, (err, hash) => {
-							db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
-								res.send(true)
+		if(!req.body.newPassword) {
+			res.send('empty')
+		}
+		else {
+			if(req.session.type = 'user') {
+				db.findOne(User, {_id: req.session.userId}, null, function (user) {
+					bcrypt.compare(oldPass, user.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
+								})
 							})
-						})
-					}
-					else {
-						res.send(false)
-					}
-                });	
+						}
+						else {
+							res.send(false)
+						}
+					});
+				})
 			}
 			else {
 				db.findOne(Doctor, {_id: req.session.userId}, null, function (doctor) {
-					if(doctor != null) {
-						bcrypt.compare(oldPass, doctor.password, function(err, equal) {
-							if(equal){
-								console.log('equal')
-								bcrypt.hash(newPass, saltRounds, (err, hash) => {
-									db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
-										res.send(true)
-									})
+					bcrypt.compare(oldPass, doctor.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
 								})
-							}
-							else {
-								res.send(false)
-							}
-						});	
-					}
+							})
+						}
+						else {
+							res.send(false)
+						}
+					});	
 				})
 			}
-		})
+		}
 	}
 }
 

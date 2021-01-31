@@ -42,6 +42,21 @@ $(document).ready(function() {
                 else if(response == 'email') {
                     $(".msg-body").text("That email is already registered with a different account! No changes were made.")
                 }
+                else if(response == 'no email') {
+                    $(".msg-body").text("You cannot leave your email blank.")
+                }
+                else if(response == 'name') {
+                    $(".msg-body").text("You cannot leave your name blank.")
+                }
+                else if(response == 'age') {
+                    $(".msg-body").text("Please make sure your inputs are valid. You cannot enter a negative value or leave your age blank.")
+                }
+                else if(response == 'weight') {
+                    $(".msg-body").text("Please make sure your inputs are valid. You cannot enter a negative value or leave your weight blank.")
+                }
+                else if(response == 'height') {
+                    $(".msg-body").text("Please make sure your inputs are valid. You cannot enter a negative value or leave your height blank.")
+                }
                 else {
                     $(".msg-body").text("No changes were made! Your profile was not updated.")
                 }

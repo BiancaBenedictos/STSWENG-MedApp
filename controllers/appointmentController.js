@@ -490,6 +490,9 @@ const appointmentController = {
 			match = {'patient': req.session.userId}
 		} else if (req.session.type == 'doctor') {
 			match = {'bookedDoctor': req.session.userId}
+		} else {
+			res.send({});
+			return;
 		}
 
 		Appointment.aggregate([{

@@ -36,12 +36,12 @@ const userSchema = new mongoose.Schema({
     },
 
     height: {
-        type: mongoose.Schema.Types.Decimal128,
+        type: mongoose.Types.Decimal128,
         required: true
     },
 
     weight: {
-        type: mongoose.Schema.Types.Decimal128,
+        type: mongoose.Types.Decimal128,
         required: true
     }
 });

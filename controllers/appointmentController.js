@@ -159,14 +159,18 @@ const appointmentController = {
 				{ _id: appointmentId },
 				{ status: 'Cancelled' },
 				function (result) {
-					// res.redirect('/upcomingAppointments');
+					console.log("Updated...");
+					db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+					db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+					res.redirect('/cancelledAppointments');
 				},
 			);
 		
-			db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
-			db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			// db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			// db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
 			
-			res.redirect('/cancelledAppointments');
+			// res.redirect('/cancelledAppointments');
 		})
 	},
 

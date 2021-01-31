@@ -8,7 +8,7 @@ function acceptbook() {
 }
 
 function rejectbook() {
-    $.post('/acceptAppointment', {id: userId}, function(result){
+    $.post('/rejectAppointment', {id: userId}, function(result){
         if (result)
             location.reload();
     })

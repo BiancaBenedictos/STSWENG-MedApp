@@ -23,12 +23,21 @@ const validation = {
                 .trim()
                 .normalizeEmail()
                 .custom(async value => {
-                    // check if email is already used
-                    const data = await patient.findOne({
+                    // check if email is already used in the doctor collection
+                    const data = await doctor.findOne({
                         email: value,
                     }).exec();
                     // reject if a record is found
                     if (data) return Promise.reject();
+                })
+                .withMessage('Email address is already in use')
+                .custom(async value => {
+                    // check if email is already used in the user collection
+                    const data = await patient.findOne({
+                        email: value,
+                    }).exec();
+                    //reject if record is found
+                    if(data) return Promise.reject();
                 })
                 .withMessage('Email address is already in use'),
             check('password')
@@ -78,12 +87,21 @@ const validation = {
                 .trim()
                 .normalizeEmail()
                 .custom(async value => {
-                    // check if email is already used
+                    // check if email is already used in the doctor collection
                     const data = await doctor.findOne({
                         email: value,
                     }).exec();
                     // reject if a record is found
                     if (data) return Promise.reject();
+                })
+                .withMessage('Email address is already in use')
+                .custom(async value => {
+                    // check if email is already used in the user collection
+                    const data = await patient.findOne({
+                        email: value,
+                    }).exec();
+                    //reject if record is found
+                    if(data) return Promise.reject();
                 })
                 .withMessage('Email address is already in use'),
             check('password')

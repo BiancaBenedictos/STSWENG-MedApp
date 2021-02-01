@@ -94,7 +94,7 @@ describe('Update doctor info', () => {
                         firstname: 'test',
                         lastname: 'update',
                         email: 'test@dr.com',
-                        profession: 'Pediatrician',
+                        profession: 'Surgeon',
                         clinics: [res._id.toString()]
                 }
 

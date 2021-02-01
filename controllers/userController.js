@@ -443,8 +443,8 @@ const userController = {
 		
 						var doctorName = info.firstname + " " + info.lastname;
 		
-						db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: userID}})
-						db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: userID}})
+						db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
+						db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
 						db.updateMany(Appointment, {bookedDoctor: userID}, {doctorName: doctorName})
 
 						var withFiles = false;

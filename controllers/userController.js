@@ -11,6 +11,7 @@ const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Admin = require('../models/adminModel');
 const Clinic = require('../models/clinicModel');
+const Appointment = require('../models/appointmentModel');
 
 const userController = {
 	getLogin: function(req,res){
@@ -418,34 +419,67 @@ const userController = {
 		var userID = mongoose.Types.ObjectId(req.session.userId)
 
 		if (req.session.type == 'doctor') {
-			var clinics = req.body.info.clinics
-			
-			db.findOne(Doctor, {_id: userID}, "clinics", function(resClinics) {
-				var addClinics = clinics.filter( 
-					function(i) { 
-						return this.indexOf(i) < 0; 
-					}, resClinics.clinics).map(s => mongoose.Types.ObjectId(s));
+			var info = req.body
+			var clinics = info.clinics
 
-				var removeClinics = resClinics.clinics.filter( 
-					function(i) { 
-						return this.indexOf(i) < 0; 
-					}, clinics).map(s => mongoose.Types.ObjectId(s));
+			db.findMany(Doctor, {email: info.email}, "", function(duplicate) {
+				if (duplicate.length > 1 || (duplicate.length == 1 && !userID.equals(duplicate[0]._id))) {
+					res.send("Email already in use. Please use a different email address.");
+					return;
+				}
 
-				db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
-				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
+				else {
+					db.findOne(Doctor, {_id: userID}, "clinics", function(resClinics) {
 
-				db.updateOne(Doctor, {_id: userID}, req.body.info, function(results) {
-					// update session info
-					req.session.email = req.body.info.email;
-					req.session.name = req.body.info.firstname + " " + req.body.info.lastname;
-					req.session.profession = req.body.info.profession;
-					
-					if (results) {
-						res.send("Changes to Dr. " + req.session.name + "'s information is saved")
-					} else {
-						res.send("Changes to Dr. " + req.session.name + "'s information failed to save. Please try again.")
-					}
-				})
+						var addClinics = clinics.filter( 
+							function(i) { 
+								return this.indexOf(i) < 0; 
+							}, resClinics.clinics).map(s => mongoose.Types.ObjectId(s));
+		
+						var removeClinics = resClinics.clinics.filter( 
+							function(i) { 
+								return this.indexOf(i) < 0; 
+							}, clinics).map(s => mongoose.Types.ObjectId(s));
+		
+						var doctorName = info.firstname + " " + info.lastname;
+		
+						db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
+						db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
+						db.updateMany(Appointment, {bookedDoctor: userID}, {doctorName: doctorName})
+
+						var withFiles = false;
+
+						if (req.files) {
+							if(req.files['picture']) {
+								withFiles = true;
+								var picName = req.body.firstname;
+								var picFileName = helper.renameAvatar(req, picName);
+								info.profpic = 'images/' + picFileName;
+							}  
+							
+							if (req.files['credentials']) {
+								withFiles = true;
+								var credName = req.body.firstname;
+								var credFileName = helper.renameAvatar(req, credName);
+								info.credentials = 'credentials/' + credFileName;
+							}
+						}
+		
+						db.updateOne(Doctor, {_id: userID}, info, function(results) {
+							// update session info
+							req.session.email = info.email;
+							req.session.name = doctorName;
+							req.session.profession = info.profession;
+													
+							if (results || withFiles) {
+								res.send("Changes to Dr. " + req.session.name + "'s information is saved")
+							} else {
+								res.send("No changes were made to Dr. " + req.session.name + "'s information.")
+							}
+						})
+					})
+				}
+
 			})
 			
 			

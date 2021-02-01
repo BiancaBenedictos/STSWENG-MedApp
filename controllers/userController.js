@@ -490,6 +490,9 @@ const userController = {
 						req.session.height = req.body.height
 						req.session.profpic = newInfo.profpic
 
+						
+						db.updateMany(Appointment, {patient: userID}, {patientName: req.session.name, patientPic: req.session.profpic})
+
 						if(req.files['picture']) flag = true
 						res.send(flag)
 					})

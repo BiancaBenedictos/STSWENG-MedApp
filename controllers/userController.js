@@ -11,6 +11,7 @@ const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Admin = require('../models/adminModel');
 const Clinic = require('../models/clinicModel');
+const Appointment = require('../models/appointmentModel');
 
 const userController = {
 	getLogin: function(req,res){

@@ -11,7 +11,6 @@ const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Admin = require('../models/adminModel');
 const Clinic = require('../models/clinicModel');
-const Appointment = require('../models/appointmentModel');
 
 const userController = {
 	getLogin: function(req,res){
@@ -479,6 +478,7 @@ const userController = {
 						})
 					})
 				}
+
 			})
 			
 			
@@ -520,9 +520,6 @@ const userController = {
 						req.session.weight = req.body.weight
 						req.session.height = req.body.height
 						req.session.profpic = newInfo.profpic
-
-						
-						db.updateMany(Appointment, {patient: userID}, {patientName: req.session.name, patientPic: req.session.profpic})
 
 						if(req.files['picture']) flag = true
 						res.send(flag)

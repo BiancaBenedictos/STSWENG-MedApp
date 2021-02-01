@@ -11,6 +11,7 @@ const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Admin = require('../models/adminModel');
 const Clinic = require('../models/clinicModel');
+const Appointment = require('../models/appointmentModel');
 
 const userController = {
 	getLogin: function(req,res){
@@ -425,13 +426,16 @@ const userController = {
 						return this.indexOf(i) < 0; 
 					}, clinics).map(s => mongoose.Types.ObjectId(s));
 
+				var doctorName = req.body.info.firstname + " " + req.body.info.lastname;
+
 				db.updateMany(Clinic, {_id: {$in: removeClinics}}, {$pull: {clinicDoctors: req.session.userId}})
 				db.updateMany(Clinic, {_id: {$in: addClinics}}, {$push: {clinicDoctors: req.session.userId}})
+				db.updateMany(Appointment, {bookedDoctor: userID}, {doctorName: doctorName})
 
 				db.updateOne(Doctor, {_id: userID}, req.body.info, function(results) {
 					// update session info
 					req.session.email = req.body.info.email;
-					req.session.name = req.body.info.firstname + " " + req.body.info.lastname;
+					req.session.name = doctorName;
 					req.session.profession = req.body.info.profession;
 					
 					if (results) {

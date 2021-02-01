@@ -4,43 +4,16 @@ function saveChanges() {
     var emptyFields = $('input:text').filter(function() { return $(this).val() == "" || $(this).val().trim() == ""; });
     var clinics = $("select[name='clinics[]']").map(function() { return $(this).val()}).get()
 
-    if (emptyFields.length > 0 && clinics.length <= 0 && validator.isEmail($("#email").val()))
+    if (clinics.length <= 0) {
+        $("#addClinic").css('border-color', 'red')
+    } else {
+        $("#addClinic").css('border-color', 'lightgray')
+    }
+
+    if (emptyFields.length > 0 || clinics.length <= 0 || !validator.isEmail($("#email").val()))
         return;
-    
-    var info = {
-        firstname: $("input#firstname").val(),
-        lastname: $("input#lastname").val(),
-        email: $("input#email").val(),
-        profession: $("select#profession").val(),
-        clinics: clinics
-    }   
-
-    // get files
-
-    var profpic = $("input#picture")[0].files
-    if (profpic.length > 0) {
-        info.profpic = profpic[0]
-    } else if ('profpic' in info) {
-        delete info.profpic
-    }
-
-    var credentials = $("input#credentials")[0].files
-    if (credentials.length > 0) {
-        info.credentials = credentials[0]
-    } else if ('credentials' in info) {
-        delete info.credentials
-    }
-
-    // post
-    $.post('/editProfile', {info: info}, function(res) {
-        console.log(res)
-        $(".msg-header").text("Update Profile Information");
-        if (res) {
-            $(".msg-body").text(res)
-        }
-
-        $("#process-message").modal('show')
-    })
+    else 
+        $("#updateForm").submit()
 }
 
 function refresh() {
@@ -69,4 +42,29 @@ $(document).ready(function(){
             $('#email').css("border-color", 'lightgray');
         }
     });
+
+    $("form").submit(function(evt){	 
+        evt.preventDefault();
+        console.log($("#updateForm"))
+        var formData = new FormData($("#updateForm")[0]);
+    $.ajax({
+        url: '/editProfile',
+        type: 'POST',
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        success: function (res) {
+            $(".msg-header").text("Update Profile Information");
+            if (res) {
+                $(".msg-body").text(res)
+            }
+    
+            $("#process-message").modal('show')
+            }
+        })
+    })
+
 });

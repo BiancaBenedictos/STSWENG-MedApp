@@ -91,13 +91,11 @@ describe('Update doctor info', () => {
         try {
             await Clinic.findOne({}, "_id", async function(err, res) {
                 rq = {
-                    info: {
                         firstname: 'test',
                         lastname: 'update',
                         email: 'test@dr.com',
                         profession: 'Pediatrician',
                         clinics: [res._id.toString()]
-                    }
                 }
 
                 clinic = res._id.toString()
@@ -107,7 +105,7 @@ describe('Update doctor info', () => {
                 await Doctor.findOne({ email: 'test@dr.com' }, 'firstname lastname email profession clinics', function(err, result) {
                     doctor = result._id.toString();
                     delete result._id
-                    expect(rq.info).toMatchObject(result)
+                    expect(rq).toMatchObject(result)
                     done()
                 }).lean()    
             })    

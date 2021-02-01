@@ -7,6 +7,13 @@ function acceptbook() {
     })
 }
 
+function rejectbook() {
+    $.post('/rejectAppointment', {id: userId}, function(result){
+        if (result)
+            location.reload();
+    })
+}
+
 function setId(id) {
     userId = id;
 }

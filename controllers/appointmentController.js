@@ -5,22 +5,32 @@ const User = require('../models/userModel.js')
 const Appointment = require('../models/appointmentModel.js')
 const Availability = require('../models/availabilityModel.js')
 const helper = require('../helpers/helper');
+const { now } = require('moment');
+const mongoose = require('mongoose');
 
 const appointmentController = {
 	upcomingAppointments: function(req,res) {
 		var userId = req.session.userId
 		var apts = []
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Upcoming'}, null, function(appointments) {
+					db.updateMany(Appointment, {patient: user._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
 							}
 							apts.push(details)
 						}
@@ -29,13 +39,19 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Upcoming'}, null, function(appointments) {
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Upcoming', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
 								apts.push(details)
 							}
@@ -56,17 +72,25 @@ const appointmentController = {
 	pendingAppointments: function(req,res) {
 		var userId = req.session.userId
 		var apts = []
+		var currentDate = new Date().toString()
 
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Pending'}, null, function(appointments) {
+					db.updateMany(Appointment, {patient: user._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+					Appointment.find({patient: user._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
+								// patient: appointments[i].patient,
+								// doctor: appointments[i].bookedDoctor
 							}
 							apts.push(details)
 						}
@@ -75,15 +99,19 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Pending'}, null, function(appointments) {
+						db.updateMany(Appointment, {bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$lte: currentDate}}, {status: 'Concluded'})
+
+						Appointment.find({bookedDoctor: doctor._id, status: 'Pending', bookedDate: {$gte: currentDate}}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
-								console.log(appointments)
 								var details = {
 									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
+									// patient: appointments[i].patient,
+									// doctor: appointments[i].bookedDoctor
 								}
 								apts.push(details)
 							}
@@ -122,6 +150,30 @@ const appointmentController = {
 		})
 	},
 
+	rejectAppointment: function(req, res) {
+		var appointmentId = req.body.id
+		console.log(appointmentId)
+		db.findOne(Appointment, {_id:appointmentId}, null, function(result) {
+			db.updateOne(
+				Appointment,
+				{ _id: appointmentId },
+				{ status: 'Cancelled' },
+				function (result) {
+					console.log("Updated...");
+					db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+					db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+					res.redirect('/cancelledAppointments');
+				},
+			);
+		
+			// db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			// db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+			// res.redirect('/cancelledAppointments');
+		})
+	},
+
 	concludedAppointments: function(req,res) {
 		var userId = req.session.userId
 		var apts = []
@@ -129,13 +181,16 @@ const appointmentController = {
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Concluded'}, null, function(appointments) {
+					Appointment.find({patient: user._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -144,13 +199,15 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Concluded'}, null, function(appointments) {
+						Appointment.find({bookedDoctor: doctor._id, status: 'Concluded'}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}
@@ -175,13 +232,16 @@ const appointmentController = {
 		if(req.session.email) {
 			db.findOne(User, {_id: userId}, null, function(user) {
 				if(user) {
-					db.findMany(Appointment, {patient: user._id, status: 'Cancelled'}, null, function(appointments) {
+					Appointment.find({patient: user._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
+					
 						for(var i = 0; i < appointments.length; i++) {
 							var details = {
+								_id: appointments[i]._id,
 								user: appointments[i].doctorName,
 								date: helper.getDate(appointments[i].bookedDate),
 								time: helper.getTime(appointments[i].bookedDate),
-								profpic: appointments[i].doctorPic
+								profpic: appointments[i].doctorPic,
+								clinicName: appointments[i].clinicName
 							}
 							apts.push(details)
 						}
@@ -190,13 +250,15 @@ const appointmentController = {
 				}
 				else {
 					db.findOne(Doctor, {_id: userId}, null, function(doctor) {
-						db.findMany(Appointment, {bookedDoctor: doctor._id, status: 'Cancelled'}, null, function(appointments) {
+						Appointment.find({bookedDoctor: doctor._id, status: 'Cancelled'}).sort({bookedDate: 1}).exec(function(err,appointments) {
 							for(var i = 0; i < appointments.length; i++) {
 								var details = {
+									_id: appointments[i]._id,
 									user: appointments[i].patientName,
 									date: helper.getDate(appointments[i].bookedDate),
 									time: helper.getTime(appointments[i].bookedDate),
-									profpic: appointments[i].patientPic
+									profpic: appointments[i].patientPic,
+									clinicName: appointments[i].clinicName
 								}
 								apts.push(details)
 							}
@@ -280,13 +342,25 @@ const appointmentController = {
 			clinicID: req.query.c,
 			day: days[day]
 		}
+
+		//month = startWeek.getMonth()
+		year = startWeek.getFullYear();
+		var monthStr = months[month];
+
+		if (month != startWeek.getMonth()) {
+			monthStr = monthStr + "-" + months[startWeek.getMonth()]
+		}
 		
 		if (disabled)
 			disabled = "disabled"
 			
 		if(req.session.type == 'user') {
 			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
-				res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
+				if (doctor && doctor.clinics.includes(q.clinicID) ) {
+					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
+				}
+				else res.redirect('/error');
+
 			})
 		}
 		else if(req.session.email) {
@@ -300,50 +374,44 @@ const appointmentController = {
 	getSlots: function(req,res) {
 		db.findOne(Availability, req.query.q, "day startTime endTime intervalHours", function(results) {
 			var times = []
-			var today = new Date(), slotDate = new Date(req.query.full)
+			var slotDate = new Date(req.query.full)
 
 			if (results) {
 				var s = results.startTime
 				var e = results.endTime
 				var int = results.intervalHours
 				var ampm = " AM"
-				var disabled, dHour = 0, dMin = 0
+				var h, h2, m;
 
-				if (today > slotDate) {
-					dHour = today.getHours()
-					dMin = today.getMinutes()
-				}
+				for (var dt=new Date(s); dt<=e; dt.setMinutes(dt.getMinutes()+(int*60))) {
+					h = (dt.getHours() % 12).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					h2 = (dt.getHours()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+					m = (dt.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 
-				while ( +s <= +e ) {
-					var h = s.getHours() % 12
-					var h2 = s.getHours()
-					var m = s.getMinutes();
-
-					if (s.getHours() >= 12)
-						ampm = " PM"
-					if (h == 0)
-						h = 12
-
-					if (dHour > h2 && dMin > m)
-						disabled = 'disabled'
-					else disabled = ''
-
-					h = h.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-					h2 = h2.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-					m = m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-
-					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00", class: disabled})
-					s.setMinutes(s.getMinutes() + (int * 60))
+					if (h2 > 11) 
+						ampm = " PM";
+					
+					if (h2 == 12)
+						h = 12;
+	
+					times.push({H12: h + ":" + m + ampm, H24: h2 + ":" + m + ":00"})
 				}
 			}
 
-			res.send(times)
+			var fulldate = slotDate.toDateString();
+			res.send({times: times, date: fulldate.substr(4)});
 		})
 	},
 
 	disableSlots: function(req, res) {
 		var doctorID = req.query.doctorID//, clinicID = req.query.clinicID
 		var start = new Date(req.query.date)
+		var today = new Date();
+		var sameDay = false;
+
+		if (+start == +today) {
+			sameDay = true;
+		}
 
 		start.setHours(0);
 		start.setMinutes(0);
@@ -352,6 +420,7 @@ const appointmentController = {
 
 		var end = new Date(start.valueOf())
 		end.setDate(start.getDate() + 1)
+
 		
 		var bookedTimes = [], h, m;
 
@@ -364,7 +433,9 @@ const appointmentController = {
 				}
 			}
 
-			res.send(bookedTimes)
+			var tH = today.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}), 
+				tM = today.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+			res.send({booked: bookedTimes, currH: tH, currM: tM, sameDay: sameDay})
 		})
 
 	},
@@ -380,34 +451,69 @@ const appointmentController = {
 				if (conflict && conflict.status == "Upcoming")
 					res.send(false);
 				else {
-					console.log(req.body)
-					var a = {
-						bookedDoctor: req.body.doctor,
-						doctorName: req.body.doctorName,
-						doctorPic: req.body.doctorPic,
-						patient: req.session.userId,
-						patientName: req.session.name,
-						patientPic: req.session.profpic,
-						bookedDate: bookTime, 
-						status: "Pending"
-					}
-					
-					db.insertOne(Appointment, a, function(result) {
-						if (result)
-							res.send(true);
-						else res.send(false)
+					db.findOne(Clinic, {_id: mongoose.Types.ObjectId(req.body.clinic)}, "clinicName", function(clinic) {
+						if (!clinic){
+							res.send(false);
+							return;
+						}
+
+						var a = {
+							bookedDoctor: req.body.doctor,
+							doctorName: req.body.doctorName,
+							doctorPic: req.body.doctorPic,
+							patient: req.session.userId,
+							patientName: req.session.name,
+							patientPic: req.session.profpic,
+							bookedDate: bookTime, 
+							status: "Pending",
+							clinic: req.body.clinic,
+							clinicName: clinic.clinicName
+						}
+		
+							//for testing (comment this block of code when running node server) and uncomment the commented block above 
+							/*var a = {
+								bookedDoctor: req.body.doctor,
+								doctorName: req.body.doctorName,
+								doctorPic: req.body.doctorPic,
+								patient: req.body.userId,
+								patientName: req.body.name,
+								patientPic: req.body.profpic,
+								bookedDate: bookTime, 
+								status: "Pending"
+							}*/
+							
+							// console.log(a);
+		
+							db.insertOne(Appointment, a, function(result) {
+								// console.log(result);
+								if (result)
+									res.send(true);
+								else res.send(false)
+							})
 					})
+
 				}
 			})
 		}
 	},
 
+	cancelAppointment: function(req, res) {
+		db.updateOne(Appointment, {_id: req.body.id}, {status: 'Cancelled'}, function(flag){})
+		// db.updateOne(User, {_id: req.body.patient}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.updateOne(Doctor, {_id: req.body.doctor}, {$pullAll: {bookedAppointments: [req.body.id]}}, function(flag){})
+		// db.deleteOne(Appointment, {_id: req.body.id})
+		res.send(true)
+  },
+  
 	getAppointmentNotifs: function(req, res) {
 		var match;
 		if (req.session.type == 'user') {
 			match = {'patient': req.session.userId}
 		} else if (req.session.type == 'doctor') {
 			match = {'bookedDoctor': req.session.userId}
+		} else {
+			res.send({});
+			return;
 		}
 
 		Appointment.aggregate([{

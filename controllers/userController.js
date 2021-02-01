@@ -34,6 +34,7 @@ const userController = {
 						req.session.weight = user.weight,
 						req.session.height = user.height,
 						req.session.profpic = user.profpic
+						// console.log(req.session);
 						res.redirect('/homeDoctors');
 					}
 				});					
@@ -158,6 +159,7 @@ const userController = {
 	},
 
 	postPatientRegister: function(req, res) {
+		console.log(req.body);
 		var errors = validationResult(req);
 		console.log(errors);
 
@@ -273,6 +275,7 @@ const userController = {
 				clinics: clinics, professions: professions})
 			})
         } else {
+			console.log("valid doctor");
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);
 			const email = helper.sanitize(req.body.email);
@@ -323,12 +326,15 @@ const userController = {
 					DOCTOR.credentials = credFileName;
 
 					db.insertOne(Doctor, DOCTOR, function (flag) {
+						// console.log(flag);
 						if (flag) {
+							console.log("inserted");
 							req.session.email = DOCTOR.email;
 							req.session.name = DOCTOR.firstname + " " + DOCTOR.lastname;
 							req.session.userId = DOCTOR._id;
 							req.session.type = 'doctor'
 							req.session.profession = DOCTOR.profession
+							console.log("inserted");
 							res.redirect('/upcomingAppointments');
 						}
 					});
@@ -446,12 +452,97 @@ const userController = {
 				})
 			})
 		} else {
-			res.send("Not a doctor")
+			var newInfo = req.body
+			var oldEmail = req.session.email
+			var newEmail = req.body.email
+
+			if(req.files['picture']) {
+				var picName = req.body.firstname;
+				var picFileName = helper.renameAvatar(req, picName);
+				newInfo.profpic = 'images/' + picFileName;
+			}
+
+			db.findOne(User, {email:newEmail}, null, function(user) {
+				if(oldEmail != newEmail && user) {
+					res.send('email')
+				}
+				else if(!req.body.firstname || ! req.body.lastname) {
+					res.send('name')
+				}
+				else if(!req.body.email) {
+					res.send('no email')
+				}
+				else if(req.body.age < 0 || !req.body.age) {
+					res.send('age')
+				}
+				else if(req.body.weight < 0 || !req.body.weight) {
+					res.send('weight')
+				}
+				else if(req.body.height < 0 || !req.body.height) {
+					res.send('height')
+				}
+				else {
+					db.updateOne(User, {_id: userID}, newInfo, function(flag) {
+						req.session.name = req.body.firstname + " " + req.body.lastname
+						req.session.email = req.body.email
+						req.session.age = req.body.age
+						req.session.weight = req.body.weight
+						req.session.height = req.body.height
+						req.session.profpic = newInfo.profpic
+
+						if(req.files['picture']) flag = true
+						res.send(flag)
+					})
+				}
+			})
 		}
 	},
 
 	error: function(req,res) {
 		res.render('error')
+	},
+
+	changePassword: function(req, res) {
+		var oldPass = req.body.oldPassword
+		var newPass = req.body.newPassword
+		
+		if(!newPass) {
+			res.send('empty')
+		}
+		else {
+			if(req.session.type = 'user') {
+				db.findOne(User, {_id: req.session.userId}, null, function (user) {
+					bcrypt.compare(oldPass, user.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(User, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
+								})
+							})
+						}
+						else {
+							res.send(false)
+						}
+					});
+				})
+			}
+			else {
+				db.findOne(Doctor, {_id: req.session.userId}, null, function (doctor) {
+					bcrypt.compare(oldPass, doctor.password, function(err, equal) {
+						if(equal){
+							bcrypt.hash(newPass, saltRounds, (err, hash) => {
+								db.updateOne(Doctor, {_id: req.session.userId}, {password: hash}, function(flag){
+									res.send(true)
+								})
+							})
+						}
+						else {
+							res.send(false)
+						}
+					});	
+				})
+			}
+		}
 	}
 }
 

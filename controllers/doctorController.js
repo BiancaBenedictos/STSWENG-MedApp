@@ -122,8 +122,6 @@ const doctorController = {
 				avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
 			}
 
-			console.log(avail)
-
 			db.insertMany(Availability, avail)
 		}
 		

@@ -114,9 +114,6 @@ const validation = {
                 .withMessage('Passwords do not match')
                 .notEmpty()
                 .withMessage('Please enter a password'),
-            check('credentials')
-                .notEmpty()
-                .withMessage('Please upload credentials'),
         ];
     }
 

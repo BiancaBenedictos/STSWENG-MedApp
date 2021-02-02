@@ -373,8 +373,8 @@ const appointmentController = {
 			var slotDate = new Date(req.query.full)
 
 			if (results) {
-				var s = results.startTime
-				var e = results.endTime
+				var s = new Date(0, 0, 0, results.startTime.getHours(), 0, 0, 0)
+				var e = new Date(0, 0, 0, results.endTime.getHours(), 0, 0, 0)
 				var int = results.intervalHours
 				var ampm = " AM"
 				var h, h2, m;

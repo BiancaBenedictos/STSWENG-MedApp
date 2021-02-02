@@ -71,11 +71,9 @@ function bookAppointment() {
     var s = link.indexOf("&c="), e = link.indexOf("&date=");
     var clinic;
 
-    if (i >= 0) {
+    if (e >= 0) {
         clinic = link.slice(s + 3, e);
-    } else clinic = link.slicee(s);
-
-    console.log(clinic);
+    } else clinic = link.slice(s+3);
 
     $.post('/requestAppointment', {fulldate: fulldate, time: time, doctor: $("h1.doctor").attr('id'), doctorName: $("h1.doctor").text(), doctorPic: $(".profpic").attr('src'), clinic: clinic}, function(res) {
         $("#confirm").modal('hide')

@@ -131,8 +131,8 @@ const userController = {
 	getDoctorRegister: function(req, res) {
 		db.findMany(Clinic, {}, null, function(clinics) {
 			var professions = Doctor.schema.path('profession').enumValues
-			console.log(professions);
-			console.log(clinics);
+			// console.log(professions);
+			// console.log(clinics);
 			res.render('doctor-register', {title: 'Register | Med-Aid',
 			register_active: true,
 			clinics: clinics, professions: professions})
@@ -262,19 +262,39 @@ const userController = {
 
             var details = {};
             for (let i = 0; i < errors.length; i++)
-                details[errors[i].param + 'Error'] = errors[i].msg;
+				details[errors[i].param + 'Error'] = errors[i].msg;
+			
+			details['credentialsError'] = "Please upload Credentials";
 
 			db.findMany(Clinic, {}, null, function(clinics) {
 				var professions = Doctor.schema.path('profession').enumValues
-				console.log(professions);
-				console.log(clinics);
+				// console.log(professions);
+				// console.log(clinics);
 				res.render('doctor-register', {title: 'Register | Med-Aid',
 				inputs: req.body,
                 details: details,
 				register_active: true,
 				clinics: clinics, professions: professions})
 			})
-        } else {
+		}
+		else if (req.files['credentials'] == undefined || req.files['credentials'] == null){
+			error = "Please upload Credentials";
+
+            var details = {};
+            details['credentialsError'] = error;
+
+			db.findMany(Clinic, {}, null, function(clinics) {
+				var professions = Doctor.schema.path('profession').enumValues
+				// console.log(professions);
+				// console.log(clinics);
+				res.render('doctor-register', {title: 'Register | Med-Aid',
+				inputs: req.body,
+                details: details,
+				register_active: true,
+				clinics: clinics, professions: professions})
+			})
+		}
+		else {
 			console.log("valid doctor");
 			const fname = helper.sanitize(req.body.firstname);
 			const lname = helper.sanitize(req.body.lastname);

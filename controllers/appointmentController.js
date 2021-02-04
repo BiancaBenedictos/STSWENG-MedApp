@@ -357,7 +357,7 @@ const appointmentController = {
 		if(req.session.type == 'user') {
 			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
 				if (doctor && doctor.clinics.includes(q.clinicID) ) {
-					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
+					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: monthStr, year: year, dates: dates, disabled: disabled})
 				}
 				else res.redirect('/error');
 
@@ -377,8 +377,8 @@ const appointmentController = {
 			var slotDate = new Date(req.query.full)
 
 			if (results) {
-				var s = results.startTime
-				var e = results.endTime
+				var s = new Date(0, 0, 0, results.startTime.getHours(), 0, 0, 0)
+				var e = new Date(0, 0, 0, results.endTime.getHours(), 0, 0, 0)
 				var int = results.intervalHours
 				var ampm = " AM"
 				var h, h2, m;

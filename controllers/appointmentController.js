@@ -159,14 +159,18 @@ const appointmentController = {
 				{ _id: appointmentId },
 				{ status: 'Cancelled' },
 				function (result) {
-					// res.redirect('/upcomingAppointments');
+					console.log("Updated...");
+					db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+					db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			
+					res.redirect('/cancelledAppointments');
 				},
 			);
 		
-			db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
-			db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			// db.updateOne(Doctor, {_id:result.bookedDoctor}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
+			// db.updateOne(User, {_id:result.patient}, {$push: {bookedAppointments:appointmentId}}, function(flag){})
 			
-			res.redirect('/cancelledAppointments');
+			// res.redirect('/cancelledAppointments');
 		})
 	},
 
@@ -507,6 +511,9 @@ const appointmentController = {
 			match = {'patient': req.session.userId}
 		} else if (req.session.type == 'doctor') {
 			match = {'bookedDoctor': req.session.userId}
+		} else {
+			res.send({});
+			return;
 		}
 
 		Appointment.aggregate([{

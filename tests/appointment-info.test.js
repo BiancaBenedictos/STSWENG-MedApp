@@ -47,6 +47,7 @@ beforeAll(async (done) => {
 
     try {
         await CLINIC.insertMany(clinics)
+        await mongoose.connection.db.createCollection('availabilities')
         
         await CLINIC.find({}, '_id', async function(err, res) {
             clinicIDs = res.map(s => s._id);
@@ -78,6 +79,7 @@ beforeAll(async (done) => {
                     //     endTime: '11',
                     //     intervalHours: '0.25'
                     // })
+
                     done()
                 })
             })

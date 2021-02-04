@@ -118,21 +118,16 @@ const doctorController = {
 		var avail = req.body.avail;
 		var success = true;
 
+		db.deleteMany(Availability, {doctorID: req.session.userId, clinicID: req.body.clinicID})
+
 		if (avail != undefined) {
 			for (i=0; i < avail.length; i++) {
 				avail[i].doctorID = req.session.userId
 				avail[i].startTime = new Date(0, 0, 0, parseInt(avail[i].startTime), 0, 0, 0)
 				avail[i].endTime = new Date(0, 0, 0, parseInt(avail[i].endTime), 0, 0, 0)
-	
-				db.upsertOne(Availability, {doctorID: avail[i].doctorID, clinicID: avail[i].clinicID,
-					day: avail[i].day}, avail[i], function(result) {
-						if (!result)
-							success = false;
-					})
 			}
-		} else {
-			db.deleteMany(Availability, {doctorID: req.session.doctorID, clinicID: req.body.clinicID})
 
+			db.insertMany(Availability, avail)
 		}
 		
 		res.send(success)

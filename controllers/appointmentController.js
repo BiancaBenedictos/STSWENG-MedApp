@@ -353,7 +353,7 @@ const appointmentController = {
 		if(req.session.type == 'user') {
 			db.findOne(Doctor, {_id: req.query.id}, null, function(doctor) {
 				if (doctor && doctor.clinics.includes(q.clinicID) ) {
-					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: months[month], year: year, dates: dates, disabled: disabled})
+					res.render('book-appointment', {doctor: doctor, clinic: q.clinicID, month: monthStr, year: year, dates: dates, disabled: disabled})
 				}
 				else res.redirect('/error');
 

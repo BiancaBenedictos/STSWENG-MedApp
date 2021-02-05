@@ -1,0 +1,49 @@
+{
+  "name": "stsweng-medapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
+    "bcrypt": "^5.0.0",
+    "busboy": "^0.3.1",
+    "connect-mongo": "^3.2.0",
+    "dateformat": "^3.0.3",
+    "debug": "^4.3.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "fs": "0.0.1-security",
+    "hbs": "^4.1.1",
+    "helper": "0.0.13",
+    "helpers": "0.0.6",
+    "moment": "^2.29.1",
+    "mongo-sanitize": "^1.1.0",
+    "mongodb-memory-server": "^6.9.2",
+    "mongoose": "^5.10.15",
+    "multer": "^1.4.2",
+    "node-pre-gyp": "^0.16.0",
+    "path": "^0.12.7",
+    "sinon": "^9.2.3",
+    "superagent": "^6.1.0",
+    "supertest-session": "^4.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "node-mocks-http": "^1.9.0",
+    "supertest": "^6.1.1"
+  },
+  "scripts": {
+    "test": "jest --testEnvironment=node --verbose --forceExit --maxWorkers=1 -- ./tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BiancaBenedictos/STSWENG-MedApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BiancaBenedictos/STSWENG-MedApp/issues"
+  },
+  "homepage": "https://github.com/BiancaBenedictos/STSWENG-MedApp#readme"
+}

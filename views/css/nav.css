@@ -1,0 +1,37 @@
+.navbar {
+    font-family: "Open Sans", sans-serif;
+    background-color: #133C55;
+    height: 70px;
+}
+
+.header {
+    background: #133C55;
+    height: 120px;
+}
+
+.search {
+    width: 350px;
+    height: 30px;
+    border: none;
+    border-radius: 50px;
+    /* font-size: 12px; */
+}
+
+.nav-link:hover {
+    color: white;
+    /* font-weight: bold; */
+}
+
+.nav-link {
+    color: white;
+    font-size: 14px;
+}
+
+img {
+    width: 25px;
+    margin: auto;
+}
+
+.profile {
+    border-radius: 50px;
+}

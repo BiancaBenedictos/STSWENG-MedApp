@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>Med-Aid</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/view-doctors.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    {{> nav}}
+    
+    <div class="container">
+        <div class="row content d-flex flex-wrap  justify-content-center">
+            {{!-- <div class="col-4 filter">
+                <form action="" style="text-align:left;">
+                    <h1>Profession</h1>
+                    
+                    {{#each professions}}
+                    <input type="radio" id="Pediatrician" value="Pediatrician">
+                    <label for="Pediatrician">{{this}}</label><br>
+                    {{/each}}
+
+                </form>
+            </div> --}}
+
+            {{!-- <div class="col ml-1"> --}}
+                
+                <div class="row view" style="width:84%">
+                    <h1 class="heading">{{clinic}}</h1>
+                </div>
+
+                <div class="row d-flex justify-content-center flex-wrap">
+                    {{#each doctors}}
+                    
+                    <div class="card">
+                        <a href="/doctorProfile?id={{_id}}" style="text-align:center">
+                            <img class="card-img-top ml-auto" src="{{profpic}}">
+                            <h5 class="card-title card-title-home">{{firstname}} {{lastname}}</h5></a>
+                            <div class="card-body card-body-home">
+                                <p class="card-text"><i>{{profession}}</i></p>
+                            </div>
+                            <div class="card-body">
+                                <a href="/bookAppointment?id={{_id}}&c={{../clinicID}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    {{!-- <div class="row d-flex flex-wrap">
+                        <div class="row admin-card">
+                            <a href="/doctorProfile?id={{_id}}">
+                                <img class="card-img" src="{{profpic}}">
+                            </a>
+                            <div class="card-body">
+                            <a href="/doctorProfile?id={{_id}}">
+                                <h5 class="card-title">{{firstname}} {{lastname}}</h5>
+                                <p class="card-text">{{profession}}</p>
+                                </a>
+                            </div>
+                            <div class="card-body cancel">
+                                <a href="/bookAppointment?id={{_id}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                            </div>
+                        </div>
+                        <div class="card-body cancel">
+                            <a href="/bookAppointment?id={{_id}}&c={{../clinicID}}" class="btn cancel-btn book-appointment" type="button">book</a>
+                        </div>
+                    </div>
+                    </div> --}}
+                    {{/each}}
+                </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+        $.get('/getDetails', null, function(result) {
+            if(result.type == 'doctor') {
+                $('.book-appointment').prop('hidden', true);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,20 @@
+<svg id="check" xmlns="http://www.w3.org/2000/svg" width="757" height="755" viewBox="0 0 757 755">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 80px;
+      }
+    </style>
+  </defs>
+  <g>
+    <path id="check1" class="cls-1" d="M257.978,485.767L505.548,238.2h0L565.954,298.6h0l-247.57,247.57h0l-60.406-60.406h0Z"/>
+    <path id="check1_copy" data-name="check1 copy" class="cls-1" d="M227.7,334.517l151.25,151.25h0l-60.406,60.406h0L167.3,394.923h0L227.7,334.517h0Z"/>
+  </g>
+  <path id="outline" class="cls-2" d="M378.978,50.1C559.642,50.1,706.1,196.555,706.1,377.22S559.642,704.343,378.978,704.343,51.855,557.885,51.855,377.22,198.313,50.1,378.978,50.1Z"/>
+</svg>

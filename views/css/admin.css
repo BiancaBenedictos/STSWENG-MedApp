@@ -1,0 +1,168 @@
+.options {
+    margin-top: -60px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 20px;
+}
+  
+.card-long, .admin-card {
+    width: 250px;
+    height: 90px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0px 0px 10px #00000050;
+    margin: 10px;
+    
+}
+
+.admin-card {
+    width: 100%;
+    margin-left: 30px;
+    /* margin: 0 30 0 30; */
+}
+
+.card-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* margin: 25px; */
+    /* margin-left: 35px; */
+}
+
+/* .card-title {
+    margin: 0;
+    font-size: 16px;
+} */
+
+.card-body {
+    align-items: center;
+    /* margin-top: 15px; */
+    text-align:left;
+}
+
+.cancel {
+    /* text-align: center; */
+    text-align: end;
+    margin-right: 30px;
+
+}
+
+.heading {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-link {
+    margin-right: -15px;
+}
+
+.filter, .appointments, .week {
+    margin-top: -150px;
+    background-color: white;
+    box-shadow: 0px 0px 10px #00000050;
+    text-align: center;
+    margin-left: 30px;
+    border-radius: 14px;
+}
+
+/* .filter {
+    text-align: center;
+} */
+
+.filter img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+.filter p {
+    margin: 30px;
+}
+
+.add {
+    display: flex;
+    justify-content: center;
+}
+
+.clinic-search {
+    width: 100%;
+    border: 1px solid gray;
+    margin-top: 15px;
+}
+
+.options a {
+    margin: -10 15 0 15;
+}
+
+.day-row {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.form-group {
+    margin: 3px;
+}
+
+.interval {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: -20px;
+}
+
+.view-btn {
+    margin: -5px;
+}
+
+.days {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.week {
+    height: 130px;
+    border-radius: 14px;
+}
+
+.day {
+    border: none;
+    background-color: white;
+    font-weight: bold;
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.time {
+    width: 90px;
+    height: 35px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    margin: 10px;
+
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0px 0px 7px #00000050;
+    background-color: white;
+}
+
+.timeslots {
+    display: flex;
+    justify-content: center;
+    margin: 20 -15 0 0;
+}
+
+.active {
+    background-color: #133C55;
+    color: white;
+}

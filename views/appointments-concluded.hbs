@@ -1,0 +1,166 @@
+<html>
+<head>
+    <title>Med-Aid</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/view-doctors.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+    <script src="/helpers/helper.js"></script>
+    <script src="scripts/appointments.js"></script>
+    <script src="scripts/appointmentNotifs.js"></script>
+
+</head>
+<body>
+    {{> nav}}
+    
+    <div class="container">
+        <div class="row content">
+            <div class="col-4 filter">
+                <img src="{{user.profpic}}">
+                <h1 class="heading">{{user.firstname}} {{user.lastname}}</h1>
+                <p id="user-info" style="white-space: pre-line"></p>
+            </div>
+            <div class="col">
+                <div class="row options">
+                    <a href="/upcomingAppointments" id="upcoming">upcoming <span class="badge badge-secondary upcomingCount"></span></a>
+                    <a href="/pendingAppointments" id="pending">pending <span class="badge badge-secondary pendingCount"></span></a>
+                    <a href="/concludedAppointments" id="concluded" style="border-bottom:2px solid black">concluded</a>
+                    <a href="/cancelledAppointments" id="cancelled">cancelled</a>
+                </div>
+
+                {{#if appointments}}
+                {{#each appointments}}
+                <div class="row d-flex flex-wrap">
+                    <div class="row no-gutters admin-card">
+                        <img class="card-img" src="{{profpic}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{user}}</h5>
+                            <p class="card-text">{{clinicName}} · {{date}} · {{time}}</p>
+                        </div>
+                        {{!-- <div class="card-body">
+                            <p class="date">
+                                <b>date concluded</b><br>
+                                November, 17, 2020
+                            </p>
+                        </div> --}}
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                <p style="text-align:center">No concluded appointments</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+  
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="edit-profile" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-profile">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    {{!-- Basic Information --}}
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label for="firstname" class="col-form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstname" value="{{user.firstname}}">
+                        </div>
+                        <div class="form-group col">
+                            <label for="lastname" class="col-form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" value="{{user.lastname}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label for="oldPassword" class="col-form-label">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword">
+                        </div>
+                        <div class="form-group col">
+                            <label for="newPassword" class="col-form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col">
+                            <label>Profile Picture</label>
+                            <div class="button-wrap">
+                                <label class="button" for="profpic">Upload File</label>
+                                <input id="picture" class="form-control" type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- Patient Users Only --}}
+                    <div class="form-group row user">
+                        <div class="form-group col">
+                            <label for="age" class="col-form-label">Age</label>
+                            <input type="Number" class="form-control" id="age" value={{user.age}}>
+                        </div>
+                    </div>
+                    <div class="form-group row user">
+                        <div class="form-group col">
+                            <label for="weight" class="col-form-label">Weight</label>
+                            <input type="Number" class="form-control" id="weight" value={{user.weight}}>
+                        </div>
+                        <div class="form-group col">
+                            <label for="height" class="col-form-label">Height</label>
+                            <input type="Number" class="form-control" id="height" value={{user.height}}>
+                        </div>
+                    </div>
+                    
+                    {{!-- Doctor Users Only --}}
+                    <div class="form-group row doctor">
+                        <div class="form-group col">
+                            <label>Credentials</label>
+                            <div class="button-wrap">
+                                <label class="button" for="credentials">Upload File</label>
+                                <input id="credentials" class="form-control" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Are you sure?
+            </div>
+            <div class="modal-body">
+                This action cannot be undone
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

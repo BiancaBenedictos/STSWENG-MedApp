@@ -1,0 +1,20 @@
+<svg id="x" xmlns="http://www.w3.org/2000/svg" width="757" height="755" viewBox="0 0 757 755">
+  <defs>
+    <style>
+      .cls-1 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-width: 80px;
+      }
+    </style>
+  </defs>
+  <g id="Group_1_copy" data-name="Group 1 copy">
+    <path id="check1" class="cls-1" d="M203.464,334.761H553.58v85.427H203.464V334.761h0Z"/>
+    <path id="check1_copy_2" data-name="check1 copy 2" class="cls-1" d="M421.394,202.309V552.425H335.967V202.309h85.427Z"/>
+  </g>
+  <circle id="outline_copy" data-name="outline copy" class="cls-2" cx="378.5" cy="377.5" r="327.125"/>
+</svg>

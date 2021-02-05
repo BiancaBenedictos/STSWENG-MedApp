@@ -264,7 +264,9 @@ const userController = {
             for (let i = 0; i < errors.length; i++)
 				details[errors[i].param + 'Error'] = errors[i].msg;
 			
-			details['credentialsError'] = "Please upload Credentials";
+			if(req.files['credentials'] == null || req.files['credentials'] == undefined){
+				details['credentialsError'] = "Please upload Credentials";
+			}
 
 			db.findMany(Clinic, {}, null, function(clinics) {
 				var professions = Doctor.schema.path('profession').enumValues

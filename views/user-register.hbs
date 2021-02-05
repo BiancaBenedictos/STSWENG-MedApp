@@ -48,7 +48,7 @@
                         <div class="col">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
-                            <p style="color: red;">
+                            <p style="color: red;" id="emailErrorMsg">
                                 {{details.emailError}}
                             </p>
                         </div>
@@ -57,14 +57,14 @@
                         <div class="col-6">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password">
-                            <p style="color: red;">
+                            <p style="color: red;" id="passErrorMsg">
                                 {{details.passwordError}}
                             </p>
                         </div>
                         <div class="col-6">
                             <label for="password">Confirm Password</label>
                             <input type="password" class="form-control" id="cpassword" name="cpassword">
-                            <p style="color: red;">
+                            <p style="color: red;" id="cpassErrorMsg">
                                 {{details.cpasswordError}}
                             </p>
                         </div>
@@ -83,21 +83,21 @@
                         <div class="col">
                             <label for="age">Age</label>
                             <input type="Number" class="form-control" id="age" name="age">
-                            <p style="color: red;">
+                            <p style="color: red;" id="ageErrorMsg" >
                                 {{details.ageError}}
                             </p>
                         </div>
                         <div class="col">
                             <label for="weight">Weight (in kg)</label>
                             <input type="Number" step="any" class="form-control" id="weight" name="weight">
-                            <p style="color: red;">
+                            <p style="color: red;" id="weightErrorMsg">
                                 {{details.weightError}}
                             </p>
                         </div>
                         <div class="col">
                             <label for="height">Height (in cm)</label>
                             <input type="Number" step="any" class="form-control" id="height" name="height">
-                            <p style="color: red;">
+                            <p style="color: red;" id="heightErrorMsg">
                                 {{details.heightError}}
                             </p>
                         </div>

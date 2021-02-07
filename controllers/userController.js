@@ -482,7 +482,7 @@ const userController = {
 							if (req.files['credentials']) {
 								withFiles = true;
 								var credName = req.body.firstname;
-								var credFileName = helper.renameAvatar(req, credName);
+								var credFileName = helper.renameCredentials(req, credName);
 								info.credentials = 'credentials/' + credFileName;
 							}
 						}
@@ -564,7 +564,7 @@ const userController = {
 			res.send('empty')
 		}
 		else {
-			if(req.session.type = 'user') {
+			if(req.session.type == 'user') {
 				db.findOne(User, {_id: req.session.userId}, null, function (user) {
 					bcrypt.compare(oldPass, user.password, function(err, equal) {
 						if(equal){

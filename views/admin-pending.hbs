@@ -48,10 +48,10 @@
                             </a>
                         </div>
                         <div class="card-body cancel">
-                            <button class="btn btn-link" data-toggle="modal" data-target="#accept" onclick="setId('{{_id}}');setClinics('{{clinics}}')" id="acceptBtn">
+                            <button class="btn btn-link" data-toggle="modal" data-target="#accept" onclick="setId('{{_id}}');setClinics('{{clinics}}')" id="acceptBtn{{firstname}}{{lastname}}">
                                 <img src="assets/check.svg" class="icon">
                             </button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#reject" onclick="setId('{{_id}}')" id="rejectBtn">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#reject" onclick="setId('{{_id}}')" id="rejectBtn{{firstname}}{{lastname}}">
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
@@ -69,7 +69,7 @@
 <div class="modal fade" id="accept" tabindex="-1" role="dialog" aria-labelledby="accept" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header del-header">
+            <div class="modal-header del-header" id="questionAccept">
                 Are you sure?
             </div>
             <div class="modal-body del-body">
@@ -77,7 +77,7 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <a class="btn btn-success" onclick="acceptDoctor()" id="confirmAccept">Yes</a>
+                <button class="btn btn-success" onclick="acceptDoctor()" id="confirmAccept">Yes</button>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
 <div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="reject" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header del-header">
+            <div class="modal-header del-header" id="questionReject">
                 Are you sure?
             </div>
             <div class="modal-body del-body">
@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetId()">No</button>
-                <a class="btn btn-danger" onclick="rejectDoctor()" id="confirmReject">Yes</a>
+                <button class="btn btn-danger" onclick="rejectDoctor()" id="confirmReject">Yes</button>
             </div>
         </div>
     </div>

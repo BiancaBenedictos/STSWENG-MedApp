@@ -36,7 +36,7 @@
 
                 <div class="row d-flex flex-wrap">
                     <div class="row admin-card justify-content-center">
-                        <button type="button" class="btn add" data-toggle="modal" data-target="#add-clinic">
+                        <button type="button" class="btn add" data-toggle="modal" data-target="#add-clinic" id="addclinicBtn">
                             <img src="assets/add.svg" class="icon">
                             <h1 class="heading pt-2 pl-3" style="align-self:center;font-size:18px">Add a Clinic</h1>
                         </button>
@@ -56,7 +56,7 @@
                             </a>
                         </div>
                         <div class="card-body cancel">
-                            <button class="btn btn-default doctors-{{clinicDoctors.length}}" data-toggle="modal" data-target="#confirm-delete" onclick="setDelete('{{_id}}')" disabled>
+                            <button class="btn btn-default doctors-{{clinicDoctors.length}}" data-toggle="modal" data-target="#confirm-delete" onclick="setDelete('{{_id}}')" id="deleteClinic{{clinicName}}" disabled>
                                 <img src="assets/clear.svg" class="icon">
                             </button>
                         </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="addClinic()">Save</button>
+                <button type="button" class="btn btn-primary" onclick="addClinic()" id="saveClinic">Save</button>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header del-header">
+            <div class="modal-header del-header" id="deleteClinic">
                 Are you sure?
             </div>
             <div class="modal-body del-body">
@@ -120,7 +120,7 @@
             </div>
             <div class="modal-footer del-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="unsetDelete()">No</button>
-                <a class="btn btn-danger" onclick="deleteClinic()">Yes</a>
+                <button id="confirmDelete" class="btn btn-danger" onclick="deleteClinic()">Yes</button>
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
                 
             </div>
             <div class="modal-footer msg-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()">Okay</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="refresh()" id="okBtn">Okay</button>
             </div>
         </div>
     </div>

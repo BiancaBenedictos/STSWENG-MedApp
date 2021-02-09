@@ -27,8 +27,8 @@ You may choose to login to any of the existing accounts to navigate through the 
 | Email | Password | User Type |
 |:---:|:---:|:--:|
 | admin@admin.com | a | admin |
-| test@dr.com | test | doctor/user |
-| test@gmail.com | test | patient/user |
+| rika@yahoo.com | 5678 | doctor/user |
+| niko@yahoo.com | 5678 | patient/user |
 
 ## Authors
 - [Bianca Joy Benedictos](https://www.facebook.com/biancajoyrb)
